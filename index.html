@@ -11,25 +11,34 @@
 
   <style>
     /* ==========================================
-       🎨 LIGHT PREMIUM CINEMATIC VARIABLES
+       🎨 LIGHT PREMIUM CINEMATIC VARIABLES (DNEVNI REŽIM)
        ========================================== */
     :root {
-      --bg-deep: #Faf7f2;       /* Topla, luksuzna "papirna" pozadina */
-      --bg-soft: #Ece3d8;       /* Malo tamnija bež za sekcije */
-      --text-main: #2c1e16;     /* Espresso smeđa */
-      --text-muted: #8c7866;    /* Prigušena smeđa/siva */
-      --gold: #c4a478;          /* Premium zlatna */
+      --bg-deep: #Faf7f2;       
+      --bg-soft: #Ece3d8;       
+      --text-main: #2c1e16;     
+      --text-muted: #8c7866;    
+      --gold: #c4a478;          
       --gold-dim: rgba(196, 164, 120, 0.4);
+    }
+
+    /* 🌙 NOĆNI REŽIM (Aktivira se automatski) */
+    body.night-mode {
+      --bg-deep: #050505;          
+      --bg-soft: #0a0a0a;        
+      --text-main: #EAE6DF;        
+      --text-muted: #7A756D;       
+      --gold: #C29B62;        
+      --gold-dim: rgba(194, 155, 98, 0.3);
     }
 
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
     
-    /* FIX ZA STICKY GALERIJU: Nema overflow-x: hidden na html-u! */
     html { scroll-behavior: auto; background-color: var(--bg-deep); width: 100%; }
-    body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-main); background-color: var(--bg-deep); -webkit-font-smoothing: antialiased; width: 100%; overflow-x: hidden; }
+    body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-main); background-color: var(--bg-deep); -webkit-font-smoothing: antialiased; width: 100%; overflow-x: hidden; transition: background-color 1s ease, color 1s ease; }
     body.is-loading { position: fixed; height: 100dvh; overflow: hidden; width: 100%; }
 
-    /* FILMSKI ZRNATI EFEKAT (Tamno zrno na svijetloj pozadini) */
+    /* FILMSKI ZRNATI EFEKAT */
     .film-grain {
         position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.04;
         background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
@@ -44,14 +53,16 @@
     /* ==========================================
        🎬 THE ENTRY (Cinematic Loader)
        ========================================== */
-    #loader { position: fixed; inset: 0; background: var(--bg-deep); z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    #loader { position: fixed; inset: 0; background: var(--bg-deep); z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: background-color 1s ease;}
     .loader-ring { width: 140px; height: 140px; border: 1px solid rgba(196, 164, 120, 0.2); border-radius: 50%; display: flex; justify-content: center; align-items: center; position: relative; }
     .loader-ring::before { content: ''; position: absolute; inset: -1px; border-radius: 50%; border: 1px solid transparent; border-top-color: var(--gold); animation: spin 2s cubic-bezier(0.6, 0.2, 0.4, 0.8) infinite; }
-    .loader-initials { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: var(--gold); letter-spacing: 0.2em; }
+    .loader-initials { position: absolute; font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: var(--gold); letter-spacing: 0.2em; animation: pulseInitials 2s infinite alternate;}
     
+    @keyframes pulseInitials { 0% { opacity: 0.5; } 100% { opacity: 1; } }
+
     .enter-button { margin-top: 50px; padding: 16px 45px; border: 1px solid var(--gold); border-radius: 40px; color: var(--text-main); font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; cursor: pointer; background: transparent; transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); opacity: 0; transform: translateY(20px); position: relative; overflow: hidden;}
     .enter-button::before { content: ''; position: absolute; inset: 0; background: var(--gold); transform: scaleY(0); transform-origin: bottom; transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: -1; }
-    .enter-button:hover { color: #fff; border-color: var(--gold); }
+    .enter-button:hover { color: var(--bg-deep); border-color: var(--gold); }
     .enter-button:hover::before { transform: scaleY(1); }
     @keyframes spin { 100% { transform: rotate(360deg); } }
 
@@ -62,24 +73,23 @@
 
     /* Puni ekrani i sekcije */
     .chapter { min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; position: relative; padding: 10dvh 5%; width: 100%; }
-    .chapter-center { align-items: center; text-align: center; }
     
     /* 🎬 HERO SECTION */
     .hero { min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; text-align: center; }
     .hero-eyebrow { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5em; color: var(--gold); margin-bottom: 4vh; overflow: hidden;}
     .hero-eyebrow span { display: block; transform: translateY(100%); }
-    .hero-title { font-size: clamp(60px, 15vw, 180px); line-height: 0.9; color: var(--text-main); text-transform: uppercase; }
+    .hero-title { font-size: clamp(60px, 15vw, 180px); line-height: 0.9; color: var(--text-main); text-transform: uppercase; transition: color 1s ease;}
     .hero-title span { font-style: italic; color: var(--gold); font-weight: 500; display: inline-block;}
     .hero-message { max-width: 500px; margin-top: 5vh; font-size: clamp(16px, 4vw, 22px); line-height: 1.8; color: var(--text-muted); font-family: 'Cormorant Garamond', serif; font-style: italic; opacity: 0;}
     
     .scroll-down { position: absolute; bottom: 5dvh; display: flex; flex-direction: column; align-items: center; gap: 15px; opacity: 0; }
     .scroll-text { font-family: 'Inter', sans-serif; font-size: 8px; text-transform: uppercase; letter-spacing: 0.5em; color: var(--text-muted); }
-    .scroll-line { width: 1px; height: 60px; background: rgba(44, 30, 22, 0.1); position: relative; overflow: hidden; }
+    .scroll-line { width: 1px; height: 60px; background: rgba(140, 120, 102, 0.2); position: relative; overflow: hidden; }
     .scroll-line::before { content: ''; position: absolute; top: -100%; left: 0; width: 100%; height: 100%; background: var(--gold); animation: scrollLine 2s cubic-bezier(0.7, 0, 0.3, 1) infinite; }
     @keyframes scrollLine { 100% { top: 100%; } }
 
     /* ⏱️ MODERN TICKER */
-    .ticker-section { padding: 15dvh 5%; background: var(--bg-soft); width: 100%; display: flex; justify-content: center;}
+    .ticker-section { padding: 15dvh 5%; background: var(--bg-soft); width: 100%; display: flex; justify-content: center; transition: background 1s ease;}
     .ticker-matrix { width: 100%; max-width: 1200px; display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 40px; text-align: center; }
     .t-unit { display: flex; flex-direction: column; align-items: center; opacity: 0; transform: translateY(30px); }
     .t-num { font-family: 'Cormorant Garamond', serif; font-size: clamp(45px, 7vw, 80px); line-height: 1; color: var(--text-main); font-weight: 400;}
@@ -116,93 +126,93 @@
     .int-header h2 { font-size: clamp(40px, 8vw, 80px); color: var(--text-main); margin-bottom: 15px; }
     .int-header p { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); }
     
-    .int-panel { width: 100%; height: 80dvh; position: relative; overflow: hidden; background: var(--bg-soft); cursor: pointer; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; clip-path: inset(100% 0 0 0); }
+    .int-panel { width: 100%; height: 80dvh; position: relative; overflow: hidden; background: var(--bg-soft); cursor: pointer; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; clip-path: inset(100% 0 0 0); transition: background 1s ease;}
     
-    /* 🖐️ Hold (Touch of a Memory) */
+    /* 🖐️ Hold */
     .hold-container { touch-action: pan-y; }
     .hold-image { width: 100%; height: 100%; object-fit: cover; filter: blur(35px) grayscale(50%); transform: scale(1.1); transition: all 2s cubic-bezier(0.19, 1, 0.22, 1); pointer-events: none; }
-    .hold-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(250, 247, 242, 0.4); transition: opacity 1s ease; pointer-events: none; }
-    /* Umanjen indikator po zahtjevu */
-    .finger-icon { width: 28px; height: 28px; fill: none; stroke: var(--text-main); stroke-width: 1.5; margin-bottom: 15px; animation: pulseFinger 2s infinite; filter: drop-shadow(0 0 10px rgba(255,255,255,0.8)); }
+    .hold-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(0,0,0,0.3); transition: opacity 1s ease; pointer-events: none; }
+    body.night-mode .hold-overlay { background: rgba(0,0,0,0.6); }
+    
+    .finger-icon { width: 28px; height: 28px; fill: none; stroke: var(--gold); stroke-width: 1.5; margin-bottom: 15px; animation: pulseFinger 2s infinite; filter: drop-shadow(0 0 10px rgba(194,155,98,0.5)); }
     @keyframes pulseFinger { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.2); opacity: 1; } }
-    .hold-text { font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-main); text-align: center; line-height: 1.8; font-weight: 500;}
+    .hold-text { font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: #fff; text-align: center; line-height: 1.8; font-weight: 500;}
     .hold-container.active .hold-image { filter: blur(0px) grayscale(0%); transform: scale(1); }
     .hold-container.active .hold-overlay { opacity: 0; }
 
-    /* ✨ Scratch (Secret Moment) - Potpuno neproziran premaz */
-    .scratch-container { touch-action: none; background: var(--text-main); }
+    /* ✨ Scratch (Potpuno neproziran premaz u boji pozadine) */
+    .scratch-container { touch-action: none; background: var(--bg-deep); transition: background 1s ease;}
     .scratch-container img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
     #scratchCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; touch-action: none; cursor: crosshair; z-index: 5; }
-    .scratch-hint { position: absolute; top: 8vh; left: 0; width: 100%; text-align: center; color: var(--text-main); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; pointer-events: none; z-index: 10; transition: opacity 0.6s ease; font-family: 'Inter', sans-serif; font-weight: 500;}
+    .scratch-hint { position: absolute; top: 8vh; left: 0; width: 100%; text-align: center; color: var(--gold); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; pointer-events: none; z-index: 10; transition: opacity 0.6s ease; font-family: 'Inter', sans-serif; font-weight: 500;}
 
     /* 📜 TIMELINE */
     .timeline-section { padding: 15dvh 5%; width: 100%; max-width: 800px; margin: 0 auto; position: relative; }
     .timeline { position: relative; width: 100%; }
-    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: rgba(44, 30, 22, 0.1); }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: rgba(140, 120, 102, 0.2); }
     .timeline-progress { position: absolute; left: 0; top: 0; width: 2px; background: var(--gold); height: 0; }
     .timeline-item { position: relative; padding-left: 8vw; margin-bottom: 12dvh; opacity: 0; transform: translateY(30px); }
     .timeline-item:last-child { margin-bottom: 0; }
-    .timeline-dot { position: absolute; left: -4px; top: 8px; width: 10px; height: 10px; background: var(--bg-deep); border: 1px solid var(--text-muted); border-radius: 50%; transition: all 0.5s ease; }
+    .timeline-dot { position: absolute; left: -3.5px; top: 8px; width: 8px; height: 8px; background: var(--bg-deep); border: 1px solid var(--muted); border-radius: 50%; transition: all 0.5s ease; }
     .timeline-item.active .timeline-dot { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 15px rgba(194, 155, 98, 0.5); transform: scale(1.4); }
     .timeline-item.active { opacity: 1; transform: translateY(0); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
-    .timeline-date { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 15px; }
-    .timeline-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(30px, 6vw, 45px); color: var(--text-main); margin-bottom: 20px; }
+    .timeline-date { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 15px; }
+    .timeline-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(30px, 6vw, 45px); color: var(--text-main); margin-bottom: 20px; transition: color 1s ease;}
     .timeline-content { font-family: 'Inter', sans-serif; font-size: clamp(14px, 3vw, 16px); line-height: 1.8; color: var(--text-muted); font-weight: 300; max-width: 500px;}
 
     /* 💬 QUOTE */
     .quote-section { padding: 20dvh 5%; text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%;}
     .quote-mark { font-family: 'Cormorant Garamond', serif; font-size: 80px; color: var(--gold-dim); line-height: 0; margin-bottom: 40px; display: block; opacity: 0; transform: scale(0.5);}
-    .quote-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(26px, 5vw, 50px); color: var(--text-main); line-height: 1.3; font-style: italic; max-width: 900px; margin: 0 auto; opacity: 0; transform: translateY(30px);}
+    .quote-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(26px, 5vw, 50px); color: var(--text-main); line-height: 1.3; font-style: italic; max-width: 900px; margin: 0 auto; opacity: 0; transform: translateY(30px); transition: color 1s ease;}
 
     /* ✍️ DRAW HEART (Full Bleed) */
-    .draw-heart-wrapper { touch-action: none; background: #1C1917;}
+    .draw-heart-wrapper { touch-action: none; background: var(--bg-soft); transition: background 1s ease;}
     .dh-hint { position: absolute; top: 8vh; left: 0; width: 100%; text-align: center; font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; z-index: 10; pointer-events: none; transition: opacity 0.5s ease; color: var(--gold); font-family: 'Inter', sans-serif;}
     #dhCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; touch-action: none; z-index: 5; cursor: crosshair; }
     .dh-reveal { position: absolute; inset: 0; z-index: 1; opacity: 0; transition: opacity 2s ease; }
     .dh-reveal img { width: 100%; height: 100%; object-fit: cover;}
-    .dh-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100px; height: 100px; opacity: 0.3; pointer-events: none; }
+    .dh-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100px; height: 100px; opacity: 0.2; pointer-events: none; }
     .dh-icon svg { width: 100%; height: 100%; fill: none; stroke: var(--gold); stroke-width: 1; stroke-dasharray: 4 4; }
     .draw-heart-wrapper.unlocked .dh-reveal { opacity: 1; z-index: 20; }
     .draw-heart-wrapper.unlocked #dhCanvas, .draw-heart-wrapper.unlocked .dh-icon, .draw-heart-wrapper.unlocked .dh-hint { opacity: 0; pointer-events: none; }
 
     /* FULLSCREEN TEXT */
     .text-block-fullscreen { padding: 20dvh 5vw; text-align: center; width: 100%; display: flex; flex-direction: column; align-items: center;}
-    .text-block-fullscreen h2 { margin-bottom: 30px; font-size: clamp(40px, 8vw, 85px); line-height: 1.1; color: var(--text-main); }
+    .text-block-fullscreen h2 { margin-bottom: 30px; font-size: clamp(40px, 8vw, 85px); line-height: 1.1; color: var(--text-main); transition: color 1s ease;}
     .text-block-fullscreen p { margin: 0 auto; max-width: 650px; font-size: clamp(16px, 4vw, 22px); line-height: 1.8; color: var(--text-muted); font-weight: 300; }
 
     /* ==========================================
        🎞️ CINEMATIC CROSSFADE GALERIJA
-       - Savršen Full Bleed i Sticky
        ========================================== */
     .gallery-section { height: 600dvh; width: 100%; position: relative; background: #000; }
     .gallery-sticky { position: sticky; top: 0; width: 100%; height: 100dvh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
     .gallery-img { position: absolute; inset: 0; opacity: 0; display: flex; align-items: center; justify-content: center; will-change: opacity; z-index: 1;}
     .gallery-img.active { opacity: 1; }
     .gallery-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; }
-    .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 60%, rgba(3,3,3,0.9) 100%); z-index: 100; pointer-events: none;}
+    .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 60%, var(--bg-deep) 100%); z-index: 100; pointer-events: none; transition: background 1s ease;}
     .gallery-text { position: absolute; bottom: 8dvh; text-align: center; z-index: 101; width: 100%; color: #fff;}
     .gallery-text h2 { font-size: clamp(30px, 6vw, 60px); letter-spacing: 0.1em; text-transform: uppercase; }
     .gallery-text p { font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; margin-top: 15px; color: var(--gold);}
 
     /* 🎴 3 THINGS I LOVE (Elegant Rows) */
     .reasons-section { padding: 15dvh 5%; width: 100%; max-width: 1000px; margin: 0 auto; }
-    .reasons-title { text-align: center; font-size: clamp(35px, 6vw, 60px); margin-bottom: 10dvh; color: var(--text-main); }
-    .reason-row { width: 100%; padding: 5dvh 0; border-top: 1px solid rgba(44, 30, 22, 0.1); display: flex; align-items: center; gap: 5vw; opacity: 0; transform: translateY(20px); }
-    .reason-row:last-child { border-bottom: 1px solid rgba(44, 30, 22, 0.1); }
+    .reasons-title { text-align: center; font-size: clamp(35px, 6vw, 60px); margin-bottom: 10dvh; color: var(--text-main); transition: color 1s ease;}
+    .reason-row { width: 100%; padding: 5dvh 0; border-top: 1px solid rgba(140, 120, 102, 0.2); display: flex; align-items: center; gap: 5vw; opacity: 0; transform: translateY(20px); }
+    .reason-row:last-child { border-bottom: 1px solid rgba(140, 120, 102, 0.2); }
     .r-num { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 6vw, 70px); font-style: italic; color: var(--gold); width: 10%; text-align: left;}
-    .r-text { font-family: 'Inter', sans-serif; font-size: clamp(16px, 3.5vw, 22px); flex: 1; color: var(--text-muted); line-height: 1.6; font-weight: 300;}
+    .r-text { font-family: 'Inter', sans-serif; font-size: clamp(16px, 3.5vw, 22px); flex: 1; color: var(--text-muted); line-height: 1.6; font-weight: 300; transition: color 1s ease;}
 
     /* 🎵 MUSIC PLAYER */
-    .music-section { min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 15dvh 5%; position: relative; background: var(--bg-soft);}
+    .music-section { min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 15dvh 5%; position: relative; background: var(--bg-soft); transition: background 1s ease;}
     .vinyl-wrapper { position: relative; width: 180px; height: 180px; margin-bottom: 5dvh; opacity: 0; transform: scale(0.8);}
-    .vinyl { width: 100%; height: 100%; border-radius: 50%; background: #050505; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 30px 60px rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden;}
+    .vinyl { width: 100%; height: 100%; border-radius: 50%; background: #050505; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 30px 60px rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden;}
     .vinyl::before { content: ''; position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.05) 100%); pointer-events: none; }
     .vinyl::after { content: ''; position: absolute; inset: 6px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 0 0 6px #050505, inset 0 0 0 7px rgba(255,255,255,0.05), inset 0 0 0 14px #050505, inset 0 0 0 15px rgba(255,255,255,0.05); pointer-events: none;}
-    .vinyl-center { width: 50px; height: 50px; background: var(--bg-deep); border-radius: 50%; z-index: 2; border: 1px solid var(--gold-dim); display: flex; justify-content: center; align-items: center; }
-    .vinyl-center::after { content: ''; width: 6px; height: 6px; background: #000; border-radius: 50%; }
+    .vinyl-center { width: 50px; height: 50px; background: var(--bg-deep); border-radius: 50%; z-index: 2; border: 1px solid var(--gold); display: flex; justify-content: center; align-items: center; transition: background 1s ease;}
+    .vinyl-center::after { content: ''; width: 6px; height: 6px; background: var(--text-main); border-radius: 50%; transition: background 1s ease;}
     .vinyl.playing { animation: spin 4s linear infinite; }
     
-    .m-title { font-size: clamp(40px, 8vw, 75px); margin-bottom: 20px; opacity: 0;}
+    .m-title { font-size: clamp(40px, 8vw, 75px); margin-bottom: 20px; opacity: 0; color: var(--text-main); transition: color 1s ease;}
     .m-desc { font-family: 'Inter', sans-serif; font-size: clamp(14px, 3vw, 16px); color: var(--text-muted); max-width: 400px; line-height: 1.6; margin-bottom: 50px; font-weight: 300; opacity: 0;}
     
     .play-controls { display: flex; flex-direction: column; gap: 20px; align-items: center; width: 100%; opacity: 0; transform: translateY(20px);}
@@ -222,26 +232,27 @@
     /* ⏳ TIME CAPSULE */
     .capsule-section { padding: 25dvh 5%; text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%;}
     .lock-icon { width: 35px; height: 35px; stroke: var(--gold); fill: none; stroke-width: 1.5; margin-bottom: 30px; }
-    .capsule-title { font-size: clamp(35px, 6vw, 60px); color: var(--text-main); margin-bottom: 20px; }
+    .capsule-title { font-size: clamp(35px, 6vw, 60px); color: var(--text-main); margin-bottom: 20px; transition: color 1s ease;}
     .capsule-desc { font-family: 'Inter', sans-serif; font-size: clamp(14px, 3vw, 18px); color: var(--text-muted); max-width: 500px; line-height: 1.6; margin-bottom: 30px; font-weight: 300;}
-    .lock-date { font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); border-top: 1px solid rgba(44, 30, 22, 0.1); padding-top: 20px;}
+    .lock-date { font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); border-top: 1px solid rgba(140, 120, 102, 0.2); padding-top: 20px;}
 
     /* 🎬 FINALE */
     .final { min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 5%; width: 100%;}
-    .final h2 { font-size: clamp(50px, 12vw, 130px); font-style: italic; line-height: 0.9; color: var(--text-main); }
+    .final h2 { font-size: clamp(50px, 12vw, 130px); font-style: italic; line-height: 0.9; color: var(--text-main); overflow: hidden; transition: color 1s ease;}
+    .final h2 span { display: block; transform: translateY(110%); }
     #typewriterText { font-family: 'Inter', sans-serif; font-size: clamp(14px, 3vw, 20px); margin-top: 5dvh; color: var(--text-muted); min-height: 30px; font-weight: 300; letter-spacing: 0.1em;}
     .cursor-blink { display: inline-block; width: 2px; height: 20px; background: var(--gold); margin-left: 8px; animation: blink 0.8s infinite; vertical-align: middle; }
     .signature { margin-top: 15dvh; font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 0.6em; text-transform: uppercase; color: var(--gold); opacity: 0; font-weight: 500;}
-    .shake-hint { margin-top: 40px; font-family: 'Inter', sans-serif; font-size: 8px; letter-spacing: 0.3em; color: var(--text-muted); cursor: pointer; text-transform: uppercase; padding: 15px 30px; border: 1px solid rgba(44, 30, 22, 0.1); border-radius: 50px; transition: all 0.4s ease; opacity: 0; }
+    .shake-hint { margin-top: 40px; font-family: 'Inter', sans-serif; font-size: 8px; letter-spacing: 0.3em; color: var(--text-muted); cursor: pointer; text-transform: uppercase; padding: 15px 30px; border: 1px solid rgba(140, 120, 102, 0.3); border-radius: 50px; transition: all 0.4s ease; opacity: 0; }
     .shake-hint:hover { border-color: var(--gold); color: var(--text-main); }
 
     /* POP-UPS */
-    .fullscreen-overlay { display: none; position: fixed; inset: 0; background: rgba(250, 247, 242, 0.95); z-index: 999999; justify-content: center; align-items: center; padding: 20px; animation: fadeInPop 0.8s ease forwards; }
+    .fullscreen-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 999999; justify-content: center; align-items: center; padding: 20px; animation: fadeInPop 0.8s ease forwards; }
     .pop-box { position: relative; text-align: center; max-width: 600px; animation: popUpAnim 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-    .pop-msg { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(30px, 6vw, 60px); line-height: 1.1; color: var(--text-main); margin-bottom: 20px;}
-    .pop-sub { font-family: 'Inter', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 0.4em; color: var(--gold); font-weight: 500;}
+    .pop-msg { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(30px, 6vw, 60px); line-height: 1.1; color: #fff; margin-bottom: 20px;}
+    .pop-sub { font-family: 'Inter', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 0.4em; color: var(--gold); font-weight: 300;}
     .close-pop { position: absolute; top: -80px; left: 50%; transform: translateX(-50%); font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.3em; color: var(--text-muted); cursor: pointer; text-transform: uppercase; border-bottom: 1px solid transparent; transition: all 0.3s; padding-bottom: 4px;}
-    .close-pop:hover { color: var(--text-main); border-color: var(--text-main);}
+    .close-pop:hover { color: #fff; border-color: #fff;}
     
     @keyframes fadeInPop { from { opacity: 0; } to { opacity: 1; } }
     @keyframes popUpAnim { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
@@ -269,7 +280,6 @@
 </head>
 <body class="is-loading">
 
-  <!-- Grain & Light effects -->
   <div class="film-grain"></div>
   <div class="cinematic-glow"></div>
 
@@ -295,7 +305,7 @@
     <!-- 🎬 HERO -->
     <section class="hero">
       <div class="hero-eyebrow"><div class="title-mask"><span>A Hidden Memory</span></div></div>
-      <h1 class="hero-title"><div class="title-mask"><span>For</span></div><div class="title-mask"><span>"Name"</span></div></h1>
+      <h1 class="hero-title"><div class="title-mask"><span>For</span></div><div class="title-mask"><span style="font-style: italic; color: var(--gold); font-weight: 400;">"Name"</span></div></h1>
       <p class="hero-message">A little piece of us, saved here for the days when you need to smile.</p>
       
       <div class="scroll-down">
@@ -397,7 +407,7 @@
       <p class="fade-up" style="margin-top:30px;">The walks, the jokes, the quiet moments, the photos we thought were ordinary... they became my favorite memories.</p>
     </section>
 
-    <!-- 🎞️ CINEMATIC GALLERY (Perfect Fullscreen Sticky) -->
+    <!-- 🎞️ CINEMATIC GALLERY -->
     <section class="gallery-section">
       <div class="gallery-sticky cinematic-gallery-container">
         <div class="gallery-img active" style="z-index: 1;"><img src="https://images.unsplash.com/photo-1611070674042-3957c8a7f700?w=1600&auto=format&fit=crop&q=80" alt="Memory" loading="lazy"/></div>
@@ -405,10 +415,6 @@
         <div class="gallery-img" style="z-index: 3;"><img src="https://images.unsplash.com/photo-1634268014879-ec7b2c982c5b?w=1600&auto=format&fit=crop&q=80" alt="Memory" loading="lazy"/></div>
         <div class="gallery-img" style="z-index: 4;"><img src="https://images.unsplash.com/photo-1508407576665-2d9a5d638a7e?w=1600&auto=format&fit=crop&q=80" alt="Memory" loading="lazy"/></div>
         <div class="gallery-img" style="z-index: 5;"><img src="https://plus.unsplash.com/premium_photo-1665159098184-d43c2bf651f4?w=1600&auto=format&fit=crop&q=80" alt="Memory" loading="lazy"/></div>
-        <div class="gallery-img" style="z-index: 6;"><img src="https://images.unsplash.com/photo-1561132667-ab2a54ebf2dc?w=1600&auto=format&fit=crop&q=80" alt="Memory" loading="lazy"/></div>
-        <div class="gallery-img" style="z-index: 7;"><img src="https://images.unsplash.com/photo-1671116302821-d6fc9a003505?w=1600&auto=format&fit=crop&q=80" alt="Memory" loading="lazy"/></div>
-        <div class="gallery-img" style="z-index: 8;"><img src="https://images.unsplash.com/photo-1694618564592-fa6eaec8fac9?w=1600&auto=format&fit=crop&q=80" alt="Memory" loading="lazy"/></div>
-        <div class="gallery-img" style="z-index: 9;"><img src="https://images.unsplash.com/photo-1649289661090-d319fd20e8f5?w=1600&auto=format&fit=crop&q=80" alt="Memory" loading="lazy"/></div>
         
         <div class="gallery-overlay"></div>
         <div class="gallery-text">
@@ -418,7 +424,7 @@
       </div>
     </section>
 
-    <!-- 🎴 3 THINGS I LOVE (Elegant Rows instead of cards) -->
+    <!-- 🎴 3 THINGS I LOVE -->
     <section class="reasons-section">
       <h2 class="reasons-title fade-up">Three Things I Love</h2>
       
@@ -496,7 +502,7 @@
     </section>
 
     <!-- 🎬 FINALE -->
-    <section class="chapter final">
+    <section class="final">
       <h2 class="title-mask"><span>I’d choose</span></h2>
       <h2 class="title-mask"><span>you again.</span></h2>
       <p id="typewriterText" data-text="In every version of this life...^I'd choose you."></p>
@@ -519,7 +525,7 @@
     // ==========================================
     // INITIAL SETUP
     // ==========================================
-    window.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
         const song = document.getElementById('song');
         const crackleAudio = document.getElementById('crackleAudio');
         const playBtn = document.getElementById('playBtn');
@@ -529,75 +535,75 @@
         if (crackleAudio) { crackleAudio.pause(); crackleAudio.currentTime = 0; }
         if (playBtn) playBtn.innerHTML = '<svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> Play Memory';
         if (waveVisual) waveVisual.style.display = 'none';
+
+        // ==========================================
+        // 🌙 DAY / NIGHT MODE LOGIC
+        // ==========================================
+        const today = new Date();
+        const hour = today.getHours();
+        let isNight = (hour >= 19 || hour < 6);
+        
+        if(isNight) {
+            document.body.classList.add('night-mode');
+        }
+
+        // ==========================================
+        // LOADER (Ne blokira sajt, okida odmah)
+        // ==========================================
+        setTimeout(() => {
+            gsap.to(".loader-ring", { opacity: 0, duration: 1 });
+            const loaderInitials = document.querySelector('.loader-initials');
+            if(loaderInitials) loaderInitials.style.display = 'none';
+            let btn = document.getElementById('enterBtn');
+            if(btn) {
+                btn.style.display = 'block';
+                setTimeout(() => {
+                    btn.style.opacity = '1';
+                    btn.style.transform = 'translateY(0)';
+                }, 50);
+            }
+        }, 2000); 
     });
 
-    window.addEventListener('load', () => {
-        const song = document.getElementById('song');
-        const crackleAudio = document.getElementById('crackleAudio');
-        if (song) song.pause();
-        if (crackleAudio) crackleAudio.pause();
-    });
-
-    const today = new Date();
     let isAnniversary = false; 
-    if (today.getMonth() === 1 && today.getDate() === 14) { isAnniversary = true; }
-    const hour = today.getHours();
-    let isNight = (hour >= 22 || hour <= 5);
+    const todayCheck = new Date();
+    if (todayCheck.getMonth() === 1 && todayCheck.getDate() === 14) { isAnniversary = true; }
     let hasShaken = false;
+    
+    document.getElementById('enterBtn').addEventListener('click', function() {
+        const tl = gsap.timeline({ 
+          onComplete: () => { 
+              document.body.classList.remove('is-loading'); ScrollTrigger.refresh(); 
+              if(isAnniversary) { document.getElementById('anniversaryOverlay').style.display = 'flex'; } 
+              else if(document.body.classList.contains('night-mode')) { document.getElementById('nightOverlay').style.display = 'flex'; }
+          } 
+        });
+        
+        tl.to("#loader", { opacity: 0, duration: 1.5, ease: "power2.inOut" })
+          .set("#loader", { display: "none" })
+          .to(".hero-eyebrow span", { y: "0%", duration: 1.5, ease: "power4.out" }, "-=0.8")
+          .to(".hero-title span", { y: "0%", duration: 1.5, ease: "power4.out", stagger: 0.15 }, "-=1.2")
+          .to(".hero-message", { opacity: 1, duration: 1.5, ease: "power2.out" }, "-=1.0")
+          .to(".scroll-down", { opacity: 0.6, duration: 1 }, "-=0.5");
 
-    window.addEventListener('load', () => {
-      window.scrollTo(0, 0); 
-      
-      // Loader logika - elegantan cinematic reveal
-      setTimeout(() => {
-          gsap.to(".loader-ring", { opacity: 0, duration: 1 });
-          document.getElementById('loaderText').style.display = 'none';
-          let btn = document.getElementById('enterBtn');
-          btn.style.display = 'block';
-          setTimeout(() => {
-              btn.style.opacity = '1';
-              btn.style.transform = 'translateY(0)';
-          }, 50);
-      }, 2500); 
-      
-      document.getElementById('enterBtn').addEventListener('click', function() {
-          const tl = gsap.timeline({ 
-            onComplete: () => { 
-                document.body.classList.remove('is-loading'); ScrollTrigger.refresh(); 
-                if(isAnniversary) { document.getElementById('anniversaryOverlay').style.display = 'flex'; } 
-                else if(isNight) { document.getElementById('nightOverlay').style.display = 'flex'; }
-            } 
-          });
-          
-          tl.to("#loader", { opacity: 0, duration: 1.5, ease: "power2.inOut" })
-            .set("#loader", { display: "none" })
-            // Otkrivanje hero sekcije
-            .to(".hero-eyebrow span", { y: "0%", duration: 1.5, ease: "power4.out" }, "-=0.8")
-            .to(".hero-title span", { y: "0%", duration: 1.5, ease: "power4.out", stagger: 0.15 }, "-=1.2")
-            .to(".hero-message", { opacity: 1, duration: 1.5, ease: "power2.out" }, "-=1.0")
-            .to(".scroll-down", { opacity: 0.6, duration: 1 }, "-=0.5");
-
-          try {
-              if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-                  DeviceOrientationEvent.requestPermission().then(permissionState => { 
-                      if (permissionState === 'granted') { window.addEventListener('devicemotion', devicemotionHandler, false); } 
-                  }).catch(console.error);
-              } else { window.addEventListener('devicemotion', devicemotionHandler, false); }
-          } catch(e) {}
-      });
+        try {
+            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+                DeviceOrientationEvent.requestPermission().then(permissionState => { 
+                    if (permissionState === 'granted') { window.addEventListener('devicemotion', devicemotionHandler, false); } 
+                }).catch(console.error);
+            } else { window.addEventListener('devicemotion', devicemotionHandler, false); }
+        } catch(e) {}
     });
 
     // ==========================================
     // GSAP STORYTELLING ANIMATIONS
     // ==========================================
     
-    // Ticker Stagger Animacija
     gsap.from(".t-unit", {
         y: 40, opacity: 0, duration: 1, stagger: 0.1, ease: "power3.out",
         scrollTrigger: { trigger: ".ticker-section", start: "top 80%" }
     });
 
-    // Standard Fade Up (tekstovi, kartice, ikonice)
     const fadeElements = document.querySelectorAll(".fade-up, .ed-desc");
     fadeElements.forEach((el) => { 
       gsap.fromTo(el, 
@@ -606,7 +612,6 @@
       ); 
     });
 
-    // Mask Reveals za naslove (kao podizanje zavjese)
     const titleMasks = document.querySelectorAll(".title-mask span");
     titleMasks.forEach((mask) => {
         gsap.to(mask, {
@@ -615,7 +620,6 @@
         });
     });
 
-    // Image Mask Reveals
     const imgMasks = document.querySelectorAll(".gs-mask");
     imgMasks.forEach((mask) => {
         gsap.to(mask, {
@@ -624,23 +628,19 @@
         });
     });
 
-    // Parallax Efekat na slikama
     const parallaxes = document.querySelectorAll(".gs-parallax");
     parallaxes.forEach((img) => {
         gsap.to(img, {
-            yPercent: 10, ease: "none",
+            yPercent: 15, ease: "none",
             scrollTrigger: { trigger: img.parentElement, start: "top bottom", end: "bottom top", scrub: true }
         });
     });
 
-    // Quote Animation
     gsap.to(".quote-mark", { opacity: 0.5, scale: 1, duration: 1.5, ease: "power3.out", scrollTrigger: { trigger: ".quote-section", start: "top 70%" } });
     gsap.to(".quote-text", { opacity: 1, y: 0, duration: 1.5, delay: 0.2, ease: "power3.out", scrollTrigger: { trigger: ".quote-section", start: "top 70%" } });
     
-    // Music Vinyl Reveal
     gsap.to(".vinyl-wrapper", { opacity: 1, scale: 1, duration: 1.5, ease: "power3.out", scrollTrigger: { trigger: ".music-section", start: "top 70%" } });
 
-    // Timeline Line Animacija
     const timelineItems = document.querySelectorAll('.timeline-item');
     timelineItems.forEach((item) => { 
         ScrollTrigger.create({ trigger: item, start: "top 75%", onEnter: () => item.classList.add('active'), onLeaveBack: () => item.classList.remove('active') }); 
@@ -681,9 +681,9 @@
       });
     }
 
-    const startDate = new Date('2022-02-14T00:00:00').getTime();
+    const startDateCalc = new Date('2022-02-14T00:00:00').getTime();
     function updateTicker() {
-      const diff = new Date().getTime() - startDate;
+      const diff = new Date().getTime() - startDateCalc;
       document.getElementById('t-years').innerText = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
       document.getElementById('t-months').innerText = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24 * 30.44));
       document.getElementById('t-days').innerText = Math.floor((diff % (1000 * 60 * 60 * 24 * 30.44)) / (1000 * 60 * 60 * 24));
@@ -779,7 +779,13 @@
     function initCanvas() { 
         if(scratchInitialized && window.innerWidth < 768) return; 
         canvas.width = canvas.parentElement.offsetWidth; canvas.height = canvas.parentElement.offsetHeight; 
-        ctx.fillStyle = '#Ece3d8'; ctx.fillRect(0, 0, canvas.width, canvas.height); 
+        
+        // PUNA BOJA PREMAZA (Potpuno neprozirno) - Provjerava koja je aktivna klasa
+        let isNightTheme = document.body.classList.contains('night-mode');
+        ctx.fillStyle = isNightTheme ? '#050505' : '#Ece3d8'; 
+        ctx.fillRect(0, 0, canvas.width, canvas.height); 
+        ctx.fillStyle = isNightTheme ? '#111' : '#d4c7b3'; 
+        for(let i=0; i<300; i++){ ctx.fillRect(Math.random()*canvas.width, Math.random()*canvas.height, 2, 2); } 
         scratchInitialized = true;
     }
     setTimeout(initCanvas, 600); window.addEventListener('resize', initCanvas);
@@ -804,27 +810,27 @@
         } 
     }
     
-    const playBtn = document.getElementById('playBtn');
-    if (playBtn) {
-        playBtn.addEventListener('click', () => { 
+    const playBtnMain = document.getElementById('playBtn');
+    if (playBtnMain) {
+        playBtnMain.addEventListener('click', () => { 
             const song = document.getElementById('song');
             const crackleAudio = document.getElementById('crackleAudio');
             
             if (song.paused) { 
                 if (crackleAudio) { crackleAudio.play().catch(e => console.log("Crackle audio blocked")); }
                 song.play().then(() => {
-                    playBtn.innerHTML = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg> Pause Memory';
+                    playBtnMain.innerHTML = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg> Pause Memory';
                     toggleWave(); 
                 }).catch(error => { console.log("Audio playback error:", error); });
             } else { 
                 if (crackleAudio) crackleAudio.pause(); 
                 song.pause(); 
-                playBtn.innerHTML = '<svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> Play Memory'; 
+                playBtnMain.innerHTML = '<svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> Play Memory'; 
                 toggleWave(); 
             } 
         });
     }
-
+    
     // ✍️ TYPEWRITER EFFECT
     const twText = document.getElementById('typewriterText');
     const originalText = twText.getAttribute('data-text'); 
