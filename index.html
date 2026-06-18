@@ -279,9 +279,9 @@
       overflow-x: auto; 
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
-      scrollbar-width: none; /* Skriva scrollbar na Firefoxu */
+      scrollbar-width: none;
     }
-    .gallery-horizontal-swipe-container::-webkit-scrollbar { display: none; } /* Skriva scrollbar na Chrome/Safari */
+    .gallery-horizontal-swipe-container::-webkit-scrollbar { display: none; }
     
     .simple-gallery-card {
       flex: 0 0 280px;
@@ -303,23 +303,19 @@
     .vogue-luminous-section { padding: 160px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
     .luminous-cards-stack { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 30px; margin-top: 20px; }
     
-    /* 3D Otvorena arhitektura za okretanje */
     .flip-card-container { perspective: 1200px; width: 100%; height: 200px; cursor: pointer; }
     .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style: preserve-3d; }
     
-    /* Aktivacijska klasa koja radi flip */
     .flip-card-container.is-flipped .flip-card-inner { transform: rotateY(180deg); }
     
     .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: var(--radius); border: 1px solid var(--card-border-sleep); box-shadow: 0 15px 40px rgba(33, 26, 20, 0.04); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; }
     
-    /* PREDNJA STRANA (Zatvoreno pismo s brojem) */
     .card-front { background: var(--card-bg-sleep); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--text-main); }
     .card-front .huge-number { font-family: var(--font-emotion); font-size: 48px; font-style: italic; color: var(--accent-love); line-height: 1; margin-bottom: 10px; }
     .card-front .tap-hint { font-family: var(--font-clean); font-size: 9px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-muted); }
     
-    /* ZADNJA STRANA (Otkrivena tajna) */
     .card-back { background: #fdfbf7; border-color: rgba(179, 132, 99, 0.3); transform: rotateY(180deg); text-align: left; align-items: flex-start; justify-content: flex-start; }
-    html.theme-night .card-back { background: #fdfbf7; } /* Uvijek ostaje toplo svjetla pozadina za čitljivost teksta pisma */
+    html.theme-night .card-back { background: #fdfbf7; }
     html.theme-night .card-back .luminous-node-title, html.theme-night .card-back .luminous-node-text { color: #2b211a; }
     
     .luminous-node-title { font-family: var(--font-emotion); font-size: 24px; color: var(--text-main); margin-bottom: 10px; font-weight: 400; }
@@ -333,7 +329,7 @@
     .vinyl-record-artisan { position: relative; width: clamp(200px, 38vw, 270px); height: clamp(200px, 38vw, 270px); background: radial-gradient(circle, #2b211a 0%, #150d0a 40%, #2b211a 41%, #0d0a08 70%, #1f1612 100%); border-radius: 50%; box-shadow: 0 30px 75px rgba(0,0,0,0.18), inset 0 0 1px rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; cursor: pointer; }
     .vinyl-center-label { width: 34%; height: 32%; background: var(--bg-promise); border-radius: 50%; border: 1px dashed var(--accent-love); display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; }
     .vinyl-heart-svg-core { width: clamp(22px, 4.5vw, 28px); height: clamp(22px, 4.5vw, 28px); fill: var(--accent-love); transform-origin: center center; will-change: transform, filter; animation: heartRestingBreathe 2.5s ease-in-out infinite alternate; }
-    @keyframes heartRestingBreathe { 0% { transform: scale(1); opacity: 0.6; filter: drop-shadow(0 0 0px rgba(179,132,99,0)); } 100% { transform: scale(1.08) opacity: 0.95; filter: drop-shadow(0 0 5px rgba(179,132,99,0.35)); } }
+    @keyframes heartRestingBreathe { 0% { transform: scale(1); opacity: 0.6; filter: drop-shadow(0 0 0px rgba(179,132,99,0)); } 100% { transform: scale(1.08); opacity: 0.95; filter: drop-shadow(0 0 5px rgba(179,132,99,0.35)); } }
     .vinyl-record-artisan.is-playing-audio .vinyl-heart-svg-core { animation: heartMusicPulse 0.95s cubic-bezier(0.25, 1, 0.2, 1) infinite !important; fill: #b33939; }
     @keyframes heartMusicPulse { 0% { transform: scale(1); } 25% { transform: scale(1.24); filter: drop-shadow(0 0 12px rgba(179,132,99,0.7)); } 40% { transform: scale(1.08); } 55% { transform: scale(1.26); filter: drop-shadow(0 0 15px rgba(179,132,99,0.8)); } 100% { transform: scale(1); } }
     .vinyl-track-info-card { text-align: center; max-width: 320px; }
@@ -342,7 +338,7 @@
 
     /* ==========================================
        🔒 POGLAVLJE 12: TIMELOCK SEF SJEĆANJA
-       ========================================== */
+       ========================================= */
     .vogue-lock-section { padding: 180px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: 100vh; text-align: center; }
     .lock-interactive-box { width: 100%; max-width: 480px; padding: 0 24px; display: none; flex-direction: column; align-items: center; will-change: opacity, transform; }
     .artisan-envelope-wrapper { position: absolute; width: 100%; max-width: 420px; height: 260px; background: #fdfbf7; border-radius: 12px; box-shadow: 0 25px 65px rgba(33, 26, 20, 0.12), inset 0 1px 2px #fff; border: 1px solid rgba(43, 33, 26, 0.08); cursor: pointer; display: none; opacity: 0; transform: scale(0.95) translateY(30px); will-change: opacity, transform; z-index: 30; }
@@ -354,7 +350,7 @@
     .letter-accent-closure { font-style: italic; color: var(--accent-love); font-weight: 400; display: block; margin-top: 45px; font-size: clamp(26px, 4.2vw, 36px); }
 
     /* ==========================================
-       👑 POGLAVLJE 14: ODUŠEVIO SI ME
+       👑 POGLAVLJE 14: FINALNI TRIBUT
        ========================================== */
     .vogue-closing-tribute-section { padding: 200px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; min-height: 100vh; }
     .closing-words-container { max-width: 680px; padding: 0 24px; will-change: transform, opacity; }
@@ -702,7 +698,9 @@
       window.scrollTo(0, 0);
       gsap.registerPlugin(ScrollTrigger);
 
-      // Tajmer
+      // =========================================================
+      // ⏳ VRAĆENO: Početak veze za ispravan rad brojača na vrhu
+      // =========================================================
       const anniversaryDate = new Date('2022-02-14T00:00:00').getTime();
 
       function refreshTicker() {
@@ -729,7 +727,11 @@
       // Timelock prepoznavanje
       const inputContainer = document.getElementById('lockInputBox');
       const realEnvelope = document.getElementById('physicalEnvelope');
-      const targetUnlockDate = new Date('2022-02-14T00:00:00').getTime();
+      
+      // =========================================================
+      // 🔒 POSTAVLJENO: Budući datum za ispravno zaključavanje pisma
+      // =========================================================
+      const targetUnlockDate = new Date('2027-02-14T00:00:00').getTime();
       const deviceCurrentDate = new Date().getTime();
 
       if (deviceCurrentDate >= targetUnlockDate) {
@@ -821,9 +823,7 @@
         scrollTrigger: { trigger: ".gallery-horizontal-swipe-container", start: "top 80%" }
       });
 
-      // =========================================================================
-      // ✨ 🖐 MEHANIZAM ZA POGLAVLJE 5 (TOUCH OF A MEMORY)
-      // =========================================================================
+      // Mehanizam za Touch of a memory
       const artPrint = document.getElementById('artPrintViewport');
       let heartbeatInterval;
 
@@ -859,30 +859,21 @@
         .to("#tributeShakeHint", { opacity: 0.55, duration: 1.4 }, "-=0.4");
     });
 
-    // =========================================================================
-    // ✨ 🔄 INTERAKCIJA: 3D FLIP KARTICA (POGLAVLJE 11 - NOVO)
-    // =========================================================================
+    // 3D Flip Kartice interakcija
     let cardVibeInterval = null;
     
     function handleCardFlip(cardElement) {
-      // Provera da li se kartica otvara ili zatvara
       const isOpening = !cardElement.classList.contains('is-flipped');
-      
-      // Gasi sve prethodne vibracije za svaki slučaj
       if (cardVibeInterval) { clearInterval(cardVibeInterval); cardVibeInterval = null; }
-      
-      // Okreni karticu (Flip efekat)
       cardElement.classList.toggle('is-flipped');
       
       if (navigator.vibrate) {
-        navigator.vibrate([40, 60]); // Mali taktilni klik pri rotaciji
+        navigator.vibrate([40, 60]);
       }
 
-      // Ako je kartica upravo otvorena, pokreni puls srca u pozadini
       if (isOpening) {
         if (navigator.vibrate) {
           cardVibeInterval = setInterval(() => {
-            // Pulsira samo dok god kartica ima aktivnu klasu flipa
             if (cardElement.classList.contains('is-flipped')) {
               navigator.vibrate([30, 80]);
             } else {
@@ -900,7 +891,7 @@
     // Funkcija otvaranja pisma
     function openPaperLetter() { const realEnvelope = document.getElementById('physicalEnvelope'); const letterZone = document.getElementById('secretLetterZone'); if (navigator.vibrate) { navigator.vibrate([45, 90, 45]); } const revealTimeline = gsap.timeline(); revealTimeline.to(realEnvelope, { opacity: 0, scale: 1.04, y: -15, duration: 1.2, ease: "power2.inOut", onComplete: () => { realEnvelope.style.display = "none"; letterZone.style.display = "block"; } }).to(letterZone, { opacity: 1, scale: 1, y: 0, duration: 2, ease: "power3.out" }); }
 
-    // Beskonačni konfeti mehanizam protresanja ekrana
+    // Protresanje telefona konfeti mehanizam
     const shakeCanvas = document.getElementById("shakeConfettiCanvas"); const sCtx = shakeCanvas.getContext("2d"); let heartParticles = []; let lastX = null, lastY = null, lastZ = null; let shakeThreshold = 14; let isConfettiActive = false;
     function resizeShakeCanvas() { shakeCanvas.width = window.innerWidth; shakeCanvas.height = window.innerHeight; }
     window.addEventListener("resize", resizeShakeCanvas); resizeShakeCanvas();
