@@ -64,6 +64,8 @@
       color: var(--text-main);
       -webkit-font-smoothing: antialiased;
       transition: background 1.5s ease-in-out, color 1.5s ease-in-out;
+      /* ✨ OSIGURAČ: Sprječava bilo kakav višak praznog prostora izvan granica */
+      overflow-x: hidden; 
     }
 
     body.is-loading { overflow: hidden; }
@@ -339,8 +341,7 @@
        🔒 POGLAVLJE 12: TIMELOCK SEF SJEĆANJA
        ========================================= */
     .vogue-lock-section { padding: 180px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: calc(var(--vh, 1vh) * 100); text-align: center; }
-    .lock-interactive-box { width: 100%; max-width: 480px; padding: 40px 30px; margin: 0 auto; display: none; flex-direction: column; align-items: center; will-change: opacity, transform; background: var(--card-bg-sleep); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 2px dashed var(--accent-love); border-radius: var(--radius); box-shadow: 0 15px 40px rgba(33, 26, 20, 0.08); }
-    @keyframes pulseLock { 0% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 8px var(--accent-love)); } 100% { transform: scale(1); opacity: 0.8; } }
+    .lock-interactive-box { width: 100%; max-width: 480px; padding: 0 24px; display: none; flex-direction: column; align-items: center; will-change: opacity, transform; }
     .artisan-envelope-wrapper { position: absolute; width: 100%; max-width: 420px; height: 260px; background: #fdfbf7; border-radius: 12px; box-shadow: 0 25px 65px rgba(33, 26, 20, 0.12), inset 0 1px 2px #fff; border: 1px solid rgba(43, 33, 26, 0.08); cursor: pointer; display: none; opacity: 0; transform: scale(0.95) translateY(30px); will-change: opacity, transform; z-index: 30; }
     .artisan-envelope-wrapper::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%; background: linear-gradient(135deg, transparent 49.5%, rgba(179, 132, 99, 0.15) 50%, transparent 50.5%), linear-gradient(225deg, transparent 49.5%, rgba(179, 132, 99, 0.15) 50%, transparent 50.5%); border-bottom: 1px solid rgba(179, 132, 99, 0.2); pointer-events: none; }
     .preview-letter-lip { position: absolute; top: -15px; left: 8%; right: 8%; height: 50px; background: #fff; border-radius: 6px 6px 0 0; box-shadow: 0 -5px 15px rgba(0,0,0,0.02); border: 1px solid rgba(43, 33, 26, 0.05); border-bottom: none; display: flex; align-items: center; justify-content: center; }
@@ -359,7 +360,9 @@
     .closure-signature-line { font-family: var(--font-clean); font-size: clamp(12px, 2vw, 14px); text-transform: uppercase; letter-spacing: 0.25em; color: var(--accent-love); font-weight: 500; opacity: 0; transform: translateY(15px); will-change: opacity, transform; }
     .shake-interaction-hint { font-family: var(--font-clean); font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); opacity: 0; margin-top: 80px; animation: gentleBreatheShake 2.5s ease-in-out infinite alternate; will-change: opacity; }
     @keyframes gentleBreatheShake { 0% { opacity: 0.25; } 100% { opacity: 0.55; } }
-    #shakeConfettiCanvas { position: fixed; inset: 0; width: 100vw; height: calc(var(--vh, 1vh) * 100); z-index: 99999; pointer-events: none; }
+    
+    /* ✨ OSIGURAČ: Spriječava širenje prostora na dnu ispod ekrana */
+    #shakeConfettiCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 99999; pointer-events: none; }
 
     /* ==========================================
        🚪 ENTRY CURTAIN EFFECT (VRAĆENA ZAVJESA)
@@ -436,19 +439,24 @@
         document.documentElement.classList.add('theme-night');
       }
 
+      // --- 🛠️ ANTI-JITTER KOD (Zaključavanje visine) ---
       const setVH = () => {
         let vh = window.innerHeight;
+        // Postavlja CSS varijablu na 1% stvarne visine pri učitavanju
         document.documentElement.style.setProperty('--vh', `${vh * 0.01}px`);
       };
       setVH();
       
       let vw = window.innerWidth;
       window.addEventListener('resize', () => {
+        // Ažurira visinu SAMO ako se promijeni širina (npr. okretanje telefona),
+        // potpuno ignorišući pojavljivanje i nestajanje navigacione trake.
         if (window.innerWidth !== vw) {
           vw = window.innerWidth;
           setVH();
         }
       });
+      // ------------------------------------------------
     })();
   </script>
 
