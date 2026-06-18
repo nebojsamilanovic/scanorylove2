@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>The Beginning — Premium Visual Story</title>
   
-  <!-- ✨ Nova, topla i duboko emotivna tipografija -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
@@ -30,7 +29,7 @@
       --shadow: 0 30px 70px rgba(33, 26, 20, 0.04);
 
       --card-bg-sleep: rgba(255, 255, 255, 0.65); 
-      --card-border-sleep: rgba(43, 33, 26, 0.25); 
+      --card-border-sleep: rgba(43, 33, 26, 0.15); 
     }
 
     html.theme-night {
@@ -43,7 +42,7 @@
       --grain-opacity: 0.04;
 
       --card-bg-sleep: rgba(28, 22, 18, 0.75); 
-      --card-border-sleep: rgba(245, 235, 226, 0.25); 
+      --card-border-sleep: rgba(245, 235, 226, 0.15); 
     }
 
     * { 
@@ -123,6 +122,7 @@
       background: var(--accent-love);
       animation: fluidLine 2.8s cubic-bezier(0.76, 0, 0.24, 1) infinite;
     }
+    @keyframes fluidLine { 0% { top: -100%; } 50% { top: 100%; } 100% { top: 100%; } }
 
     /* ==========================================
        🎬 SEKCIJA 1: HERO STILOVI
@@ -187,6 +187,7 @@
     .stars-story-fullscreen { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; opacity: 0; background: radial-gradient(ellipse at center, #120d0a 0%, #080605 70%, #030202 100%); display: flex; align-items: center; justify-content: center; text-align: center; will-change: opacity; }
     .stars-overlay-artisan { position: absolute; inset: 0; background: transparent; z-index: 1; }
     .stars-overlay-artisan::before { content: " "; position: absolute; top: 0; left: 0; width: 1.5px; height: 1.5px; background: transparent; box-shadow: 200px 150px rgba(238, 223, 204, 0.6), 600px 400px rgba(255, 255, 255, 0.4), 150px 500px rgba(238, 223, 204, 0.5), 800px 250px rgba(255, 255, 255, 0.7), 450px 700px rgba(179, 132, 99, 0.6), 700px 600px rgba(238, 223, 204, 0.4), 300px 300px rgba(255, 255, 255, 0.5), 900px 150px rgba(179, 132, 99, 0.5); animation: starsBreathe 4s ease-in-out infinite alternate; }
+    @keyframes starsBreathe { 0% { opacity: 0.3; } 100% { opacity: 0.85; } }
     .stars-text-content { position: relative; z-index: 3; padding: 0 6vw; max-width: 750px; text-align: center; opacity: 0; transform: scale(0.95); will-change: opacity, transform; }
     .vogue-date-label { font-family: var(--font-clean); font-size: clamp(10px, 1.3vw, 12px); text-transform: uppercase; letter-spacing: 0.3em; color: #f5ebe2; margin-top: 20px; display: block; font-weight: 400; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); }
 
@@ -197,12 +198,13 @@
     .location-text-content { position: relative; z-index: 4; padding: 0 6vw; max-width: 750px; text-align: center; opacity: 0; transform: translateY(25px); will-change: opacity, transform; }
     
     .vogue-pin-icon { width: clamp(30px, 5vw, 42px); height: clamp(30px, 5vw, 42px); fill: var(--accent-love); margin-bottom: 25px; display: inline-block; animation: pinFloat 3.5s ease-in-out infinite alternate; filter: drop-shadow(0 8px 15px rgba(179, 132, 99, 0.4)); }
+    @keyframes pinFloat { 0% { transform: translateY(0); } 100% { transform: translateY(-10px); } }
     .vogue-coords-value { font-family: var(--font-clean); font-size: clamp(18px, 3.8vw, 28px); font-weight: 300; letter-spacing: 0.08em; color: #eedfcc; margin-bottom: 20px; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); }
 
     .journey-sticky-container::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle, transparent 40%, rgba(13, 10, 8, 0.65) 100%); z-index: 4; pointer-events: none; }
 
     /* ==========================================
-       🖐️ POGLAVLJE 5: TOUCH OF A MEMORY (ZAKLJUČANI I SIGURNI STILOVI)
+       🖐️ POGLAVLJE 5: TOUCH OF A MEMORY
        ========================================== */
     .section-artisan-hold { padding: 160px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: 100vh; }
     .art-print-viewport { position: relative; width: 100%; max-width: 520px; aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; box-shadow: 0 35px 80px rgba(33, 26, 20, 0.06); cursor: pointer; touch-action: none; will-change: transform, box-shadow; transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.8s ease; }
@@ -210,6 +212,7 @@
     .art-print-viewport::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle, transparent 50%, rgba(21, 16, 12, 0.4) 100%); z-index: 2; pointer-events: none; transition: opacity 1s ease; }
     .hold-touch-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 3; padding: 0 40px; text-align: center; transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); pointer-events: none; }
     .hold-touch-overlay .finger-icon { font-size: 36px; margin-bottom: 20px; color: var(--accent-love); filter: drop-shadow(0 0 10px rgba(179,132,99,0.3)); animation: pulseSparkle 2s infinite alternate; }
+    @keyframes pulseSparkle { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.15); opacity: 1; } }
     .hold-instruction-text { font-family: var(--font-clean); font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: #eedfcc; font-weight: 400; line-height: 1.7; }
     .art-print-viewport.active { transform: scale(1.03); box-shadow: 0 45px 95px rgba(179, 132, 99, 0.3), 0 20px 40px rgba(0,0,0,0.04); }
     .art-print-viewport.active img { filter: blur(0px) grayscale(0%) brightness(0.95); transform: scale(1.02); }
@@ -240,7 +243,7 @@
     .node-description { font-family: var(--font-clean); font-size: 14px; line-height: 1.7; color: var(--text-muted); font-weight: 300; }
 
     /* ==========================================
-       ✍️ POGLAVLJE 7: OOBEĆANJE (FULL VIEWPORT)
+       ✍️ POGLAVLJE 7: OBEĆANJE (FULL VIEWPORT)
        ========================================== */
     .vogue-promise-section { width: 100vw; height: 100dvh; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: var(--bg-promise); display: flex; align-items: center; justify-content: center; overflow: hidden; perspective: 1200px; transition: background 1.5s ease-in-out; }
     .promise-3d-container { max-width: 740px; padding: 0 24px; text-align: center; will-change: transform, opacity; transform-style: preserve-3d; transform: rotateX(12deg) rotateY(-12deg) rotateZ(-2deg); opacity: 0; }
@@ -266,46 +269,73 @@
     .break-paragraph-clean { font-family: var(--font-clean); font-size: clamp(14px, 3.2vw, 17px); font-weight: 300; line-height: 1.8; color: var(--text-muted); max-width: 520px; margin: 0 auto; letter-spacing: 0.02em; opacity: 0; transform: translateY(20px); will-change: opacity, transform; }
 
     /* ==========================================
-       🖼️ POGLAVLJE 10: FLUIDNI ASIMETRIČNI MOZAIK
+       🖼️ POGLAVLJE 10: JEDNOSTAVNA SWIPE GALERIJA (NOVO & POBOLJŠANO)
        ========================================== */
-    .vogue-gallery-scroller { width: 100vw; height: 350vh; background: transparent; }
-    .gallery-sticky-viewport { position: sticky; top: 0; width: 100vw; height: 100dvh; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    .mosaic-fixed-title { position: absolute; top: 8vh; left: 0; width: 100%; text-align: center; z-index: 20; margin-bottom: 0; pointer-events: none; }
-    .gallery-mosaic-stage { position: relative; width: 100%; max-width: 950px; height: 100%; max-height: 650px; margin-top: 60px; will-change: transform; }
-    .mosaic-photo-card { position: absolute; border-radius: 12px; overflow: hidden; box-shadow: 0 25px 60px rgba(33, 26, 20, 0.08); will-change: transform, opacity; opacity: 0; }
-    .mosaic-photo-card img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
-    .card-p1 { top: 12%; left: 4%; width: 22%; height: 50%; z-index: 2; }
-    .card-l2 { top: 6%; right: 6%; width: 36%; height: 36%; z-index: 1; }
-    .card-p3 { top: 18%; left: 36%; width: 25%; height: 62%; z-index: 4; }
-    .card-l4 { bottom: 8%; left: 2%; width: 32%; height: 34%; z-index: 3; }
-    .card-p5 { bottom: 6%; right: 4%; width: 22%; height: 46%; z-index: 2; }
+    .vogue-gallery-scroller { width: 100%; padding: 120px 0; overflow: hidden; position: relative; }
+    .gallery-horizontal-swipe-container { 
+      display: flex; 
+      gap: 24px; 
+      padding: 20px 30px 40px 30px; 
+      overflow-x: auto; 
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; /* Skriva scrollbar na Firefoxu */
+    }
+    .gallery-horizontal-swipe-container::-webkit-scrollbar { display: none; } /* Skriva scrollbar na Chrome/Safari */
+    
+    .simple-gallery-card {
+      flex: 0 0 280px;
+      scroll-snap-align: center;
+      background: #fff;
+      padding: 14px 14px 28px 14px;
+      border-radius: 4px;
+      box-shadow: 0 15px 40px rgba(33, 26, 20, 0.07);
+      transform: rotate(calc(var(--item-rotation, 0) * 1deg));
+      transition: transform 0.4s ease;
+    }
+    html.theme-night .simple-gallery-card { background: #1c1612; box-shadow: 0 15px 40px rgba(0,0,0,0.3); }
+    .simple-gallery-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 2px; margin-bottom: 14px; pointer-events: none; }
+    .simple-gallery-card-caption { font-family: var(--font-emotion); font-style: italic; font-size: 16px; text-align: center; color: var(--text-main); }
 
     /* ==========================================
-       ❤️ POGLAVLJE 11: 3 THINGS I LOVE ABOUT YOU
+       ❤️ POGLAVLJE 11: 3 THINGS I LOVE - 3D FLIP KARTICE (NOVO & MAGIČNO)
        ========================================== */
     .vogue-luminous-section { padding: 160px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
-    .luminous-cards-stack { width: 100%; max-width: 540px; display: flex; flex-direction: column; gap: 40px; margin-top: 20px; }
-    .luminous-thought-card { position: relative; width: 100%; padding: 40px; background: var(--card-bg-sleep); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: var(--radius); border: 1px solid var(--card-border-sleep); box-shadow: 0 20px 50px rgba(33, 26, 20, 0.05); cursor: pointer; touch-action: none; will-change: transform, background, box-shadow, border-color; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), background 0.8s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.8s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.8s ease; }
-    .luminous-card-inner-content { filter: blur(5px); opacity: 0.45; will-change: filter, opacity; transition: filter 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s cubic-bezier(0.16, 1, 0.3, 1); }
-    .luminous-node-number { font-family: var(--font-emotion); font-size: 28px; font-style: italic; color: var(--accent-love); margin-bottom: 15px; line-height: 1; }
-    .luminous-node-title { font-family: var(--font-emotion); font-size: clamp(22px, 4vw, 28px); color: var(--text-main); margin-bottom: 12px; font-weight: 400; }
-    .luminous-node-text { font-family: var(--font-clean); font-size: 14px; line-height: 1.7; color: var(--text-muted); font-weight: 300; }
-    .luminous-thought-card.luminous-active { background: #fdfbf7; border-color: rgba(179, 132, 99, 0.35); box-shadow: 0 40px 90px rgba(179, 132, 99, 0.26), 0 10px 30px rgba(0, 0, 0, 0.03); transform: scale(1.025); }
-    html.theme-night .luminous-thought-card.luminous-active { background: #fdfbf7; border-color: rgba(199, 156, 125, 0.4); }
-    html.theme-night .luminous-thought-card.luminous-active .luminous-node-title, html.theme-night .luminous-thought-card.luminous-active .luminous-node-text { color: #2b211a; }
-    .luminous-thought-card.luminous-active .luminous-card-inner-content { filter: blur(0px); opacity: 1; }
+    .luminous-cards-stack { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 30px; margin-top: 20px; }
+    
+    /* 3D Otvorena arhitektura za okretanje */
+    .flip-card-container { perspective: 1200px; width: 100%; height: 200px; cursor: pointer; }
+    .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style: preserve-3d; }
+    
+    /* Aktivacijska klasa koja radi flip */
+    .flip-card-container.is-flipped .flip-card-inner { transform: rotateY(180deg); }
+    
+    .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: var(--radius); border: 1px solid var(--card-border-sleep); box-shadow: 0 15px 40px rgba(33, 26, 20, 0.04); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; }
+    
+    /* PREDNJA STRANA (Zatvoreno pismo s brojem) */
+    .card-front { background: var(--card-bg-sleep); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--text-main); }
+    .card-front .huge-number { font-family: var(--font-emotion); font-size: 48px; font-style: italic; color: var(--accent-love); line-height: 1; margin-bottom: 10px; }
+    .card-front .tap-hint { font-family: var(--font-clean); font-size: 9px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-muted); }
+    
+    /* ZADNJA STRANA (Otkrivena tajna) */
+    .card-back { background: #fdfbf7; border-color: rgba(179, 132, 99, 0.3); transform: rotateY(180deg); text-align: left; align-items: flex-start; justify-content: flex-start; }
+    html.theme-night .card-back { background: #fdfbf7; } /* Uvijek ostaje toplo svjetla pozadina za čitljivost teksta pisma */
+    html.theme-night .card-back .luminous-node-title, html.theme-night .card-back .luminous-node-text { color: #2b211a; }
+    
+    .luminous-node-title { font-family: var(--font-emotion); font-size: 24px; color: var(--text-main); margin-bottom: 10px; font-weight: 400; }
+    .luminous-node-text { font-family: var(--font-clean); font-size: 13.5px; line-height: 1.6; color: var(--text-muted); font-weight: 300; }
 
     /* ==========================================
        🎵 POGLAVLJE 13: SOUNDTRACK OF US
        ========================================== */
     .vogue-soundtrack-section { padding: 160px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
     .soundtrack-layout-grid { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 40px; }
-    .vinyl-record-artisan { position: relative; width: clamp(200px, 38vw, 270px); height: clamp(200px, 38vw, 270px); background: radial-gradient(circle, #2b211a 0%, #150d0a 40%, #2b211a 41%, #0d0a08 70%, #1f1612 100%); border-radius: 50%; box-shadow: 0 30px 75px rgba(0,0,0,0.18), inset 0 0 1px rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; cursor: pointer; transform: none !important; }
+    .vinyl-record-artisan { position: relative; width: clamp(200px, 38vw, 270px); height: clamp(200px, 38vw, 270px); background: radial-gradient(circle, #2b211a 0%, #150d0a 40%, #2b211a 41%, #0d0a08 70%, #1f1612 100%); border-radius: 50%; box-shadow: 0 30px 75px rgba(0,0,0,0.18), inset 0 0 1px rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; cursor: pointer; }
     .vinyl-center-label { width: 34%; height: 32%; background: var(--bg-promise); border-radius: 50%; border: 1px dashed var(--accent-love); display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; }
-    .vinyl-heart-svg-core { width: clamp(22px, 4.5vw, 28px); height: clamp(22px, 4.5vw, 28px); fill: var(--accent-love); transform: rotate(0deg) !important; transform-origin: center center; will-change: transform, filter; animation: heartRestingBreathe 2.5s ease-in-out infinite alternate; }
-    @keyframes heartRestingBreathe { 0% { transform: scale(1) rotate(0deg); opacity: 0.6; filter: drop-shadow(0 0 0px rgba(179,132,99,0)); } 100% { transform: scale(1.08) rotate(0deg); opacity: 0.95; filter: drop-shadow(0 0 5px rgba(179,132,99,0.35)); } }
+    .vinyl-heart-svg-core { width: clamp(22px, 4.5vw, 28px); height: clamp(22px, 4.5vw, 28px); fill: var(--accent-love); transform-origin: center center; will-change: transform, filter; animation: heartRestingBreathe 2.5s ease-in-out infinite alternate; }
+    @keyframes heartRestingBreathe { 0% { transform: scale(1); opacity: 0.6; filter: drop-shadow(0 0 0px rgba(179,132,99,0)); } 100% { transform: scale(1.08) opacity: 0.95; filter: drop-shadow(0 0 5px rgba(179,132,99,0.35)); } }
     .vinyl-record-artisan.is-playing-audio .vinyl-heart-svg-core { animation: heartMusicPulse 0.95s cubic-bezier(0.25, 1, 0.2, 1) infinite !important; fill: #b33939; }
-    @keyframes heartMusicPulse { 0% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 2px rgba(179,132,99,0.2)); } 25% { transform: scale(1.24) rotate(0deg); filter: drop-shadow(0 0 12px rgba(179,132,99,0.7)); } 40% { transform: scale(1.08) rotate(0deg); } 55% { transform: scale(1.26) rotate(0deg); filter: drop-shadow(0 0 15px rgba(179,132,99,0.8)); } 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 2px rgba(179,132,99,0.2)); } }
+    @keyframes heartMusicPulse { 0% { transform: scale(1); } 25% { transform: scale(1.24); filter: drop-shadow(0 0 12px rgba(179,132,99,0.7)); } 40% { transform: scale(1.08); } 55% { transform: scale(1.26); filter: drop-shadow(0 0 15px rgba(179,132,99,0.8)); } 100% { transform: scale(1); } }
     .vinyl-track-info-card { text-align: center; max-width: 320px; }
     .vinyl-track-title { font-family: var(--font-emotion); font-size: clamp(24px, 4vw, 30px); color: var(--text-main); margin-bottom: 6px; font-weight: 400; }
     .vinyl-track-sub { font-family: var(--font-clean); font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--text-muted); font-weight: 500; }
@@ -355,7 +385,6 @@
 
   <main>
     
-    <!-- 🎬 SEKCIJA 1: HERO -->
     <section class="awwwards-hero-container">
       <div class="hero-content-inner">
         <div class="vogue-eyebrow" id="heroEyebrow">A hidden space for Ana</div>
@@ -385,7 +414,6 @@
       <div class="vogue-scroll-indicator" id="heroScroll"><div class="vogue-scroll-line"></div></div>
     </section>
 
-    <!-- 🎬 MASTER KINEMATOGRAFSKA TRAKA (POGLAVLJA 2, 3, 4) -->
     <section class="scroll-journey-wrapper" id="journeySection">
       <div class="journey-sticky-container">
         
@@ -427,10 +455,8 @@
       </div>
     </section>
 
-    <!-- Ručni spomenar niz stranicu -->
     <div class="page-story-wrapper">
       
-      <!-- 🖐 Levant 5: TOUCH OF A MEMORY -->
       <section class="section-artisan-hold">
         <h2 class="vogue-section-title" id="holdTitleTrigger">Touch of a Memory</h2>
         
@@ -445,7 +471,6 @@
         <div class="vogue-scroll-indicator"><div class="vogue-scroll-line"></div></div>
       </section>
 
-      <!-- 〰️ POGLAVLJE 6: SPIRALA VREMENA -->
       <section class="vogue-timeline-section" id="timelineSectionScope">
         <div class="timeline-container-inner">
           
@@ -487,7 +512,6 @@
 
     </div>
 
-    <!-- ✍️ POGLAVLJE 7: A PROMISE OF ORDINARY DAYS -->
     <section class="vogue-promise-section" id="promiseSectionTrigger">
       <div class="promise-3d-container" id="promise3D">
         <div class="promise-title">A Promise of Ordinary Days</div>
@@ -502,7 +526,6 @@
 
     <div class="page-story-wrapper">
       
-      <!-- 🧼 POGLAVLJE 8: SECRET MOMENT -->
       <section class="section-artisan-scratch">
         <h2 class="vogue-section-title" id="scratchTitleTrigger">Secret Moment</h2>
         
@@ -515,7 +538,6 @@
         <div class="vogue-scroll-indicator"><div class="vogue-scroll-line"></div></div>
       </section>
 
-      <!-- 📖 POGLAVLJE 9: EVERY LITTLE THING -->
       <section class="vogue-text-break-section" id="textBreakTrigger">
         <div class="break-content-inner">
           <h2 class="break-title-emotion" id="breakTitle">Every little thing became ours.</h2>
@@ -528,62 +550,91 @@
 
     </div>
 
-    <!-- 🖼️ POGLAVLJE 10: FLUIDNI ASIMETRIČNI MOZAIK -->
-    <section class="vogue-gallery-scroller" id="gallerySectionTrigger">
-      <div class="gallery-sticky-viewport">
+    <section class="vogue-gallery-scroller">
+      <h2 class="vogue-section-title" style="margin-bottom: 20px;">Our Shared Chapters</h2>
+      
+      <div class="gallery-horizontal-swipe-container" id="simpleSwipeGallery">
         
-        <h2 class="vogue-section-title mosaic-fixed-title">Our Floating Collage</h2>
-
-        <div class="gallery-mosaic-stage">
-          <div class="mosaic-photo-card card-p1"><img src="https://images.unsplash.com/photo-1513279922550-250c2129b13a?w=800&auto=format&fit=crop&q=80" alt="Memory 1" loading="lazy" decoding="async" /></div>
-          <div class="mosaic-photo-card card-l2"><img src="https://images.unsplash.com/photo-1634268014879-ec7b2c982c5b?w=800&auto=format&fit=crop&q=80" alt="Memory 2" loading="lazy" decoding="async" /></div>
-          <div class="mosaic-photo-card card-p3"><img src="https://images.unsplash.com/photo-1508407576665-2d9a5d638a7e?w=800&auto=format&fit=crop&q=80" alt="Memory 3" loading="lazy" decoding="async" /></div>
-          <div class="mosaic-photo-card card-l4"><img src="https://images.unsplash.com/photo-1561132667-ab2a54ebf2dc?w=800&auto=format&fit=crop&q=80" alt="Memory 4" loading="lazy" decoding="async" /></div>
-          <div class="mosaic-photo-card card-p5"><img src="https://images.unsplash.com/photo-1671116302821-d6fc9a003505?w=800&auto=format&fit=crop&q=80" alt="Memory 5" loading="lazy" decoding="async" /></div>
+        <div class="simple-gallery-card" style="--item-rotation: -2;">
+          <img src="https://images.unsplash.com/photo-1513279922550-250c2129b13a?w=600&auto=format&fit=crop&q=80" alt="Memory 1" />
+          <div class="simple-gallery-card-caption">The warmth of sun</div>
         </div>
 
-        <div class="vogue-scroll-indicator" id="mosaicScrollIndicator"><div class="vogue-scroll-line"></div></div>
+        <div class="simple-gallery-card" style="--item-rotation: 3;">
+          <img src="https://images.unsplash.com/photo-1634268014879-ec7b2c982c5b?w=600&auto=format&fit=crop&q=80" alt="Memory 2" />
+          <div class="simple-gallery-card-caption">Stolen smiles</div>
+        </div>
+
+        <div class="simple-gallery-card" style="--item-rotation: -1;">
+          <img src="https://images.unsplash.com/photo-1508407576665-2d9a5d638a7e?w=600&auto=format&fit=crop&q=80" alt="Memory 3" />
+          <div class="simple-gallery-card-caption">Morning coffee</div>
+        </div>
+
+        <div class="simple-gallery-card" style="--item-rotation: 2;">
+          <img src="https://images.unsplash.com/photo-1561132667-ab2a54ebf2dc?w=600&auto=format&fit=crop&q=80" alt="Memory 4" />
+          <div class="simple-gallery-card-caption">Holding hands</div>
+        </div>
+
+        <div class="simple-gallery-card" style="--item-rotation: -3;">
+          <img src="https://images.unsplash.com/photo-1671116302821-d6fc9a003505?w=600&auto=format&fit=crop&q=80" alt="Memory 5" />
+          <div class="simple-gallery-card-caption">Infinite versions</div>
+        </div>
 
       </div>
+      <div class="vogue-scroll-indicator" style="position:relative; bottom: 0; margin-top: 20px;"><div class="vogue-scroll-line" style="height: 30px;"></div></div>
     </section>
 
-    <!-- Omotač u kome se nastavlja čista, topla priča -->
     <div class="page-story-wrapper">
       
-      <!-- ❤️ POGLAVLJE 11: 3 THINGS I LOVE ABOUT YOU -->
       <section class="vogue-luminous-section">
-        <h2 class="vogue-section-title" id="luminousTitleTrigger">3 Things I Love About You</h2>
+        <h2 class="vogue-section-title">3 Things I Love About You</h2>
 
         <div class="luminous-cards-stack">
-          <div class="luminous-thought-card gs-luminous-reveal">
-            <div class="luminous-card-inner-content">
-              <div class="luminous-node-number">01</div>
-              <h3 class="luminous-node-title">Your quiet resilience</h3>
-              <p class="luminous-node-text">The way you handle the heaviest days with grace, never losing your warmth or your ability to care for others.</p>
+          
+          <div class="flip-card-container" onclick="handleCardFlip(this)">
+            <div class="flip-card-inner">
+              <div class="card-front">
+                <div class="huge-number">01</div>
+                <div class="tap-hint">Tap to unlock</div>
+              </div>
+              <div class="card-back">
+                <h3 class="luminous-node-title">Your quiet resilience</h3>
+                <p class="luminous-node-text">The way you handle the heaviest days with grace, never losing your warmth or your ability to care for others.</p>
+              </div>
             </div>
           </div>
 
-          <div class="luminous-thought-card gs-luminous-reveal">
-            <div class="luminous-card-inner-content">
-              <div class="luminous-node-number">02</div>
-              <h3 class="luminous-node-title">The way you laugh</h3>
-              <p class="luminous-node-text">That unfiltered, real laugh that completely takes over your face. It is the single purest sound in my world.</p>
+          <div class="flip-card-container" onclick="handleCardFlip(this)">
+            <div class="flip-card-inner">
+              <div class="card-front">
+                <div class="huge-number">02</div>
+                <div class="tap-hint">Tap to unlock</div>
+              </div>
+              <div class="card-back">
+                <h3 class="luminous-node-title">The way you laugh</h3>
+                <p class="luminous-node-text">That unfiltered, real laugh that completely takes over your face. It is the single purest sound in my world.</p>
+              </div>
             </div>
           </div>
 
-          <div class="luminous-thought-card gs-luminous-reveal">
-            <div class="luminous-card-inner-content">
-              <div class="luminous-node-number">03</div>
-              <h3 class="luminous-node-title">How safe you make me feel</h3>
-              <p class="luminous-node-text">No matter how chaotic or loud the world outside gets, coming back to your presence resets everything.</p>
+          <div class="flip-card-container" onclick="handleCardFlip(this)">
+            <div class="flip-card-inner">
+              <div class="card-front">
+                <div class="huge-number">03</div>
+                <div class="tap-hint">Tap to unlock</div>
+              </div>
+              <div class="card-back">
+                <h3 class="luminous-node-title">How safe you make me feel</h3>
+                <p class="luminous-node-text">No matter how chaotic or loud the world outside gets, coming back to your presence resets everything.</p>
+              </div>
             </div>
           </div>
+
         </div>
 
         <div class="vogue-scroll-indicator"><div class="vogue-scroll-line"></div></div>
       </section>
 
-      <!-- 🎵 POGLAVLJE 13: SOUNDTRACK OF US -->
       <section class="vogue-soundtrack-section" id="audioSectionTrigger">
         <h2 class="vogue-section-title">Soundtrack of Us</h2>
 
@@ -606,7 +657,6 @@
         <div class="vogue-scroll-indicator"><div class="vogue-scroll-line"></div></div>
       </section>
 
-      <!-- 🔒 📜 POGLAVLJE 12: LOCKED MEMORY -->
       <section class="vogue-lock-section" id="lockSectionScope">
         <div class="lock-interactive-box" id="lockInputBox">
           <h2 class="vogue-section-title">Locked Memory</h2>
@@ -628,7 +678,6 @@
         </div>
       </section>
 
-      <!-- 👑 POGLAVLJE 14: ODUŠEVIO SI ME -->
       <section class="vogue-closing-tribute-section" id="finalTributeScope">
         <div class="closing-words-container">
           <h2 class="closure-main-statement" id="tributeMain">I’d choose you again.</h2>
@@ -654,7 +703,7 @@
       gsap.registerPlugin(ScrollTrigger);
 
       // Tajmer
-      const anniversaryDate = new Date('2026-06-20T00:00:00').getTime();
+      const anniversaryDate = new Date('2022-02-14T00:00:00').getTime();
 
       function refreshTicker() {
         const now = new Date().getTime();
@@ -766,37 +815,24 @@
       gsap.fromTo("#breakTitle", { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 1.5, ease: "power2.out", scrollTrigger: { trigger: "#textBreakTrigger", start: "top 75%", end: "bottom 25%", toggleActions: "play reverse play reverse" } });
       gsap.fromTo("#breakText", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.5, ease: "power2.out", scrollTrigger: { trigger: "#textBreakTrigger", start: "top 70%", end: "bottom 20%", toggleActions: "play reverse play reverse" } });
 
-      // Dvosmjerna animacija za Mozaik (Poglavlje 10)
-      const mosaicTimeline = gsap.timeline({ scrollTrigger: { trigger: "#gallerySectionTrigger", start: "top top", end: "bottom bottom", scrub: 1.3, anticipatePin: 1 } });
-      mosaicTimeline.fromTo(".card-p1", { opacity: 0, y: 100 }, { opacity: 1, y: -30, duration: 1 }, 0).fromTo(".card-l2", { opacity: 0, y: 140 }, { opacity: 1, y: -50, duration: 1 }, 0.2).to([".card-p1", ".card-l2"], { opacity: 0.15, filter: "blur(4px)", duration: 0.6 }, 0.8).fromTo(".card-p3", { opacity: 0, y: 180, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 1.2 }, 0.6).to(".card-p3", { opacity: 0.2, filter: "blur(4px)", duration: 0.6 }, 1.4).fromTo(".card-l4", { opacity: 0, y: 110, x: -15 }, { opacity: 1, y: -20, x: 0, duration: 1 }, 1.2).fromTo(".card-p5", { opacity: 0, y: 150 }, { opacity: 1, y: -40, duration: 1.2 }, 1.4);
-
-      // Meko izranjanje kartica (Poglavlje 11)
-      const luminousCards = document.querySelectorAll(".gs-luminous-reveal");
-      luminousCards.forEach((card) => { gsap.fromTo(card, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 1.6, ease: "power2.out", scrollTrigger: { trigger: card, start: "top 85%", toggleActions: "play none none reverse" } }); });
-
-      // Logika za Luminous kartice
-      const thoughtCards = document.querySelectorAll('.luminous-thought-card'); let luminousInterval;
-      thoughtCards.forEach((card) => {
-        function handleThoughtTouchStart(e) { e.preventDefault(); card.classList.add('luminous-active'); if (navigator.vibrate) { navigator.vibrate([40, 90, 40]); luminousInterval = setInterval(() => { navigator.vibrate([40, 90, 40]); }, 1050); } }
-        function handleThoughtTouchEnd() { card.classList.remove('luminous-active'); if (luminousInterval) { clearInterval(luminousInterval); } }
-        card.addEventListener('mousedown', handleThoughtTouchStart); card.addEventListener('mouseup', handleThoughtTouchEnd); card.addEventListener('mouseleave', handleThoughtTouchEnd); card.addEventListener('touchstart', handleThoughtTouchStart, { passive: false }); card.addEventListener('touchend', handleThoughtTouchEnd); card.addEventListener('touchcancel', handleThoughtTouchEnd);
+      // Animiranje novih horizontalnih kartica galerije pri skrolu
+      gsap.from(".simple-gallery-card", {
+        opacity: 0, y: 40, scale: 0.95, duration: 1.2, stagger: 0.15, ease: "power2.out",
+        scrollTrigger: { trigger: ".gallery-horizontal-swipe-container", start: "top 80%" }
       });
 
       // =========================================================================
-      // ✨ 🖐 OŽIVLJENA MAŠINSKA LOGIKA ZA POGLAVLJE 5 (TOUCH OF A MEMORY - SADA RADI!)
+      // ✨ 🖐 MEHANIZAM ZA POGLAVLJE 5 (TOUCH OF A MEMORY)
       // =========================================================================
       const artPrint = document.getElementById('artPrintViewport');
       let heartbeatInterval;
 
       function triggerTouchStart(e) {
-        e.preventDefault(); // Sprečava otvaranje sistemskog menija slike na telefonu
+        e.preventDefault();
         artPrint.classList.add('active');
-        
         if (navigator.vibrate) {
           navigator.vibrate([45, 90, 45]);
-          heartbeatInterval = setInterval(() => { 
-            navigator.vibrate([45, 90, 45]); 
-          }, 1050); 
+          heartbeatInterval = setInterval(() => { navigator.vibrate([45, 90, 45]); }, 1050); 
         }
       }
 
@@ -805,7 +841,6 @@
         if (heartbeatInterval) { clearInterval(heartbeatInterval); }
       }
 
-      // Vezivanje kompletnih i neprobojnih osluškivača za dodir prsta i miša
       artPrint.addEventListener('mousedown', triggerTouchStart);
       artPrint.addEventListener('mouseup', triggerTouchEnd);
       artPrint.addEventListener('mouseleave', triggerTouchEnd);
@@ -822,12 +857,41 @@
         .to("#tributeSub", { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" }, "-=1.0")
         .to("#tributeSign", { opacity: 1, y: 0, duration: 1.2, ease: "power2.out" }, "-=0.8")
         .to("#tributeShakeHint", { opacity: 0.55, duration: 1.4 }, "-=0.4");
-
-      // Globalno aktiviranje bazičnih čvorova
-      const revealElementsNodes = document.querySelectorAll(".gs-reveal");
-      revealElementsNodes.forEach((el) => { gsap.fromTo(el, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 1.4, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 88%", toggleActions: "play none none reverse" } }); });
-
     });
+
+    // =========================================================================
+    // ✨ 🔄 INTERAKCIJA: 3D FLIP KARTICA (POGLAVLJE 11 - NOVO)
+    // =========================================================================
+    let cardVibeInterval = null;
+    
+    function handleCardFlip(cardElement) {
+      // Provera da li se kartica otvara ili zatvara
+      const isOpening = !cardElement.classList.contains('is-flipped');
+      
+      // Gasi sve prethodne vibracije za svaki slučaj
+      if (cardVibeInterval) { clearInterval(cardVibeInterval); cardVibeInterval = null; }
+      
+      // Okreni karticu (Flip efekat)
+      cardElement.classList.toggle('is-flipped');
+      
+      if (navigator.vibrate) {
+        navigator.vibrate([40, 60]); // Mali taktilni klik pri rotaciji
+      }
+
+      // Ako je kartica upravo otvorena, pokreni puls srca u pozadini
+      if (isOpening) {
+        if (navigator.vibrate) {
+          cardVibeInterval = setInterval(() => {
+            // Pulsira samo dok god kartica ima aktivnu klasu flipa
+            if (cardElement.classList.contains('is-flipped')) {
+              navigator.vibrate([30, 80]);
+            } else {
+              clearInterval(cardVibeInterval);
+            }
+          }, 1100);
+        }
+      }
+    }
 
     // Plejer kontroler
     const player = document.getElementById('globalAudioPlayer'); const vinylMesh = document.getElementById('vinylRecordMesh'); const statusString = document.getElementById('trackDisplayStatus'); let heartVibrationInterval = null;
