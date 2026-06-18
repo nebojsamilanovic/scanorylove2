@@ -129,7 +129,7 @@
        ========================================== */
     .awwwards-hero-container {
       width: 100vw;
-      height: 100dvh;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -175,7 +175,7 @@
        🎞️ MASTER INTEGRISANA KINEMATOGRAFSKA TRAKA (SEKCIJE 2, 3, 4)
        ========================================== */
     .scroll-journey-wrapper { position: relative; width: 100vw; height: 500vh; background-color: transparent; }
-    .journey-sticky-container { position: sticky; top: 0; width: 100vw; height: 100dvh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .journey-sticky-container { position: sticky; top: 0; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
     
     .journey-bg-image { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; will-change: transform, filter, opacity; filter: grayscale(10%) brightness(0.35) blur(10px); transform: scale(1.1); }
     .journey-bg-image img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
@@ -242,7 +242,7 @@
     /* ==========================================
        ✍️ POGLAVLJE 7: OOBEĆANJE (FULL VIEWPORT)
        ========================================== */
-    .vogue-promise-section { width: 100vw; height: 100dvh; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: var(--bg-promise); display: flex; align-items: center; justify-content: center; overflow: hidden; perspective: 1200px; transition: background 1.5s ease-in-out; }
+    .vogue-promise-section { width: 100vw; height: 100vh; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: var(--bg-promise); display: flex; align-items: center; justify-content: center; overflow: hidden; perspective: 1200px; transition: background 1.5s ease-in-out; }
     .promise-3d-container { max-width: 740px; padding: 0 24px; text-align: center; will-change: transform, opacity; transform-style: preserve-3d; transform: rotateX(12deg) rotateY(-12deg) rotateZ(-2deg); opacity: 0; }
     .promise-title { font-family: var(--font-clean); font-size: clamp(10px, 1.4vw, 12px); text-transform: uppercase; letter-spacing: 0.35em; color: var(--accent-love); margin-bottom: 30px; font-weight: 500; }
     .promise-body-text { font-family: var(--font-emotion); font-size: clamp(26px, 4.5vw, 44px); font-weight: 300; line-height: 1.45; color: var(--text-main); letter-spacing: -0.01em; transition: color 1.5s ease-in-out; }
@@ -269,7 +269,7 @@
        🖼️ POGLAVLJE 10: FLUIDNI ASIMETRIČNI MOZAIK
        ========================================== */
     .vogue-gallery-scroller { width: 100vw; height: 350vh; background: transparent; }
-    .gallery-sticky-viewport { position: sticky; top: 0; width: 100vw; height: 100dvh; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .gallery-sticky-viewport { position: sticky; top: 0; width: 100vw; height: 100vh; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; }
     .mosaic-fixed-title { position: absolute; top: 8vh; left: 0; width: 100%; text-align: center; z-index: 20; margin-bottom: 0; pointer-events: none; }
     .gallery-mosaic-stage { position: relative; width: 100%; max-width: 950px; height: 100%; max-height: 650px; margin-top: 60px; will-change: transform; }
     .mosaic-photo-card { position: absolute; border-radius: 12px; overflow: hidden; box-shadow: 0 25px 60px rgba(33, 26, 20, 0.08); will-change: transform, opacity; opacity: 0; }
@@ -323,90 +323,17 @@
     .artisan-handwritten-letter { font-family: var(--font-emotion); font-size: clamp(24px, 4vw, 34px); line-height: 1.8; color: #2b211a; font-weight: 300; text-align: center; }
     .letter-accent-closure { font-style: italic; color: var(--accent-love); font-weight: 400; display: block; margin-top: 45px; font-size: clamp(26px, 4.2vw, 36px); }
 
-    /* =========================================================================
-       👑 ✨ POGLAVLJE 14: ODUŠEVIO SI ME (THE FOREVER IMPRINT - FINAL KADAR SA CONFETTI SHAKE)
-       ========================================================================= */
-    .vogue-closing-tribute-section {
-      padding: 200px 0; /* Ekstremno prostran Awwwards raspored za finiš */
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      position: relative;
-      min-height: 100vh;
-    }
-
-    .closing-words-container {
-      max-width: 680px;
-      padding: 0 24px;
-      will-change: transform, opacity;
-    }
-
-    .closure-main-statement {
-      font-family: var(--font-emotion);
-      font-size: clamp(38px, 6.5vw, 68px);
-      font-weight: 300;
-      line-height: 1.35;
-      color: var(--text-main);
-      margin-bottom: 25px;
-      opacity: 0;
-      transform: translateY(20px);
-      will-change: opacity, transform;
-    }
-
-    .closure-sub-manifesto {
-      font-family: var(--font-emotion);
-      font-size: clamp(24px, 4vw, 36px);
-      font-style: italic;
-      line-height: 1.6;
-      color: var(--text-muted);
-      max-width: 520px;
-      margin: 0 auto 50px auto;
-      opacity: 0;
-      transform: translateY(20px);
-      will-change: opacity, transform;
-    }
-
-    .closure-signature-line {
-      font-family: var(--font-clean);
-      font-size: clamp(12px, 2vw, 14px);
-      text-transform: uppercase;
-      letter-spacing: 0.25em;
-      color: var(--accent-love);
-      font-weight: 500;
-      opacity: 0;
-      transform: translateY(15px);
-      will-change: opacity, transform;
-    }
-
-    /* Suptilna, luksuzna doušnica za protresanje ekrana */
-    .shake-interaction-hint {
-      font-family: var(--font-clean);
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--text-muted);
-      opacity: 0;
-      margin-top: 80px;
-      animation: gentleBreatheShake 2.5s ease-in-out infinite alternate;
-      will-change: opacity;
-    }
-
-    @keyframes gentleBreatheShake {
-      0% { opacity: 0.25; }
-      100% { opacity: 0.55; }
-    }
-
-    /* Nevidljivo platno za zlatna srca konfeta koje eksplodiraju na shake */
-    #shakeConfettiCanvas {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 99999;
-      pointer-events: none;
-    }
+    /* ==========================================
+       👑 POGLAVLJE 14: ODUŠEVIO SI ME
+       ========================================== */
+    .vogue-closing-tribute-section { padding: 200px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; min-height: 100vh; }
+    .closing-words-container { max-width: 680px; padding: 0 24px; will-change: transform, opacity; }
+    .closure-main-statement { font-family: var(--font-emotion); font-size: clamp(38px, 6.5vw, 68px); font-weight: 300; line-height: 1.35; color: var(--text-main); margin-bottom: 25px; opacity: 0; transform: translateY(20px); will-change: opacity, transform; }
+    .closure-sub-manifesto { font-family: var(--font-emotion); font-size: clamp(24px, 4vw, 36px); font-style: italic; line-height: 1.6; color: var(--text-muted); max-width: 520px; margin: 0 auto 50px auto; opacity: 0; transform: translateY(20px); will-change: opacity, transform; }
+    .closure-signature-line { font-family: var(--font-clean); font-size: clamp(12px, 2vw, 14px); text-transform: uppercase; letter-spacing: 0.25em; color: var(--accent-love); font-weight: 500; opacity: 0; transform: translateY(15px); will-change: opacity, transform; }
+    .shake-interaction-hint { font-family: var(--font-clean); font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); opacity: 0; margin-top: 80px; animation: gentleBreatheShake 2.5s ease-in-out infinite alternate; will-change: opacity; }
+    @keyframes gentleBreatheShake { 0% { opacity: 0.25; } 100% { opacity: 0.55; } }
+    #shakeConfettiCanvas { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 99999; pointer-events: none; }
   </style>
 </head>
 <body class="is-loading">
@@ -424,8 +351,6 @@
   </script>
 
   <div class="hero-grain"></div>
-
-  <!-- Platno koje čeka protresanje telefona da aktivira srca -->
   <canvas id="shakeConfettiCanvas"></canvas>
 
   <main>
@@ -568,7 +493,7 @@
         <div class="promise-title">A Promise of Ordinary Days</div>
         
         <h2 class="promise-body-text" id="promiseParagraph">
-          <span class="letter-span">"I</span> <span class="letter-span">don't</span> <span class="letter-span">just</span> <span class="letter-span">look</span> <span class="letter-span">forward</span> <span class="letter-span">to</span> <span class="letter-span">the</span> <span class="letter-span">big</span> <span class="letter-span">moments</span> <span class="letter-span">with</span> <span class="letter-span">you;</span> <span class="letter-span">I</span> <span class="letter-span">look</span> <span class="letter-span">forward</span> <span class="letter-span">to</span> <span class="letter-span">the</span> <span class="letter-span">simple</span> <span class="letter-span">ones.</span> <span class="letter-span">Getting</span> <span class="letter-span">lost</span> <span class="letter-span">in</span> <span class="letter-span">new</span> <span class="letter-span">cities,</span> <span class="letter-span">sharing</span> <span class="letter-span">headphones</span> <span class="letter-span">on</span> <span class="letter-span">trains,</span> <span class="letter-span">and</span> <span class="letter-span">coming</span> <span class="letter-span">home</span> <span class="letter-span">to</span> <span class="letter-span" style="font-style: italic; color: var(--accent-love); font-weight: 400;">eyes,</span> <span class="letter-span">every</span> <span class="letter-span">single</span> <span class="letter-span">night."</span>
+          <span class="letter-span">"I</span> <span class="letter-span">don't</span> <span class="letter-span">just</span> <span class="letter-span">look</span> <span class="letter-span">forward</span> <span class="letter-span">to</span> <span class="letter-span">the</span> <span class="letter-span">big</span> <span class="letter-span">moments</span> <span class="letter-span">with</span> <span class="letter-span">you;</span> <span class="letter-span">I</span> <span class="letter-span">look</span> <span class="letter-span">forward</span> <span class="letter-span">to</span> <span class="letter-span">the</span> <span class="letter-span">simple</span> <span class="letter-span">ones.</span> <span class="letter-span">Getting</span> <span class="letter-span">lost</span> <span class="letter-span">in</span> <span class="letter-span">new</span> <span class="letter-span">cities,</span> <span class="letter-span">sharing</span> <span class="letter-span">headphones</span> <span class="letter-span">on</span> <span class="letter-span">trains,</span> <span class="letter-span">and</span> <span class="letter-span">coming</span> <span class="letter-span">home</span> <span class="letter-span">to</span> <span class="letter-span">the</span> <span class="letter-span" style="font-style: italic; color: var(--accent-love); font-weight: 400;">eyes,</span> <span class="letter-span">every</span> <span class="letter-span">single</span> <span class="letter-span">night."</span>
         </h2>
       </div>
 
@@ -703,7 +628,7 @@
         </div>
       </section>
 
-      <!-- 👑 ✨ DODATO POGLAVLJE 14: THE FOREVER IMPRINT (ODUŠEVIO SI ME FINALE) -->
+      <!-- 👑 POGLAVLJE 14: ODUŠEVIO SI ME -->
       <section class="vogue-closing-tribute-section" id="finalTributeScope">
         <div class="closing-words-container">
           <h2 class="closure-main-statement" id="tributeMain">I’d choose you again.</h2>
@@ -727,6 +652,22 @@
     document.addEventListener('DOMContentLoaded', () => {
       window.scrollTo(0, 0);
       gsap.registerPlugin(ScrollTrigger);
+
+      // ✨ OPTIMIZACIJA: Preuzimanje kontrole nad mobilnim dodirom i spajanje skokova visine navigacionih traka telefona
+      ScrollTrigger.normalizeScroll({ 
+        allowNestedScroll: true, 
+        debounce: true 
+      });
+      
+      // Pametno zaključavanje visine na iOS/Android u pravim pikselima da se izbegne trzanje unazad
+      const lockViewportHeights = () => {
+        const fullStickyContainers = document.querySelectorAll('.journey-sticky-container, .gallery-sticky-viewport, .awwwards-hero-container, .vogue-promise-section');
+        fullStickyContainers.forEach(container => {
+          container.style.height = `${window.innerHeight}px`;
+        });
+      };
+      lockViewportHeights();
+      window.addEventListener('resize', lockViewportHeights);
 
       // Tajmer
       const anniversaryDate = new Date('2022-02-14T00:00:00').getTime();
@@ -779,7 +720,7 @@
 
       // Master skrol blok sjećanja (2, 3, 4)
       const masterJourneyTimeline = gsap.timeline({
-        scrollTrigger: { trigger: "#journeySection", start: "top top", end: "bottom bottom", scrub: 1.4 }
+        scrollTrigger: { trigger: "#journeySection", start: "top top", end: "bottom bottom", scrub: 1.4, anticipatePin: 1 }
       });
       masterJourneyTimeline
         .to("#journeyBg", { filter: "grayscale(0%) brightness(0.55) blur(0px)", scale: 1.02, duration: 2 })
@@ -822,21 +763,15 @@
         });
       });
 
-      // Taktilni dodir (Živa slika)
-      const artPrint = document.getElementById('artPrintViewport');
-      let heartbeatInterval;
-      function triggerTouchStart(e) { e.preventDefault(); artPrint.classList.add('active'); if (navigator.vibrate) { navigator.vibrate([45, 90, 45]); heartbeatInterval = setInterval(() => { navigator.vibrate([45, 90, 45]); }, 1050); } }
-      function triggerTouchEnd() { artPrint.classList.remove('active'); if (heartbeatInterval) { clearInterval(heartbeatInterval); } }
-      artPrint.addEventListener('mousedown', triggerTouchStart);
-      artPrint.addEventListener('mouseup', triggerTouchEnd);
-      artPrint.addEventListener('mouseleave', triggerTouchEnd);
-      artPrint.addEventListener('touchstart', triggerTouchStart, { passive: false });
-      artPrint.addEventListener('touchend', triggerTouchEnd);
-      artPrint.addEventListener('touchcancel', triggerTouchEnd);
-
-      // Obećanje ispisivanje i rotacija
-      gsap.fromTo("#promise3D", { opacity: 0, rotateX: 18, rotateY: -15, rotateZ: -4 }, { opacity: 1, rotateX: 0, rotateY: 0, rotateZ: 0, duration: 2.2, ease: "power2.out", scrollTrigger: { trigger: "#promiseSectionTrigger", start: "top 65%", end: "bottom 35%", toggleActions: "play reverse play reverse" } });
-      gsap.fromTo(".letter-span", { opacity: 0, filter: "blur(5px)", transform: "translateZ(-50px) scale(0.92)" }, { opacity: 1, filter: "blur(0px)", transform: "translateZ(0px) scale(1)", stagger: 0.08, duration: 1.4, ease: "power3.out", scrollTrigger: { trigger: "#promiseSectionTrigger", start: "top 55%", end: "bottom 45%", toggleActions: "play reverse play reverse" } });
+      // ✨ OPTIMIZACIJA: Dvosmjerna animacija za Poglavlje 7 (A promise of ordinary days) sa anticipatePin za savršenu glatkoću unazad
+      gsap.fromTo("#promise3D", 
+        { opacity: 0, rotateX: 18, rotateY: -15, rotateZ: -4 }, 
+        { opacity: 1, rotateX: 0, rotateY: 0, rotateZ: 0, duration: 2.2, ease: "power2.out", scrollTrigger: { trigger: "#promiseSectionTrigger", start: "top 65%", end: "bottom 35%", toggleActions: "play reverse play reverse", anticipatePin: 1 } }
+      );
+      gsap.fromTo(".letter-span", 
+        { opacity: 0, filter: "blur(5px)", transform: "translateZ(-50px) scale(0.92)" }, 
+        { opacity: 1, filter: "blur(0px)", transform: "translateZ(0px) scale(1)", stagger: 0.08, duration: 1.4, ease: "power3.out", scrollTrigger: { trigger: "#promiseSectionTrigger", start: "top 55%", end: "bottom 45%", toggleActions: "play reverse play reverse" } }
+      );
       gsap.fromTo("#promiseScrollIndicator", { opacity: 0 }, { opacity: 0.6, duration: 1.2, scrollTrigger: { trigger: "#promiseSectionTrigger", start: "top 40%", end: "bottom 60%", toggleActions: "play reverse play reverse" } });
 
       // Bioskopski ulazak za Secret Moment
@@ -854,7 +789,7 @@
       gsap.fromTo("#breakText", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.5, ease: "power2.out", scrollTrigger: { trigger: "#textBreakTrigger", start: "top 70%", end: "bottom 20%", toggleActions: "play reverse play reverse" } });
 
       // Dvosmjerna animacija za Mozaik (Poglavlje 10)
-      const mosaicTimeline = gsap.timeline({ scrollTrigger: { trigger: "#gallerySectionTrigger", start: "top top", end: "bottom bottom", scrub: 1.3 } });
+      const mosaicTimeline = gsap.timeline({ scrollTrigger: { trigger: "#gallerySectionTrigger", start: "top top", end: "bottom bottom", scrub: 1.3, anticipatePin: 1 } });
       mosaicTimeline.fromTo(".card-p1", { opacity: 0, y: 100 }, { opacity: 1, y: -30, duration: 1 }, 0).fromTo(".card-l2", { opacity: 0, y: 140 }, { opacity: 1, y: -50, duration: 1 }, 0.2).to([".card-p1", ".card-l2"], { opacity: 0.15, filter: "blur(4px)", duration: 0.6 }, 0.8).fromTo(".card-p3", { opacity: 0, y: 180, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 1.2 }, 0.6).to(".card-p3", { opacity: 0.2, filter: "blur(4px)", duration: 0.6 }, 1.4).fromTo(".card-l4", { opacity: 0, y: 110, x: -15 }, { opacity: 1, y: -20, x: 0, duration: 1 }, 1.2).fromTo(".card-p5", { opacity: 0, y: 150 }, { opacity: 1, y: -40, duration: 1.2 }, 1.4);
 
       // Meko izranjanje kartica (Poglavlje 11)
@@ -869,24 +804,15 @@
         card.addEventListener('mousedown', handleThoughtTouchStart); card.addEventListener('mouseup', handleThoughtTouchEnd); card.addEventListener('mouseleave', handleThoughtTouchEnd); card.addEventListener('touchstart', handleThoughtTouchStart, { passive: false }); card.addEventListener('touchend', handleThoughtTouchEnd); card.addEventListener('touchcancel', handleThoughtTouchEnd);
       });
 
-      // =========================================================================
-      // 👑 ✨ KASKADNA ANIMACIJA ODJAVNOG KADRA (POGLAVLJE 14)
-      // =========================================================================
+      // Kaskadna animacija odjavnog kadra (Poglavlje 14)
       const closingTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: "#finalTributeScope",
-          start: "top 70%",
-          end: "bottom bottom",
-          toggleActions: "play none none reverse"
-        }
+        scrollTrigger: { trigger: "#finalTributeScope", start: "top 70%", end: "bottom bottom", toggleActions: "play none none reverse", anticipatePin: 1 }
       });
-
       closingTimeline
         .to("#tributeMain", { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" })
         .to("#tributeSub", { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" }, "-=1.0")
         .to("#tributeSign", { opacity: 1, y: 0, duration: 1.2, ease: "power2.out" }, "-=0.8")
         .to("#tributeShakeHint", { opacity: 0.55, duration: 1.4 }, "-=0.4");
-
 
       // Globalno aktiviranje bazičnih čvorova
       const revealElementsNodes = document.querySelectorAll(".gs-reveal");
@@ -902,13 +828,13 @@
     function openPaperLetter() { const realEnvelope = document.getElementById('physicalEnvelope'); const letterZone = document.getElementById('secretLetterZone'); if (navigator.vibrate) { navigator.vibrate([45, 90, 45]); } const revealTimeline = gsap.timeline(); revealTimeline.to(realEnvelope, { opacity: 0, scale: 1.04, y: -15, duration: 1.2, ease: "power2.inOut", onComplete: () => { realEnvelope.style.display = "none"; letterZone.style.display = "block"; } }).to(letterZone, { opacity: 1, scale: 1, y: 0, duration: 2, ease: "power3.out" }); }
 
     // =========================================================================
-    // 📳 ✨ LOGIKA PROTRESANJA TELEFONA (ACCELEROMETER CONFETTI HEARTS MESH)
+    // 📳 ✨ POPRAVLJENA LOGIKA PROTRESANJA: GENERATOR SRCA DOKLE GOD SE TELEFON TRESE
     // =========================================================================
     const shakeCanvas = document.getElementById("shakeConfettiCanvas");
     const sCtx = shakeCanvas.getContext("2d");
     let heartParticles = [];
     let lastX = null, lastY = null, lastZ = null;
-    let shakeThreshold = 18; // Jačina potreba protresanja da se aktiviraju srca
+    let shakeThreshold = 14; // Finiji i osjetljiviji senzor pokreta za mobilne telefone
     let isConfettiActive = false;
 
     function resizeShakeCanvas() {
@@ -918,19 +844,22 @@
     window.addEventListener("resize", resizeShakeCanvas);
     resizeShakeCanvas();
 
-    // Generisanje digitalnih zlatnih srca
-    function spawnHeartConfetti() {
-      if (navigator.vibrate) { navigator.vibrate([60, 40, 60]); }
+    // ✨ Generator: Dodaje novi talas srca sa svakim novim pokretom protresanja u realnom vremenu
+    function spawnHeartConfetti(intensity) {
+      // Intenzitet pokreta određuje broj srca koji će iskočiti na ekranu
+      const particleCount = Math.min(Math.floor(intensity * 1.5), 25);
       
-      for (let i = 0; i < 45; i++) {
+      if (navigator.vibrate) { navigator.vibrate(40); }
+      
+      for (let i = 0; i < particleCount; i++) {
         heartParticles.push({
           x: Math.random() * shakeCanvas.width,
-          y: -20 - (Math.random() * 100),
+          y: -20 - (Math.random() * 50),
           size: Math.random() * 14 + 10,
-          speedY: Math.random() * 3 + 2,
-          speedX: (Math.random() - 0.5) * 4,
+          speedY: Math.random() * 3 + 3, // Brže opadanje za dinamičniji ugođaj
+          speedX: (Math.random() - 0.5) * 5,
           rotation: Math.random() * Math.PI * 2,
-          rotationSpeed: (Math.random() - 0.5) * 0.03,
+          rotationSpeed: (Math.random() - 0.5) * 0.04,
           opacity: Math.random() * 0.4 + 0.6
         });
       }
@@ -941,20 +870,18 @@
       }
     }
 
-    // Matematika crtanja i padanja srca niz sajt
     function drawVectorHeart(ctx, x, y, size, angle, opacity) {
       ctx.save();
       ctx.translate(x, y);
       ctx.rotate(angle);
       ctx.beginPath();
       ctx.moveTo(0, -size / 4);
-      // Iscrtavanje savršenog oblika srca prigušenog zlata i ljubavi
       ctx.bezierCurveTo(-size / 2, -size / 2, -size, -size / 4, -size, size / 4);
       ctx.bezierCurveTo(-size, size * 0.7, -size / 5, size, 0, size * 1.15);
       ctx.bezierCurveTo(size / 5, size, size, size * 0.7, size, size / 4);
       ctx.bezierCurveTo(size, -size / 4, size / 2, -size / 2, 0, -size / 4);
       ctx.closePath();
-      ctx.fillStyle = `rgba(179, 132, 99, ${opacity})`; /* Luksuzno prigušeno zlato */
+      ctx.fillStyle = `rgba(179, 132, 99, ${opacity})`; 
       ctx.fill();
       ctx.restore();
     }
@@ -970,7 +897,6 @@
         
         drawVectorHeart(sCtx, p.x, p.y, p.size, p.rotation, p.opacity);
         
-        // Brisanje čestica koje izađu van vidokruga
         if (p.y > shakeCanvas.height) {
           heartParticles.splice(i, 1);
           i--;
@@ -985,7 +911,6 @@
       }
     }
 
-    // Slušalac senzora pokreta na modernim mobilnim pretraživačima
     if (window.DeviceMotionEvent) {
       window.addEventListener('devicemotion', (e) => {
         let acc = e.accelerationIncludingGravity;
@@ -996,8 +921,11 @@
           let deltaY = Math.abs(acc.y - lastY);
           let deltaZ = Math.abs(acc.z - lastZ);
           
-          if ((deltaX > shakeThreshold && deltaY > shakeThreshold) || (deltaX > shakeThreshold && deltaZ > shakeThreshold)) {
-            spawnHeartConfetti();
+          let totalMovement = deltaX + deltaY + deltaZ;
+          
+          // ✨ Dokle god trese, skripta neprekidno ubacuje nove konfete na osnovu jačine potresa
+          if (totalMovement > shakeThreshold) {
+            spawnHeartConfetti(totalMovement);
           }
         }
         
@@ -1007,9 +935,9 @@
       });
     }
 
-    // 💻 Sigurnosni Desktop Fallback: Ako Ana otvori na računaru, klik na samu sekciju takođe aktivira magiju
+    // Desktop Fallback klik
     document.getElementById("finalTributeScope").addEventListener("click", () => {
-      spawnHeartConfetti();
+      spawnHeartConfetti(20);
     });
   </script>
 </body>
