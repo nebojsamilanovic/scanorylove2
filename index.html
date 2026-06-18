@@ -339,7 +339,31 @@
        🔒 POGLAVLJE 12: TIMELOCK SEF SJEĆANJA
        ========================================= */
     .vogue-lock-section { padding: 180px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: calc(var(--vh, 1vh) * 100); text-align: center; }
-    .lock-interactive-box { width: 100%; max-width: 480px; padding: 0 24px; display: none; flex-direction: column; align-items: center; will-change: opacity, transform; }
+    
+    /* ✨ UOKVIRENO: Box Mode za Locked Memory */
+    .lock-interactive-box { 
+      width: 100%; 
+      max-width: 480px; 
+      margin: 0 auto;
+      padding: 40px 30px; 
+      display: none; 
+      flex-direction: column; 
+      align-items: center; 
+      will-change: opacity, transform; 
+      background: var(--card-bg-sleep);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 2px dashed var(--accent-love);
+      border-radius: var(--radius);
+      box-shadow: 0 15px 40px rgba(33, 26, 20, 0.08);
+    }
+    
+    @keyframes pulseLock {
+      0% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 8px var(--accent-love)); }
+      100% { transform: scale(1); opacity: 0.8; }
+    }
+
     .artisan-envelope-wrapper { position: absolute; width: 100%; max-width: 420px; height: 260px; background: #fdfbf7; border-radius: 12px; box-shadow: 0 25px 65px rgba(33, 26, 20, 0.12), inset 0 1px 2px #fff; border: 1px solid rgba(43, 33, 26, 0.08); cursor: pointer; display: none; opacity: 0; transform: scale(0.95) translateY(30px); will-change: opacity, transform; z-index: 30; }
     .artisan-envelope-wrapper::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%; background: linear-gradient(135deg, transparent 49.5%, rgba(179, 132, 99, 0.15) 50%, transparent 50.5%), linear-gradient(225deg, transparent 49.5%, rgba(179, 132, 99, 0.15) 50%, transparent 50.5%); border-bottom: 1px solid rgba(179, 132, 99, 0.2); pointer-events: none; }
     .preview-letter-lip { position: absolute; top: -15px; left: 8%; right: 8%; height: 50px; background: #fff; border-radius: 6px 6px 0 0; box-shadow: 0 -5px 15px rgba(0,0,0,0.02); border: 1px solid rgba(43, 33, 26, 0.05); border-bottom: none; display: flex; align-items: center; justify-content: center; }
@@ -359,68 +383,6 @@
     .shake-interaction-hint { font-family: var(--font-clean); font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); opacity: 0; margin-top: 80px; animation: gentleBreatheShake 2.5s ease-in-out infinite alternate; will-change: opacity; }
     @keyframes gentleBreatheShake { 0% { opacity: 0.25; } 100% { opacity: 0.55; } }
     #shakeConfettiCanvas { position: fixed; inset: 0; width: 100vw; height: calc(var(--vh, 1vh) * 100); z-index: 99999; pointer-events: none; }
-
-    /* ==========================================
-       🚪 ENTRY CURTAIN EFFECT
-       ========================================== */
-    .curtain-overlay {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: calc(var(--vh, 1vh) * 100);
-      z-index: 9999999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: all;
-    }
-    .curtain-panel {
-      position: absolute;
-      top: 0;
-      height: 100%;
-      width: 50vw;
-      background: #14100d;
-      transition: transform 1.6s cubic-bezier(0.76, 0, 0.24, 1);
-      z-index: 1;
-    }
-    .curtain-left { left: 0; }
-    .curtain-right { right: 0; }
-
-    .curtain-content {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    .enter-world-btn {
-      background: transparent;
-      border: 1px solid var(--accent-love);
-      color: #eedfcc;
-      font-family: var(--font-clean);
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.35em;
-      padding: 18px 40px;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-      outline: none;
-    }
-    .enter-world-btn:hover, .enter-world-btn:active {
-      background: var(--accent-love);
-      color: #14100d;
-      box-shadow: 0 10px 30px rgba(179, 132, 99, 0.3);
-      transform: translateY(-2px);
-    }
-
-    .curtain-overlay.is-open .curtain-left { transform: translateX(-100%); }
-    .curtain-overlay.is-open .curtain-right { transform: translateX(100%); }
-    .curtain-overlay.is-open .curtain-content { opacity: 0; transform: scale(0.95); pointer-events: none; }
   </style>
 </head>
 <body class="is-loading">
@@ -435,34 +397,22 @@
         document.documentElement.classList.add('theme-night');
       }
 
-      // --- 🛠️ ANTI-JITTER KOD (Zaključavanje visine) ---
+      // --- 🛠️ ANTI-JITTER KOD ---
       const setVH = () => {
         let vh = window.innerHeight;
-        // Postavlja CSS varijablu na 1% stvarne visine pri učitavanju
         document.documentElement.style.setProperty('--vh', `${vh * 0.01}px`);
       };
       setVH();
       
       let vw = window.innerWidth;
       window.addEventListener('resize', () => {
-        // Ažurira visinu SAMO ako se promijeni širina (npr. okretanje telefona),
-        // potpuno ignorišući pojavljivanje i nestajanje navigacione trake.
         if (window.innerWidth !== vw) {
           vw = window.innerWidth;
           setVH();
         }
       });
-      // ------------------------------------------------
     })();
   </script>
-
-  <div id="curtainOverlay" class="curtain-overlay">
-    <div class="curtain-panel curtain-left"></div>
-    <div class="curtain-panel curtain-right"></div>
-    <div class="curtain-content">
-      <button id="enterWorldBtn" class="enter-world-btn">Step into our world</button>
-    </div>
-  </div>
 
   <div class="hero-grain"></div>
   <canvas id="shakeConfettiCanvas"></canvas>
@@ -733,7 +683,13 @@
       <section class="vogue-lock-section" id="lockSectionScope">
         
         <div class="lock-interactive-box" id="lockInputBox">
-          <h2 class="vogue-section-title">Locked Memory</h2>
+          <div class="lock-icon" style="margin-bottom: 20px; animation: pulseLock 2s infinite;">
+            <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="var(--accent-love)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <h2 class="vogue-section-title" style="margin-bottom: 15px;">Locked Memory</h2>
           <p class="vogue-node-text" style="text-align: center; font-size: 14px; margin-bottom: 10px; letter-spacing: 0.05em; color: var(--text-muted);">This space is protected by time.</p>
           <p class="vogue-node-text" style="text-align: center; font-size: 12px; font-style: italic; color: var(--accent-love);">It will unlock itself only when the calendar reaches the day our universe shifted...</p>
         </div>
@@ -776,7 +732,6 @@
       window.scrollTo(0, 0);
       gsap.registerPlugin(ScrollTrigger);
 
-      // ✨ GSAP FIX: Ignorišemo resajz mobilne navigacione trake za stabilne animacije
       ScrollTrigger.config({ ignoreMobileResize: true });
 
       const anniversaryDate = new Date('2022-02-14T00:00:00').getTime();
@@ -818,32 +773,13 @@
         gsap.fromTo(inputContainer, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.6, ease: "power2.out", scrollTrigger: { trigger: "#lockSectionScope", start: "top 80%" } });
       }
 
-      // Uvodna animacija sajta - SADA JE PAUZIRANA
       const introTimeline = gsap.timeline({
-        paused: true,
         onComplete: () => { document.body.classList.remove('is-loading'); ScrollTrigger.refresh(); }
       });
       introTimeline.to("#heroEyebrow", { opacity: 0.75, y: 0, duration: 2.0, ease: "power2.out", delay: 0.4 })
       .to(".word-span", { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.6, stagger: 0.15, ease: "power3.out" }, "-=1.4")
       .to("#heroTicker", { opacity: 1, y: 0, duration: 2.2, ease: "power2.out" }, "-=1.0")
       .to("#heroScroll", { opacity: 0.8, duration: 1.6, ease: "power2.out" }, "-=1.4");
-
-      // LOGIKA ZAVJESE (Curtain Effect)
-      const enterBtn = document.getElementById('enterWorldBtn');
-      const curtainOverlay = document.getElementById('curtainOverlay');
-
-      enterBtn.addEventListener('click', () => {
-        if (navigator.vibrate) { navigator.vibrate(30); }
-        curtainOverlay.classList.add('is-open');
-        
-        setTimeout(() => {
-          introTimeline.play();
-        }, 500);
-
-        setTimeout(() => {
-          curtainOverlay.style.display = 'none';
-        }, 1600);
-      });
 
       const masterJourneyTimeline = gsap.timeline({
         scrollTrigger: { trigger: "#journeySection", start: "top top", end: "bottom bottom", scrub: 1.4, anticipatePin: 1 }
@@ -970,13 +906,97 @@
 
     function openPaperLetter() { const realEnvelope = document.getElementById('physicalEnvelope'); const letterZone = document.getElementById('secretLetterZone'); if (navigator.vibrate) { navigator.vibrate([45, 90, 45]); } const revealTimeline = gsap.timeline(); revealTimeline.to(realEnvelope, { opacity: 0, scale: 1.04, y: -15, duration: 1.2, ease: "power2.inOut", onComplete: () => { realEnvelope.style.display = "none"; letterZone.style.display = "block"; } }).to(letterZone, { opacity: 1, scale: 1, y: 0, duration: 2, ease: "power3.out" }); }
 
-    const shakeCanvas = document.getElementById("shakeConfettiCanvas"); const sCtx = shakeCanvas.getContext("2d"); let heartParticles = []; let lastX = null, lastY = null, lastZ = null; let shakeThreshold = 14; let isConfettiActive = false;
+    // =========================================================================
+    // ✨ POBOLJŠAN I OSIGURAN SHAKE SENZOR (SA IOS DOZVOLOM)
+    // =========================================================================
+    const shakeCanvas = document.getElementById("shakeConfettiCanvas"); 
+    const sCtx = shakeCanvas.getContext("2d"); 
+    let heartParticles = []; 
+    let lastX = null, lastY = null, lastZ = null; 
+    let motionInitialized = false;
+    let lastTimeShake = Date.now();
+
     function resizeShakeCanvas() { shakeCanvas.width = window.innerWidth; shakeCanvas.height = window.innerHeight; }
     window.addEventListener("resize", resizeShakeCanvas); resizeShakeCanvas();
-    function spawnHeartConfetti(intensity) { const particleCount = Math.min(Math.floor(intensity * 1.8), 30); if (navigator.vibrate) { navigator.vibrate(35); } for (let i = 0; i < particleCount; i++) { heartParticles.push({ x: Math.random() * shakeCanvas.width, y: -20 - (Math.random() * 60), size: Math.random() * 14 + 10, speedY: Math.random() * 3 + 3.5, speedX: (Math.random() - 0.5) * 6, rotation: Math.random() * Math.PI * 2, rotationSpeed: (Math.random() - 0.5) * 0.05, opacity: Math.random() * 0.4 + 0.6 }); } if (!isConfettiActive) { isConfettiActive = true; animateHeartConfetti(); } }
-    function drawVectorHeart(ctx, x, y, size, angle, opacity) { ctx.save(); ctx.translate(x, y); ctx.rotate(angle); ctx.beginPath(); ctx.moveTo(0, -size / 4); ctx.bezierCurveTo(-size / 2, -size / 2, -size, -size / 4, -size, size / 4); ctx.bezierCurveTo(-size, size * 0.7, -size / 5, size, 0, size * 1.15); ctx.bezierCurveTo(size / 5, size, size, size * 0.7, size, size / 4); ctx.bezierCurveTo(size, -size / 4, size / 2, -size / 2, 0, -size / 4); ctx.closePath(); ctx.fillStyle = `rgba(179, 132, 99, ${opacity})`; ctx.fill(); ctx.restore(); }
-    function animateHeartConfetti() { sCtx.clearRect(0, 0, shakeCanvas.width, shakeCanvas.height); for (let i = 0; i < heartParticles.length; i++) { let p = heartParticles[i]; p.y += p.speedY; p.x += p.speedX; p.rotation += p.rotationSpeed; drawVectorHeart(sCtx, p.x, p.y, p.size, p.rotation, p.opacity); if (p.y > shakeCanvas.height) { heartParticles.splice(i, 1); i--; } } if (heartParticles.length > 0) { requestAnimationFrame(animateHeartConfetti); } else { isConfettiActive = false; sCtx.clearRect(0, 0, shakeCanvas.width, shakeCanvas.height); } }
-    if (window.DeviceMotionEvent) { window.addEventListener('devicemotion', (e) => { let acc = e.accelerationIncludingGravity; if (!acc || acc.x === null) return; if (lastX !== null) { let deltaX = Math.abs(acc.x - lastX); let deltaY = Math.abs(acc.y - lastY); let deltaZ = Math.abs(acc.z - lastZ); let totalMovement = deltaX + deltaY + deltaZ; if (totalMovement > shakeThreshold) { spawnHeartConfetti(totalMovement); } } lastX = acc.x; lastY = acc.y; lastZ = acc.z; }); }
+    
+    function spawnHeartConfetti(intensity) { 
+      const particleCount = Math.min(Math.floor(intensity * 1.8), 30); 
+      if (navigator.vibrate) { navigator.vibrate(35); } 
+      for (let i = 0; i < particleCount; i++) { 
+        heartParticles.push({ 
+          x: Math.random() * shakeCanvas.width, 
+          y: -20 - (Math.random() * 60), 
+          size: Math.random() * 14 + 10, 
+          speedY: Math.random() * 3 + 3.5, 
+          speedX: (Math.random() - 0.5) * 6, 
+          rotation: Math.random() * Math.PI * 2, 
+          rotationSpeed: (Math.random() - 0.5) * 0.05, 
+          opacity: Math.random() * 0.4 + 0.6 
+        }); 
+      } 
+      animateHeartConfetti();
+    }
+    
+    function drawVectorHeart(ctx, x, y, size, angle, opacity) { 
+      ctx.save(); ctx.translate(x, y); ctx.rotate(angle); ctx.beginPath(); ctx.moveTo(0, -size / 4); 
+      ctx.bezierCurveTo(-size / 2, -size / 2, -size, -size / 4, -size, size / 4); 
+      ctx.bezierCurveTo(-size, size * 0.7, -size / 5, size, 0, size * 1.15); 
+      ctx.bezierCurveTo(size / 5, size, size, size * 0.7, size, size / 4); 
+      ctx.bezierCurveTo(size, -size / 4, size / 2, -size / 2, 0, -size / 4); 
+      ctx.closePath(); ctx.fillStyle = `rgba(179, 132, 99, ${opacity})`; ctx.fill(); ctx.restore(); 
+    }
+    
+    function animateHeartConfetti() { 
+      sCtx.clearRect(0, 0, shakeCanvas.width, shakeCanvas.height); 
+      for (let i = 0; i < heartParticles.length; i++) { 
+        let p = heartParticles[i]; 
+        p.y += p.speedY; p.x += p.speedX; p.rotation += p.rotationSpeed; 
+        drawVectorHeart(sCtx, p.x, p.y, p.size, p.rotation, p.opacity); 
+        if (p.y > shakeCanvas.height) { heartParticles.splice(i, 1); i--; } 
+      } 
+      if (heartParticles.length > 0) { 
+        requestAnimationFrame(animateHeartConfetti); 
+      } 
+    }
+
+    function handleMotion(e) {
+      let acc = e.accelerationIncludingGravity;
+      if (!acc || acc.x === null) return;
+      let currentTime = Date.now();
+      if ((currentTime - lastTimeShake) > 100) {
+        let diffTime = currentTime - lastTimeShake;
+        lastTimeShake = currentTime;
+        if (lastX !== null) {
+          let speed = Math.abs(acc.x + acc.y + acc.z - lastX - lastY - lastZ) / diffTime * 10000;
+          if (speed > 80) { 
+            spawnHeartConfetti(speed / 10);
+          }
+        }
+        lastX = acc.x; lastY = acc.y; lastZ = acc.z;
+      }
+    }
+
+    function initShakeParams() {
+      if (motionInitialized) return;
+      if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
+        DeviceMotionEvent.requestPermission()
+          .then(response => {
+            if (response === 'granted') {
+              window.addEventListener('devicemotion', handleMotion);
+              motionInitialized = true;
+            }
+          })
+          .catch(console.error);
+      } else {
+        window.addEventListener('devicemotion', handleMotion);
+        motionInitialized = true;
+      }
+    }
+
+    // Tihi okidači koji pale senzor pokreta na Apple uređajima tek nakon prvog klika na ekran
+    document.addEventListener('click', initShakeParams, { once: true });
+    document.addEventListener('touchstart', initShakeParams, { once: true });
+
     document.getElementById("finalTributeScope").addEventListener("click", () => { spawnHeartConfetti(25); });
   </script>
 </body>
