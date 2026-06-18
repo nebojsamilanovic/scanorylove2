@@ -243,7 +243,7 @@
     .node-description { font-family: var(--font-clean); font-size: 14px; line-height: 1.7; color: var(--text-muted); font-weight: 300; }
 
     /* ==========================================
-       ✍️ POGLAVLJE 7: OBEĆANJE (FULL VIEWPORT)
+       ✍️ POGLAVLJE 7: A PROMISE OF ORDINARY DAYS (FULL VIEWPORT)
        ========================================== */
     .vogue-promise-section { width: 100vw; height: 100dvh; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: var(--bg-promise); display: flex; align-items: center; justify-content: center; overflow: hidden; perspective: 1200px; transition: background 1.5s ease-in-out; }
     .promise-3d-container { max-width: 740px; padding: 0 24px; text-align: center; will-change: transform, opacity; transform-style: preserve-3d; transform: rotateX(12deg) rotateY(-12deg) rotateZ(-2deg); opacity: 0; }
@@ -269,7 +269,7 @@
     .break-paragraph-clean { font-family: var(--font-clean); font-size: clamp(14px, 3.2vw, 17px); font-weight: 300; line-height: 1.8; color: var(--text-muted); max-width: 520px; margin: 0 auto; letter-spacing: 0.02em; opacity: 0; transform: translateY(20px); will-change: opacity, transform; }
 
     /* ==========================================
-       🖼️ POGLAVLJE 10: JEDNOSTAVNA SWIPE GALERIJA (NOVO & POBOLJŠANO)
+       🖼️ POGLAVLJE 10: JEDNOSTAVNA SWIPE GALERIJA BEZ TEKSTA (ZAKLJUČANO)
        ========================================== */
     .vogue-gallery-scroller { width: 100%; padding: 120px 0; overflow: hidden; position: relative; }
     .gallery-horizontal-swipe-container { 
@@ -287,18 +287,17 @@
       flex: 0 0 280px;
       scroll-snap-align: center;
       background: #fff;
-      padding: 14px 14px 28px 14px;
+      padding: 14px; /* Očišćen prostor jer nema teksta */
       border-radius: 4px;
       box-shadow: 0 15px 40px rgba(33, 26, 20, 0.07);
       transform: rotate(calc(var(--item-rotation, 0) * 1deg));
       transition: transform 0.4s ease;
     }
     html.theme-night .simple-gallery-card { background: #1c1612; box-shadow: 0 15px 40px rgba(0,0,0,0.3); }
-    .simple-gallery-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 2px; margin-bottom: 14px; pointer-events: none; }
-    .simple-gallery-card-caption { font-family: var(--font-emotion); font-style: italic; font-size: 16px; text-align: center; color: var(--text-main); }
+    .simple-gallery-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 2px; pointer-events: none; display: block; }
 
     /* ==========================================
-       ❤️ POGLAVLJE 11: 3 THINGS I LOVE - 3D FLIP KARTICE (NOVO & MAGIČNO)
+       ❤️ POGLAVLJE 11: 3 THINGS I LOVE ABOUT YOU - 3D FLIP KARTICE
        ========================================== */
     .vogue-luminous-section { padding: 160px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
     .luminous-cards-stack { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 30px; margin-top: 20px; }
@@ -326,10 +325,10 @@
        ========================================== */
     .vogue-soundtrack-section { padding: 160px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
     .soundtrack-layout-grid { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 40px; }
-    .vinyl-record-artisan { position: relative; width: clamp(200px, 38vw, 270px); height: clamp(200px, 38vw, 270px); background: radial-gradient(circle, #2b211a 0%, #150d0a 40%, #2b211a 41%, #0d0a08 70%, #1f1612 100%); border-radius: 50%; box-shadow: 0 30px 75px rgba(0,0,0,0.18), inset 0 0 1px rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+    .vinyl-record-artisan { position: relative; width: clamp(200px, 38vw, 270px); height: clamp(200px, 38vw, 270px); background: radial-gradient(circle, #2b211a 0%, #150d0a 40%, #2b211a 41%, #0d0a08 70%, #1f1612 100%); border-radius: 50%; box-shadow: 0 30px 75px rgba(0,0,0,0.18), inset 0 0 1px rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; cursor: pointer; transform: none !important; }
     .vinyl-center-label { width: 34%; height: 32%; background: var(--bg-promise); border-radius: 50%; border: 1px dashed var(--accent-love); display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; }
     .vinyl-heart-svg-core { width: clamp(22px, 4.5vw, 28px); height: clamp(22px, 4.5vw, 28px); fill: var(--accent-love); transform-origin: center center; will-change: transform, filter; animation: heartRestingBreathe 2.5s ease-in-out infinite alternate; }
-    @keyframes heartRestingBreathe { 0% { transform: scale(1); opacity: 0.6; filter: drop-shadow(0 0 0px rgba(179,132,99,0)); } 100% { transform: scale(1.08); opacity: 0.95; filter: drop-shadow(0 0 5px rgba(179,132,99,0.35)); } }
+    @keyframes heartRestingBreathe { 0% { transform: scale(1) rotate(0deg); opacity: 0.6; filter: drop-shadow(0 0 0px rgba(179,132,99,0)); } 100% { transform: scale(1.08) rotate(0deg); opacity: 0.95; filter: drop-shadow(0 0 5px rgba(179,132,99,0.35)); } }
     .vinyl-record-artisan.is-playing-audio .vinyl-heart-svg-core { animation: heartMusicPulse 0.95s cubic-bezier(0.25, 1, 0.2, 1) infinite !important; fill: #b33939; }
     @keyframes heartMusicPulse { 0% { transform: scale(1); } 25% { transform: scale(1.24); filter: drop-shadow(0 0 12px rgba(179,132,99,0.7)); } 40% { transform: scale(1.08); } 55% { transform: scale(1.26); filter: drop-shadow(0 0 15px rgba(179,132,99,0.8)); } 100% { transform: scale(1); } }
     .vinyl-track-info-card { text-align: center; max-width: 320px; }
@@ -337,10 +336,35 @@
     .vinyl-track-sub { font-family: var(--font-clean); font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--text-muted); font-weight: 500; }
 
     /* ==========================================
-       🔒 POGLAVLJE 12: TIMELOCK SEF SJEĆANJA
-       ========================================= */
+       🔒 POGLAVLJE 12: LOCKED MEMORY (BOX MODE STILOVI)
+       ========================================== */
     .vogue-lock-section { padding: 180px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: 100vh; text-align: center; }
-    .lock-interactive-box { width: 100%; max-width: 480px; padding: 0 24px; display: none; flex-direction: column; align-items: center; will-change: opacity, transform; }
+    
+    /* Box Mode za Locked Memory */
+    .lock-interactive-box { 
+      width: 100%; 
+      max-width: 480px; 
+      margin: 0 auto;
+      padding: 40px 30px; 
+      display: none; 
+      flex-direction: column; 
+      align-items: center; 
+      will-change: opacity, transform; 
+      /* Dizajn Kutije (Box Mode) */
+      background: var(--card-bg-sleep);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 2px dashed var(--accent-love);
+      border-radius: var(--radius);
+      box-shadow: 0 15px 40px rgba(33, 26, 20, 0.08);
+    }
+
+    @keyframes pulseLock {
+      0% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 8px var(--accent-love)); }
+      100% { transform: scale(1); opacity: 0.8; }
+    }
+
     .artisan-envelope-wrapper { position: absolute; width: 100%; max-width: 420px; height: 260px; background: #fdfbf7; border-radius: 12px; box-shadow: 0 25px 65px rgba(33, 26, 20, 0.12), inset 0 1px 2px #fff; border: 1px solid rgba(43, 33, 26, 0.08); cursor: pointer; display: none; opacity: 0; transform: scale(0.95) translateY(30px); will-change: opacity, transform; z-index: 30; }
     .artisan-envelope-wrapper::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%; background: linear-gradient(135deg, transparent 49.5%, rgba(179, 132, 99, 0.15) 50%, transparent 50.5%), linear-gradient(225deg, transparent 49.5%, rgba(179, 132, 99, 0.15) 50%, transparent 50.5%); border-bottom: 1px solid rgba(179, 132, 99, 0.2); pointer-events: none; }
     .preview-letter-lip { position: absolute; top: -15px; left: 8%; right: 8%; height: 50px; background: #fff; border-radius: 6px 6px 0 0; box-shadow: 0 -5px 15px rgba(0,0,0,0.02); border: 1px solid rgba(43, 33, 26, 0.05); border-bottom: none; display: flex; align-items: center; justify-content: center; }
@@ -350,7 +374,7 @@
     .letter-accent-closure { font-style: italic; color: var(--accent-love); font-weight: 400; display: block; margin-top: 45px; font-size: clamp(26px, 4.2vw, 36px); }
 
     /* ==========================================
-       👑 POGLAVLJE 14: FINALNI TRIBUT
+       👑 POGLAVLJE 14: ODUŠEVIO SI ME
        ========================================== */
     .vogue-closing-tribute-section { padding: 200px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; min-height: 100vh; }
     .closing-words-container { max-width: 680px; padding: 0 24px; will-change: transform, opacity; }
@@ -359,6 +383,8 @@
     .closure-signature-line { font-family: var(--font-clean); font-size: clamp(12px, 2vw, 14px); text-transform: uppercase; letter-spacing: 0.25em; color: var(--accent-love); font-weight: 500; opacity: 0; transform: translateY(15px); will-change: opacity, transform; }
     .shake-interaction-hint { font-family: var(--font-clean); font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); opacity: 0; margin-top: 80px; animation: gentleBreatheShake 2.5s ease-in-out infinite alternate; will-change: opacity; }
     @keyframes gentleBreatheShake { 0% { opacity: 0.25; } 100% { opacity: 0.55; } }
+    
+    /* ZAKLJUČAN CSS ZA SHAKE EFEKAT SRCA */
     #shakeConfettiCanvas { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 99999; pointer-events: none; }
   </style>
 </head>
@@ -550,32 +576,21 @@
       <h2 class="vogue-section-title" style="margin-bottom: 20px;">Our Shared Chapters</h2>
       
       <div class="gallery-horizontal-swipe-container" id="simpleSwipeGallery">
-        
         <div class="simple-gallery-card" style="--item-rotation: -2;">
           <img src="https://images.unsplash.com/photo-1513279922550-250c2129b13a?w=600&auto=format&fit=crop&q=80" alt="Memory 1" />
-          <div class="simple-gallery-card-caption">The warmth of sun</div>
         </div>
-
         <div class="simple-gallery-card" style="--item-rotation: 3;">
           <img src="https://images.unsplash.com/photo-1634268014879-ec7b2c982c5b?w=600&auto=format&fit=crop&q=80" alt="Memory 2" />
-          <div class="simple-gallery-card-caption">Stolen smiles</div>
         </div>
-
         <div class="simple-gallery-card" style="--item-rotation: -1;">
           <img src="https://images.unsplash.com/photo-1508407576665-2d9a5d638a7e?w=600&auto=format&fit=crop&q=80" alt="Memory 3" />
-          <div class="simple-gallery-card-caption">Morning coffee</div>
         </div>
-
         <div class="simple-gallery-card" style="--item-rotation: 2;">
           <img src="https://images.unsplash.com/photo-1561132667-ab2a54ebf2dc?w=600&auto=format&fit=crop&q=80" alt="Memory 4" />
-          <div class="simple-gallery-card-caption">Holding hands</div>
         </div>
-
         <div class="simple-gallery-card" style="--item-rotation: -3;">
           <img src="https://images.unsplash.com/photo-1671116302821-d6fc9a003505?w=600&auto=format&fit=crop&q=80" alt="Memory 5" />
-          <div class="simple-gallery-card-caption">Infinite versions</div>
         </div>
-
       </div>
       <div class="vogue-scroll-indicator" style="position:relative; bottom: 0; margin-top: 20px;"><div class="vogue-scroll-line" style="height: 30px;"></div></div>
     </section>
@@ -654,10 +669,12 @@
       </section>
 
       <section class="vogue-lock-section" id="lockSectionScope">
+        
         <div class="lock-interactive-box" id="lockInputBox">
-          <h2 class="vogue-section-title">Locked Memory</h2>
-          <p class="vogue-node-text" style="text-align: center; font-size: 12px; margin-bottom: 10px; letter-spacing: 0.05em; color: var(--text-muted);">This space is protected by time.</p>
-          <p class="vogue-node-text" style="text-align: center; font-size: 11px; font-style: italic; color: var(--accent-love);">It will unlock itself only when the calendar reaches the day our universe shifted...</p>
+          <div class="lock-icon" style="font-size: 3rem; margin-bottom: 20px; animation: pulseLock 2s infinite;">🔒</div>
+          <h2 class="vogue-section-title" style="margin-bottom: 15px;">Locked Memory</h2>
+          <p class="vogue-node-text" style="text-align: center; font-size: 14px; margin-bottom: 10px; letter-spacing: 0.05em; color: var(--text-muted);">This space is protected by time.</p>
+          <p class="vogue-node-text" style="text-align: center; font-size: 12px; font-style: italic; color: var(--accent-love);">It will unlock itself only when the calendar reaches the day our universe shifted...</p>
         </div>
 
         <div class="artisan-envelope-wrapper" id="physicalEnvelope" onclick="openPaperLetter()">
@@ -699,7 +716,7 @@
       gsap.registerPlugin(ScrollTrigger);
 
       // =========================================================
-      // ⏳ VRAĆENO: Početak veze za ispravan rad brojača na vrhu
+      // ⏳ ISPRAVLJENO: Brojač (Timer) na vrhu u odnosu na prošlost
       // =========================================================
       const anniversaryDate = new Date('2022-02-14T00:00:00').getTime();
 
@@ -729,7 +746,7 @@
       const realEnvelope = document.getElementById('physicalEnvelope');
       
       // =========================================================
-      // 🔒 POSTAVLJENO: Budući datum za ispravno zaključavanje pisma
+      // 🔒 POSTAVLJENO: Budući datum kako bi sajt pokazao "Locked Memory Box"
       // =========================================================
       const targetUnlockDate = new Date('2027-02-14T00:00:00').getTime();
       const deviceCurrentDate = new Date().getTime();
