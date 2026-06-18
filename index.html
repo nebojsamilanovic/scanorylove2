@@ -269,7 +269,7 @@
     .break-paragraph-clean { font-family: var(--font-clean); font-size: clamp(14px, 3.2vw, 17px); font-weight: 300; line-height: 1.8; color: var(--text-muted); max-width: 520px; margin: 0 auto; letter-spacing: 0.02em; opacity: 0; transform: translateY(20px); will-change: opacity, transform; }
 
     /* ==========================================
-       🖼️ POGLAVLJE 10: JEDNOSTAVNA SWIPE GALERIJA BEZ TEKSTA (ZAKLJUČANO)
+       🖼️ POGLAVLJE 10: JEDNOSTAVNA SWIPE GALERIJA BEZ TEKSTA
        ========================================== */
     .vogue-gallery-scroller { width: 100%; padding: 120px 0; overflow: hidden; position: relative; }
     .gallery-horizontal-swipe-container { 
@@ -287,7 +287,7 @@
       flex: 0 0 280px;
       scroll-snap-align: center;
       background: #fff;
-      padding: 14px; /* Očišćen prostor jer nema teksta */
+      padding: 14px;
       border-radius: 4px;
       box-shadow: 0 15px 40px rgba(33, 26, 20, 0.07);
       transform: rotate(calc(var(--item-rotation, 0) * 1deg));
@@ -340,7 +340,6 @@
        ========================================== */
     .vogue-lock-section { padding: 180px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: 100vh; text-align: center; }
     
-    /* Box Mode za Locked Memory */
     .lock-interactive-box { 
       width: 100%; 
       max-width: 480px; 
@@ -350,7 +349,6 @@
       flex-direction: column; 
       align-items: center; 
       will-change: opacity, transform; 
-      /* Dizajn Kutije (Box Mode) */
       background: var(--card-bg-sleep);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
@@ -384,8 +382,70 @@
     .shake-interaction-hint { font-family: var(--font-clean); font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); opacity: 0; margin-top: 80px; animation: gentleBreatheShake 2.5s ease-in-out infinite alternate; will-change: opacity; }
     @keyframes gentleBreatheShake { 0% { opacity: 0.25; } 100% { opacity: 0.55; } }
     
-    /* ZAKLJUČAN CSS ZA SHAKE EFEKAT SRCA */
     #shakeConfettiCanvas { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 99999; pointer-events: none; }
+
+    /* ==========================================
+       🚪 ENTRY CURTAIN EFFECT (ZAVJESA)
+       ========================================== */
+    .curtain-overlay {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: all;
+    }
+    .curtain-panel {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 50vw;
+      background: #14100d;
+      transition: transform 1.6s cubic-bezier(0.76, 0, 0.24, 1);
+      z-index: 1;
+    }
+    /* Obrisana linija razdvajanja za puni "stealth" efekat */
+    .curtain-left { left: 0; border-right: none; }
+    .curtain-right { right: 0; border-left: none; }
+
+    .curtain-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .enter-world-btn {
+      background: transparent;
+      border: 1px solid var(--accent-love);
+      color: #eedfcc;
+      font-family: var(--font-clean);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.35em;
+      padding: 18px 40px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      outline: none;
+    }
+    .enter-world-btn:hover, .enter-world-btn:active {
+      background: var(--accent-love);
+      color: #14100d;
+      box-shadow: 0 10px 30px rgba(179, 132, 99, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .curtain-overlay.is-open .curtain-left { transform: translateX(-100%); }
+    .curtain-overlay.is-open .curtain-right { transform: translateX(100%); }
+    .curtain-overlay.is-open .curtain-content { opacity: 0; transform: scale(0.95); pointer-events: none; }
   </style>
 </head>
 <body class="is-loading">
@@ -401,6 +461,15 @@
       }
     })();
   </script>
+
+  <!-- 🚪 CURTAIN OVERLAY (Ulazna zavjesa) -->
+  <div id="curtainOverlay" class="curtain-overlay">
+    <div class="curtain-panel curtain-left"></div>
+    <div class="curtain-panel curtain-right"></div>
+    <div class="curtain-content">
+      <button id="enterWorldBtn" class="enter-world-btn">Step into our world</button>
+    </div>
+  </div>
 
   <div class="hero-grain"></div>
   <canvas id="shakeConfettiCanvas"></canvas>
@@ -715,9 +784,7 @@
       window.scrollTo(0, 0);
       gsap.registerPlugin(ScrollTrigger);
 
-      // =========================================================
-      // ⏳ ISPRAVLJENO: Brojač (Timer) na vrhu u odnosu na prošlost
-      // =========================================================
+      // Tajmer
       const anniversaryDate = new Date('2022-02-14T00:00:00').getTime();
 
       function refreshTicker() {
@@ -745,9 +812,6 @@
       const inputContainer = document.getElementById('lockInputBox');
       const realEnvelope = document.getElementById('physicalEnvelope');
       
-      // =========================================================
-      // 🔒 POSTAVLJENO: Budući datum kako bi sajt pokazao "Locked Memory Box"
-      // =========================================================
       const targetUnlockDate = new Date('2027-02-14T00:00:00').getTime();
       const deviceCurrentDate = new Date().getTime();
 
@@ -761,8 +825,9 @@
         gsap.fromTo(inputContainer, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.6, ease: "power2.out", scrollTrigger: { trigger: "#lockSectionScope", start: "top 80%" } });
       }
 
-      // Uvodna animacija sajta
+      // Uvodna animacija sajta (Zakucana: pauzirano do klika na zavjesu)
       const introTimeline = gsap.timeline({
+        paused: true, 
         onComplete: () => { document.body.classList.remove('is-loading'); ScrollTrigger.refresh(); }
       });
       introTimeline.to("#heroEyebrow", { opacity: 0.75, y: 0, duration: 2.0, ease: "power2.out", delay: 0.4 })
@@ -770,7 +835,23 @@
       .to("#heroTicker", { opacity: 1, y: 0, duration: 2.2, ease: "power2.out" }, "-=1.0")
       .to("#heroScroll", { opacity: 0.8, duration: 1.6, ease: "power2.out" }, "-=1.4");
 
-      // Master skrol blok sjećanja (2, 3, 4)
+      // LOGIKA ZAVJESE (Curtain Effect)
+      const enterBtn = document.getElementById('enterWorldBtn');
+      const curtainOverlay = document.getElementById('curtainOverlay');
+
+      enterBtn.addEventListener('click', () => {
+        if (navigator.vibrate) { navigator.vibrate(30); }
+        curtainOverlay.classList.add('is-open');
+        
+        setTimeout(() => {
+          introTimeline.play();
+        }, 500);
+
+        setTimeout(() => {
+          curtainOverlay.style.display = 'none';
+        }, 1600);
+      });
+
       const masterJourneyTimeline = gsap.timeline({
         scrollTrigger: { trigger: "#journeySection", start: "top top", end: "bottom bottom", scrub: 1.4, anticipatePin: 1 }
       });
@@ -791,10 +872,8 @@
 
       gsap.to("#masterJourneyScroll", { opacity: 0, scrollTrigger: { trigger: "#journeySection", start: "70% top", scrub: true } });
 
-      // Bioskopski paralaks za Touch of a memory
       gsap.fromTo("#artPrintViewport", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1.8, ease: "power2.out", scrollTrigger: { trigger: "#holdTitleTrigger", start: "top 85%" } });
 
-      // Spirala vremena matematika
       const wire = document.getElementById("splineMemoryWire");
       if (wire) {
         const wireLength = wire.getTotalLength();
@@ -815,32 +894,26 @@
         });
       });
 
-      // Meka animacija za Poglavlje 7 (A promise of ordinary days)
       gsap.fromTo("#promise3D", { opacity: 0, rotateX: 18, rotateY: -15, rotateZ: -4 }, { opacity: 1, rotateX: 0, rotateY: 0, rotateZ: 0, duration: 2.2, ease: "power2.out", scrollTrigger: { trigger: "#promiseSectionTrigger", start: "top 65%", end: "bottom 35%", toggleActions: "play reverse play reverse", anticipatePin: 1 } });
       gsap.fromTo(".letter-span", { opacity: 0, filter: "blur(5px)", transform: "translateZ(-50px) scale(0.92)" }, { opacity: 1, filter: "blur(0px)", transform: "translateZ(0px) scale(1)", stagger: 0.08, duration: 1.4, ease: "power3.out", scrollTrigger: { trigger: "#promiseSectionTrigger", start: "top 55%", end: "bottom 45%", toggleActions: "play reverse play reverse" } });
       gsap.fromTo("#promiseScrollIndicator", { opacity: 0 }, { opacity: 0.6, duration: 1.2, scrollTrigger: { trigger: "#promiseSectionTrigger", start: "top 40%", end: "bottom 60%", toggleActions: "play reverse play reverse" } });
 
-      // Bioskopski ulazak za Secret Moment
       gsap.fromTo("#scratchArtViewport", { y: 60, opacity: 0, scale: 0.97 }, { y: 0, opacity: 1, scale: 1, duration: 1.8, ease: "power2.out", scrollTrigger: { trigger: "#scratchTitleTrigger", start: "top 85%" } });
 
-      // Logika struganja platna
       const canvas = document.getElementById('scratchCanvas'); const ctx = canvas.getContext('2d'); const hint = document.getElementById('scratchHint'); let isDrawing = false; let scratchInitialized = false;
       function initCanvas() { if (scratchInitialized && window.innerWidth < 768) return; canvas.width = canvas.parentElement.offsetWidth; canvas.height = canvas.parentElement.offsetHeight; ctx.fillStyle = '#cfbca2'; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = '#bda88d'; for (let i = 0; i < 300; i++) { ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 1.5, 1.5); } scratchInitialized = true; }
       setTimeout(initCanvas, 600); window.addEventListener('resize', initCanvas);
       function scratch(e) { if (!isDrawing) return; hint.style.opacity = 0; const rect = canvas.getBoundingClientRect(); let x, y; if (e.type.includes('touch')) { x = e.touches[0].clientX - rect.left; y = e.touches[0].clientY - rect.top; } else { x = e.clientX - rect.left; y = e.clientY - rect.top; } ctx.globalCompositeOperation = 'destination-out'; ctx.beginPath(); ctx.arc(x, y, 40, 0, Math.PI * 2); ctx.fill(); }
       canvas.addEventListener('mousedown', () => isDrawing = true); canvas.addEventListener('mouseup', () => isDrawing = false); canvas.addEventListener('mousemove', scratch); canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); }, { passive: true }); canvas.addEventListener('touchmove', scratch, { passive: true }); canvas.addEventListener('touchend', () => isDrawing = false);
 
-      // Dvosmjerna animacija za Poglavlje 9
       gsap.fromTo("#breakTitle", { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 1.5, ease: "power2.out", scrollTrigger: { trigger: "#textBreakTrigger", start: "top 75%", end: "bottom 25%", toggleActions: "play reverse play reverse" } });
       gsap.fromTo("#breakText", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.5, ease: "power2.out", scrollTrigger: { trigger: "#textBreakTrigger", start: "top 70%", end: "bottom 20%", toggleActions: "play reverse play reverse" } });
 
-      // Animiranje novih horizontalnih kartica galerije pri skrolu
       gsap.from(".simple-gallery-card", {
         opacity: 0, y: 40, scale: 0.95, duration: 1.2, stagger: 0.15, ease: "power2.out",
         scrollTrigger: { trigger: ".gallery-horizontal-swipe-container", start: "top 80%" }
       });
 
-      // Mehanizam za Touch of a memory
       const artPrint = document.getElementById('artPrintViewport');
       let heartbeatInterval;
 
@@ -865,7 +938,6 @@
       artPrint.addEventListener('touchend', triggerTouchEnd);
       artPrint.addEventListener('touchcancel', triggerTouchEnd);
 
-      // Kaskadna animacija odjavnog kadra (Poglavlje 14)
       const closingTimeline = gsap.timeline({
         scrollTrigger: { trigger: "#finalTributeScope", start: "top 70%", end: "bottom bottom", toggleActions: "play none none reverse" }
       });
@@ -876,7 +948,6 @@
         .to("#tributeShakeHint", { opacity: 0.55, duration: 1.4 }, "-=0.4");
     });
 
-    // 3D Flip Kartice interakcija
     let cardVibeInterval = null;
     
     function handleCardFlip(cardElement) {
@@ -901,14 +972,11 @@
       }
     }
 
-    // Plejer kontroler
     const player = document.getElementById('globalAudioPlayer'); const vinylMesh = document.getElementById('vinylRecordMesh'); const statusString = document.getElementById('trackDisplayStatus'); let heartVibrationInterval = null;
     function togglePlayHeart(src) { if (!player.paused && player.src === src) { player.pause(); vinylMesh.classList.remove('is-playing-audio'); statusString.innerText = "Paused. Tap to resume"; if (heartVibrationInterval) { clearInterval(heartVibrationInterval); heartVibrationInterval = null; } return; } if (player.src !== src) { player.src = src; } player.play(); vinylMesh.classList.add('is-playing-audio'); statusString.innerText = "Playing your memory..."; if (navigator.vibrate) { navigator.vibrate([40, 80, 40]); heartVibrationInterval = setInterval(() => { if (!player.paused) { navigator.vibrate([40, 80, 40]); } }, 950); } player.onended = () => { vinylMesh.classList.remove('is-playing-audio'); statusString.innerText = "Tap the vinyl to listen again"; if (heartVibrationInterval) { clearInterval(heartVibrationInterval); heartVibrationInterval = null; } }; }
 
-    // Funkcija otvaranja pisma
     function openPaperLetter() { const realEnvelope = document.getElementById('physicalEnvelope'); const letterZone = document.getElementById('secretLetterZone'); if (navigator.vibrate) { navigator.vibrate([45, 90, 45]); } const revealTimeline = gsap.timeline(); revealTimeline.to(realEnvelope, { opacity: 0, scale: 1.04, y: -15, duration: 1.2, ease: "power2.inOut", onComplete: () => { realEnvelope.style.display = "none"; letterZone.style.display = "block"; } }).to(letterZone, { opacity: 1, scale: 1, y: 0, duration: 2, ease: "power3.out" }); }
 
-    // Protresanje telefona konfeti mehanizam
     const shakeCanvas = document.getElementById("shakeConfettiCanvas"); const sCtx = shakeCanvas.getContext("2d"); let heartParticles = []; let lastX = null, lastY = null, lastZ = null; let shakeThreshold = 14; let isConfettiActive = false;
     function resizeShakeCanvas() { shakeCanvas.width = window.innerWidth; shakeCanvas.height = window.innerHeight; }
     window.addEventListener("resize", resizeShakeCanvas); resizeShakeCanvas();
