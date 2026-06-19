@@ -358,8 +358,7 @@
     .shake-interaction-hint { font-family: var(--font-clean); font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); opacity: 0; margin-top: 80px; animation: gentleBreatheShake 2.5s ease-in-out infinite alternate; will-change: opacity; }
     @keyframes gentleBreatheShake { 0% { opacity: 0.25; } 100% { opacity: 0.55; } }
     
-    /* ✨ POPRAVLJEN I FIKSIRAN SHAKE CANVAS: 
-       Koristi nativni 100vh fiksni prostor tako da ga pretraživač ne vidi kao element skrola */
+    /* ✨ ZAKLJUČANO FIKSNO PLATNO ZA SRCA (Spriječava duh prostor na dnu ekrana) */
     #shakeConfettiCanvas { 
       position: fixed; 
       top: 0; 
@@ -369,68 +368,6 @@
       z-index: 99999; 
       pointer-events: none; 
     }
-
-    /* ==========================================
-       🚪 ENTRY CURTAIN EFFECT (VRAĆENA ZAVJESA)
-       ========================================== */
-    .curtain-overlay {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: calc(var(--vh, 1vh) * 100);
-      z-index: 9999999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: all;
-    }
-    .curtain-panel {
-      position: absolute;
-      top: 0;
-      height: 100%;
-      width: 50vw;
-      background: #14100d;
-      transition: transform 1.6s cubic-bezier(0.76, 0, 0.24, 1);
-      z-index: 1;
-    }
-    .curtain-left { left: 0; }
-    .curtain-right { right: 0; }
-
-    .curtain-content {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    .enter-world-btn {
-      background: transparent;
-      border: 1px solid var(--accent-love);
-      color: #eedfcc;
-      font-family: var(--font-clean);
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.35em;
-      padding: 18px 40px;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-      outline: none;
-    }
-    .enter-world-btn:hover, .enter-world-btn:active {
-      background: var(--accent-love);
-      color: #14100d;
-      box-shadow: 0 10px 30px rgba(179, 132, 99, 0.3);
-      transform: translateY(-2px);
-    }
-
-    .curtain-overlay.is-open .curtain-left { transform: translateX(-100%); }
-    .curtain-overlay.is-open .curtain-right { transform: translateX(100%); }
-    .curtain-overlay.is-open .curtain-content { opacity: 0; transform: scale(0.95); pointer-events: none; }
   </style>
 </head>
 <body class="is-loading">
@@ -445,6 +382,7 @@
         document.documentElement.classList.add('theme-night');
       }
 
+      // --- 🛠️ ANTI-JITTER KOD (Zaključavanje visine) ---
       const setVH = () => {
         let vh = window.innerHeight;
         document.documentElement.style.setProperty('--vh', `${vh * 0.01}px`);
@@ -460,14 +398,6 @@
       });
     })();
   </script>
-
-  <div id="curtainOverlay" class="curtain-overlay">
-    <div class="curtain-panel curtain-left"></div>
-    <div class="curtain-panel curtain-right"></div>
-    <div class="curtain-content">
-      <button id="enterWorldBtn" class="enter-world-btn">Step into our world</button>
-    </div>
-  </div>
 
   <div class="hero-grain"></div>
   <canvas id="shakeConfettiCanvas"></canvas>
@@ -590,7 +520,7 @@
       <section class="section-artisan-scratch">
         <h2 class="vogue-section-title" id="scratchTitleTrigger">Secret Moment</h2>
         <div class="scratch-art-viewport" id="scratchArtViewport">
-          <img src="https://images.unsplash.com/photo-1563808599481-34a342e44508?w=1200&auto=format&fit=crop&q=80" alt="Secret Memory" loading="lazy" decoding="async" />
+          <img src="https://images.unsplash.com/photo-1563808599481-34a342e44008?w=1200&auto=format&fit=crop&q=80" alt="Secret Memory" loading="lazy" decoding="async" />
           <div class="scratch-vogue-hint" id="scratchHint">Erase the dust from our favorite day.</div>
           <canvas id="scratchCanvas"></canvas>
         </div>
@@ -760,7 +690,7 @@
         gsap.fromTo(inputContainer, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.6, ease: "power2.out", scrollTrigger: { trigger: "#lockSectionScope", start: "top 80%" } });
       }
 
-      // 🛠️ POPRAVLJENO: Uvodna animacija se sada pokreće bez pauziranja i grešaka!
+      // 🛠️ ISPRAVLJENO: Uvodna animacija se odmah glatko izvodi pri učitavanju body-a
       const introTimeline = gsap.timeline({
         onComplete: () => { document.body.classList.remove('is-loading'); ScrollTrigger.refresh(); }
       });
@@ -769,9 +699,8 @@
       .to("#heroTicker", { opacity: 1, y: 0, duration: 2.2, ease: "power2.out" }, "-=1.0")
       .to("#heroScroll", { opacity: 0.8, duration: 1.6, ease: "power2.out" }, "-=1.4");
 
-      // ✨ SIGURNOSNA PROVJERA ZA DOZVOLU (Shake i motion slušalac se glatko montira na body)
+      // Slušalac pokreta za drmanje
       if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
-         // Fallback za iOS uređaje ukoliko traže eksplicitni klik
          document.body.addEventListener('click', function requestMotion() {
             DeviceMotionEvent.requestPermission().then(response => {
                if (response === 'granted') { window.addEventListener('devicemotion', handleMotion); }
