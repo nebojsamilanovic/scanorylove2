@@ -64,17 +64,71 @@
       color: var(--text-main);
       -webkit-font-smoothing: antialiased;
       transition: background 1.5s ease-in-out, color 1.5s ease-in-out;
-      /* ⚡ Dodato: Zabrana "gumenog skrola" koji stvara trzaje */
       overscroll-behavior-y: none;
     }
 
     body.is-loading { overflow: hidden; }
 
+    /* ==========================================
+       ✨ UVODNI EKRAN (INTRO OVERLAY)
+       ========================================== */
+    #introOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100svh;
+      background: var(--bg-gradient);
+      z-index: 9999999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.2s;
+    }
+    #introOverlay.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .intro-vogue-title {
+      font-family: var(--font-emotion);
+      font-size: clamp(28px, 5vw, 42px);
+      font-style: italic;
+      color: var(--text-main);
+      margin-bottom: 40px;
+      opacity: 0.9;
+    }
+    .intro-enter-btn {
+      font-family: var(--font-clean);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: var(--text-main);
+      background: transparent;
+      border: 1px solid rgba(43, 33, 26, 0.2);
+      padding: 18px 40px;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      outline: none;
+      position: relative;
+      overflow: hidden;
+    }
+    html.theme-night .intro-enter-btn {
+      border-color: rgba(245, 235, 226, 0.2);
+    }
+    .intro-enter-btn:hover, .intro-enter-btn:active {
+      background: var(--accent-love);
+      color: #fff;
+      border-color: var(--accent-love);
+    }
+
     .hero-grain {
       position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: var(--grain-opacity);
       background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
       transition: opacity 1.5s ease-in-out;
-      transform: translateZ(0); /* ⚡ Ubrzanje na GPU */
+      transform: translateZ(0); 
     }
 
     .page-story-wrapper {
@@ -389,6 +443,12 @@
       }
     })();
   </script>
+
+  <!-- ✨ UVODNI EKRAN -->
+  <div id="introOverlay">
+    <div class="intro-vogue-title">The Beginning</div>
+    <button class="intro-enter-btn" id="enterBtn">Enter our world</button>
+  </div>
 
   <div class="hero-grain"></div>
   <canvas id="shakeConfettiCanvas"></canvas>
@@ -708,7 +768,6 @@
       window.scrollTo(0, 0);
       gsap.registerPlugin(ScrollTrigger);
 
-      // ✨ GSAP ostaje optimizovan da ignoriše address bar
       ScrollTrigger.config({ ignoreMobileResize: true });
 
       const anniversaryDate = new Date('2022-02-14T00:00:00').getTime();
@@ -750,13 +809,36 @@
         gsap.fromTo(inputContainer, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.6, ease: "power2.out", scrollTrigger: { trigger: "#lockSectionScope", start: "top 80%" } });
       }
 
+      // ✨ IZMIJENJENO: Uvodna animacija je pauzirana po defaultu
       const introTimeline = gsap.timeline({
-        onComplete: () => { document.body.classList.remove('is-loading'); ScrollTrigger.refresh(); }
+        paused: true,
+        onComplete: () => { ScrollTrigger.refresh(); }
       });
+      
       introTimeline.to("#heroEyebrow", { opacity: 0.75, y: 0, duration: 2.0, ease: "power2.out", delay: 0.4 })
       .to(".word-span", { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.6, stagger: 0.15, ease: "power3.out" }, "-=1.4")
       .to("#heroTicker", { opacity: 1, y: 0, duration: 2.2, ease: "power2.out" }, "-=1.0")
       .to("#heroScroll", { opacity: 0.8, duration: 1.6, ease: "power2.out" }, "-=1.4");
+
+      // ✨ DODATO: Logika za klik na dugme i otključavanje sajta
+      const enterBtn = document.getElementById('enterBtn');
+      const introOverlay = document.getElementById('introOverlay');
+
+      enterBtn.addEventListener('click', () => {
+        // Skriva uvodni ekran
+        introOverlay.classList.add('is-hidden');
+        
+        // Vraća skrol na tijelo sajta
+        document.body.classList.remove('is-loading');
+        
+        // Budi audio i vibraciju kako bi kasnije radili bez blokada od strane browsera
+        if (navigator.vibrate) { navigator.vibrate(30); }
+        
+        // Pokreće animaciju prve sekcije sa kratkim kašnjenjem dok ekran ne izblijedi
+        setTimeout(() => {
+          introTimeline.play();
+        }, 600);
+      });
 
       const masterJourneyTimeline = gsap.timeline({
         scrollTrigger: { trigger: "#journeySection", start: "top top", end: "bottom bottom", scrub: 1.4, anticipatePin: 1 }
