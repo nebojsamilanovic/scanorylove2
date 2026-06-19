@@ -57,16 +57,15 @@
     
     html, body {
       width: 100%;
-      height: 100%;
+      min-height: 100svh; /* OSLOBOĐEN GSAP SCROLL NA MOBILNIM! */
       background: var(--bg-gradient);
       font-family: var(--font-clean);
       font-weight: 300;
       color: var(--text-main);
       -webkit-font-smoothing: antialiased;
       transition: background 1.5s ease-in-out, color 1.5s ease-in-out;
-      /* ✨ OSIGURAČ ZA SCROLL: Ubija sjeckanje i odskakanje na iPhone uređajima */
-      overflow-x: hidden;
-      overscroll-behavior-y: none;
+      overflow-x: hidden; 
+      overscroll-behavior-y: none; /* Ubija "gumeno" odskakanje na iPhone-u */
     }
 
     body.is-loading { overflow: hidden; }
@@ -132,9 +131,7 @@
        ========================================== */
     .awwwards-hero-container {
       width: 100vw;
-      /* ✨ SVH ZAKLJUČAVANJE: Visina ekrana ostaje fiksna bez obzira na traku pretraživača */
-      height: 100vh;
-      height: 100svh;
+      height: 100svh; /* Korišten SVH za stabilnost pretraživača */
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -179,24 +176,8 @@
     /* ==========================================
        🎞️ MASTER INTEGRISANA KINEMATOGRAFSKA TRAKA (SEKCIJE 2, 3, 4)
        ========================================== */
-    .scroll-journey-wrapper { 
-      position: relative; 
-      width: 100vw; 
-      height: 500vh; 
-      height: 500svh; 
-      background-color: transparent; 
-    }
-    .journey-sticky-container { 
-      position: sticky; 
-      top: 0; 
-      width: 100vw; 
-      height: 100vh; 
-      height: 100svh; 
-      overflow: hidden; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-    }
+    .scroll-journey-wrapper { position: relative; width: 100vw; height: 500svh; background-color: transparent; }
+    .journey-sticky-container { position: sticky; top: 0; width: 100vw; height: 100svh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
     
     .journey-bg-image { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; will-change: transform, filter, opacity; filter: grayscale(10%) brightness(0.35) blur(10px); transform: scale(1.1); }
     .journey-bg-image img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
@@ -227,7 +208,7 @@
     /* ==========================================
        🖐️ POGLAVLJE 5: TOUCH OF A MEMORY
        ========================================== */
-    .section-artisan-hold { padding: 160px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: 100vh; min-height: 100svh; }
+    .section-artisan-hold { padding: 160px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: 100svh; }
     .art-print-viewport { position: relative; width: 100%; max-width: 520px; aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; box-shadow: 0 35px 80px rgba(33, 26, 20, 0.06); cursor: pointer; touch-action: none; will-change: transform, box-shadow; transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.8s ease; }
     .art-print-viewport img { width: 100%; height: 100%; object-fit: cover; display: block; filter: blur(25px) grayscale(60%) brightness(0.65); transform: scale(1.12); will-change: filter, transform; transition: filter 1.4s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.4s cubic-bezier(0.2, 0.8, 0.2, 1); pointer-events: none; }
     .art-print-viewport::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle, transparent 50%, rgba(21, 16, 12, 0.4) 100%); z-index: 2; pointer-events: none; transition: opacity 1s ease; }
@@ -243,7 +224,7 @@
     /* ==========================================
        〰️ POGLAVLJE 6: SPIRALA VREMENA
        ========================================== */
-    .vogue-timeline-section { position: relative; width: 100%; padding: 180px 0; display: flex; justify-content: center; min-height: 100vh; min-height: 100svh; }
+    .vogue-timeline-section { position: relative; width: 100%; padding: 180px 0; display: flex; justify-content: center; min-height: 100svh; }
     .timeline-container-inner { position: relative; width: 100%; max-width: 700px; display: flex; justify-content: center; }
     .svg-timeline-track { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 240px; height: 100%; overflow: visible; pointer-events: none; z-index: 1; }
     .svg-path-base { fill: none; stroke: var(--scroll-bg); stroke-width: 2.5; stroke-linecap: round; transition: stroke 1.5s; }
@@ -266,7 +247,7 @@
     /* ==========================================
        ✍️ POGLAVLJE 7: A PROMISE OF ORDINARY DAYS (FULL VIEWPORT)
        ========================================== */
-    .vogue-promise-section { width: 100vw; height: 100vh; height: 100svh; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: var(--bg-promise); display: flex; align-items: center; justify-content: center; overflow: hidden; perspective: 1200px; transition: background 1.5s ease-in-out; }
+    .vogue-promise-section { width: 100vw; height: 100svh; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: var(--bg-promise); display: flex; align-items: center; justify-content: center; overflow: hidden; perspective: 1200px; transition: background 1.5s ease-in-out; }
     .promise-3d-container { max-width: 740px; padding: 0 24px; text-align: center; will-change: transform, opacity; transform-style: preserve-3d; transform: rotateX(12deg) rotateY(-12deg) rotateZ(-2deg); opacity: 0; }
     .promise-title { font-family: var(--font-clean); font-size: clamp(10px, 1.4vw, 12px); text-transform: uppercase; letter-spacing: 0.35em; color: var(--accent-love); margin-bottom: 30px; font-weight: 500; }
     .promise-body-text { font-family: var(--font-emotion); font-size: clamp(26px, 4.5vw, 44px); font-weight: 300; line-height: 1.45; color: var(--text-main); letter-spacing: -0.01em; transition: color 1.5s ease-in-out; }
@@ -275,7 +256,7 @@
     /* ==========================================
        🧼 POGLAVLJE 8: SECRET MOMENT
        ========================================== */
-    .section-artisan-scratch { padding: 160px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: 100vh; min-height: 100svh; }
+    .section-artisan-scratch { padding: 160px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: 100svh; }
     .scratch-art-viewport { position: relative; width: 100%; max-width: 520px; aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; box-shadow: 0 35px 80px rgba(33, 26, 20, 0.06); touch-action: none; will-change: transform, opacity; }
     .scratch-art-viewport img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
     #scratchCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; touch-action: none; cursor: pointer; }
@@ -284,7 +265,7 @@
     /* ==========================================
        📖 POGLAVLJE 9: EVERY LITTLE THING
        ========================================== */
-    .vogue-text-break-section { width: 100%; padding: 180px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; min-height: 100vh; min-height: 100svh; }
+    .vogue-text-break-section { width: 100%; padding: 180px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; min-height: 100svh; }
     .break-content-inner { max-width: 660px; padding: 0 24px; will-change: transform; }
     .break-title-emotion { font-family: var(--font-emotion); font-size: clamp(36px, 6.5vw, 64px); font-weight: 400; line-height: 1.3; color: var(--text-main); margin-bottom: 30px; opacity: 0; transform: translateY(20px); will-change: opacity, transform; }
     .break-paragraph-clean { font-family: var(--font-clean); font-size: clamp(14px, 3.2vw, 17px); font-weight: 300; line-height: 1.8; color: var(--text-muted); max-width: 520px; margin: 0 auto; letter-spacing: 0.02em; opacity: 0; transform: translateY(20px); will-change: opacity, transform; }
@@ -359,7 +340,7 @@
     /* ==========================================
        🔒 POGLAVLJE 12: TIMELOCK SEF SJEĆANJA
        ========================================= */
-    .vogue-lock-section { padding: 180px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: 100vh; min-height: 100svh; text-align: center; }
+    .vogue-lock-section { padding: 180px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: 100svh; text-align: center; }
     .lock-interactive-box { width: 100%; max-width: 480px; padding: 40px 30px; margin: 0 auto; display: none; flex-direction: column; align-items: center; will-change: opacity, transform; background: var(--card-bg-sleep); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 2px dashed var(--accent-love); border-radius: var(--radius); box-shadow: 0 15px 40px rgba(33, 26, 20, 0.08); }
     @keyframes pulseLock { 0% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 8px var(--accent-love)); } 100% { transform: scale(1); opacity: 0.8; } }
     .artisan-envelope-wrapper { position: absolute; width: 100%; max-width: 420px; height: 260px; background: #fdfbf7; border-radius: 12px; box-shadow: 0 25px 65px rgba(33, 26, 20, 0.12), inset 0 1px 2px #fff; border: 1px solid rgba(43, 33, 26, 0.08); cursor: pointer; display: none; opacity: 0; transform: scale(0.95) translateY(30px); will-change: opacity, transform; z-index: 30; }
@@ -373,7 +354,7 @@
     /* ==========================================
        👑 POGLAVLJE 14: FINALNI TRIBUT
        ========================================== */
-    .vogue-closing-tribute-section { padding: 200px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; min-height: 100vh; min-height: 100svh; }
+    .vogue-closing-tribute-section { padding: 200px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; min-height: 100svh; }
     .closing-words-container { max-width: 680px; padding: 0 24px; will-change: transform, opacity; }
     .closure-main-statement { font-family: var(--font-emotion); font-size: clamp(38px, 6.5vw, 68px); font-weight: 300; line-height: 1.35; color: var(--text-main); margin-bottom: 25px; opacity: 0; transform: translateY(20px); will-change: opacity, transform; }
     .closure-sub-manifesto { font-family: var(--font-emotion); font-size: clamp(24px, 4vw, 36px); font-style: italic; line-height: 1.6; color: var(--text-muted); max-width: 520px; margin: 0 auto 50px auto; opacity: 0; transform: translateY(20px); will-change: opacity, transform; }
@@ -381,8 +362,8 @@
     .shake-interaction-hint { font-family: var(--font-clean); font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); opacity: 0; margin-top: 80px; animation: gentleBreatheShake 2.5s ease-in-out infinite alternate; will-change: opacity; }
     @keyframes gentleBreatheShake { 0% { opacity: 0.25; } 100% { opacity: 0.55; } }
     
-    /* ✨ POPRAVLJEN SHAKE CANVAS: 100% i 100vh da spriječi duh prostor ispod sajta */
-    #shakeConfettiCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 99999; pointer-events: none; }
+    /* ✨ FIX: Canvas za srca mora imati height 100svh da ne bi probijao dole! */
+    #shakeConfettiCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100svh; z-index: 99999; pointer-events: none; }
 
     /* ==========================================
        🚪 ENTRY CURTAIN EFFECT (BEZ LINIJE)
@@ -391,7 +372,6 @@
       position: fixed;
       inset: 0;
       width: 100vw;
-      height: 100vh;
       height: 100svh;
       z-index: 9999999;
       display: flex;
@@ -449,7 +429,7 @@
   </style>
 </head>
 
-<body>
+<body class="is-loading">
 
   <div id="curtainOverlay" class="curtain-overlay">
     <div class="curtain-panel curtain-left"></div>
@@ -458,6 +438,18 @@
       <button id="enterWorldBtn" class="enter-world-btn">Step into our world</button>
     </div>
   </div>
+
+  <script>
+    (function() {
+      if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+      window.scrollTo(0, 0);
+      
+      const currentHour = new Date().getHours();
+      if (currentHour >= 20 || currentHour < 6) {
+        document.documentElement.classList.add('theme-night');
+      }
+    })();
+  </script>
 
   <div class="hero-grain"></div>
   <canvas id="shakeConfettiCanvas"></canvas>
@@ -711,7 +703,7 @@
       window.scrollTo(0, 0);
       gsap.registerPlugin(ScrollTrigger);
 
-      // ✨ GSAP ANTI-JITTER: Sprječava sjeckanje i preskakanje animacija kada se na telefonu skrola
+      // ✨ GSAP ANTI-JITTER: Potpuno gasi kalkulaciju pri povratku pretraživač trake
       ScrollTrigger.config({ ignoreMobileResize: true });
 
       const anniversaryDate = new Date('2022-02-14T00:00:00').getTime();
@@ -746,7 +738,6 @@
         gsap.fromTo(inputContainer, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.6, ease: "power2.out", scrollTrigger: { trigger: "#lockSectionScope", start: "top 80%" } });
       }
 
-      // Animacija pauzirana, čeka klik na dugme zavjese
       const introTimeline = gsap.timeline({
         paused: true,
         onComplete: () => { ScrollTrigger.refresh(); }
@@ -756,29 +747,30 @@
       .to("#heroTicker", { opacity: 1, y: 0, duration: 2.2, ease: "power2.out" }, "-=1.0")
       .to("#heroScroll", { opacity: 0.8, duration: 1.6, ease: "power2.out" }, "-=1.4");
 
-      // LOGIKA ZAVJESE I iOS DOZVOLE ZA SHAKE EFEKAT NA KLIK
       const enterBtn = document.getElementById('enterWorldBtn');
       const curtainOverlay = document.getElementById('curtainOverlay');
 
-      enterBtn.addEventListener('click', () => {
-        if (navigator.vibrate) { navigator.vibrate(30); }
-        curtainOverlay.classList.add('is-open');
-        
-        // Aktiviramo slušač za drmanje tek kad Ana klikne dugme (zahtjev iOS-a)
-        if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
-          DeviceMotionEvent.requestPermission()
-            .then(response => {
-              if (response === 'granted') {
-                window.addEventListener('devicemotion', handleMotion);
-              }
+      if(enterBtn && curtainOverlay) {
+        enterBtn.addEventListener('click', () => {
+          if (navigator.vibrate) { navigator.vibrate(30); }
+          curtainOverlay.classList.add('is-open');
+          
+          // Otključava skrol odmah
+          document.body.classList.remove('is-loading');
+          setTimeout(() => { ScrollTrigger.refresh(); }, 100);
+
+          if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
+            DeviceMotionEvent.requestPermission().then(response => {
+              if (response === 'granted') { window.addEventListener('devicemotion', handleMotion); }
             }).catch(console.error);
-        } else {
-          window.addEventListener('devicemotion', handleMotion);
-        }
-        
-        setTimeout(() => { introTimeline.play(); }, 500);
-        setTimeout(() => { curtainOverlay.style.display = 'none'; }, 1600);
-      });
+          } else if (window.DeviceMotionEvent) {
+            window.addEventListener('devicemotion', handleMotion);
+          }
+          
+          setTimeout(() => { introTimeline.play(); }, 500);
+          setTimeout(() => { curtainOverlay.style.display = 'none'; }, 1600);
+        });
+      }
 
       const masterJourneyTimeline = gsap.timeline({ scrollTrigger: { trigger: "#journeySection", start: "top top", end: "bottom bottom", scrub: 1.4, anticipatePin: 1 } });
       masterJourneyTimeline
