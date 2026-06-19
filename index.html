@@ -64,6 +64,8 @@
       color: var(--text-main);
       -webkit-font-smoothing: antialiased;
       transition: background 1.5s ease-in-out, color 1.5s ease-in-out;
+      /* ⚡ Dodato: Zabrana "gumenog skrola" koji stvara trzaje */
+      overscroll-behavior-y: none;
     }
 
     body.is-loading { overflow: hidden; }
@@ -72,6 +74,7 @@
       position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: var(--grain-opacity);
       background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
       transition: opacity 1.5s ease-in-out;
+      transform: translateZ(0); /* ⚡ Ubrzanje na GPU */
     }
 
     .page-story-wrapper {
@@ -97,7 +100,7 @@
       position: absolute;
       bottom: 6vh;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translateX(-50%) translateZ(0);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -129,7 +132,6 @@
        ========================================== */
     .awwwards-hero-container {
       width: 100vw;
-      /* FIX: 100svh umjesto 100dvh za stabilnost na mobilnom */
       height: 100svh;
       display: flex;
       flex-direction: column;
@@ -164,9 +166,9 @@
       margin-bottom: 6vh;
     }
 
-    .word-span { display: inline-block; opacity: 0; filter: blur(5px); transform: translateY(12px); }
+    .word-span { display: inline-block; opacity: 0; filter: blur(5px); transform: translateY(12px) translateZ(0); }
 
-    .matrix-ticker { display: flex; justify-content: center; gap: clamp(12px, 3.5vw, 30px); margin-top: 2vh; opacity: 0; transform: translateY(25px); }
+    .matrix-ticker { display: flex; justify-content: center; gap: clamp(12px, 3.5vw, 30px); margin-top: 2vh; opacity: 0; transform: translateY(25px) translateZ(0); }
     .ticker-unit { display: flex; flex-direction: column; align-items: center; }
     .ticker-number { font-family: var(--font-emotion); font-size: clamp(38px, 6.5vw, 74px); font-weight: 300; line-height: 1; color: var(--text-main); }
     .ticker-unit.pulse-heart .ticker-number { color: var(--accent-love); font-style: italic; font-weight: 400; }
@@ -178,33 +180,32 @@
     .scroll-journey-wrapper { position: relative; width: 100vw; height: 500vh; background-color: transparent; }
     .journey-sticky-container { 
       position: sticky; top: 0; width: 100vw; 
-      /* FIX: 100svh umjesto 100dvh */
       height: 100svh; 
       overflow: hidden; display: flex; align-items: center; justify-content: center; 
     }
     
-    .journey-bg-image { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; will-change: transform, filter, opacity; filter: grayscale(10%) brightness(0.35) blur(10px); transform: scale(1.1); }
+    .journey-bg-image { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; will-change: transform, filter, opacity; filter: grayscale(10%) brightness(0.35) blur(10px); transform: scale(1.1) translateZ(0); backface-visibility: hidden; perspective: 1000; }
     .journey-bg-image img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
 
-    .journey-text-content { position: relative; z-index: 5; padding: 0 6vw; max-width: 750px; text-align: center; opacity: 0; transform: translateY(25px); will-change: opacity, transform; }
+    .journey-text-content { position: relative; z-index: 5; padding: 0 6vw; max-width: 750px; text-align: center; opacity: 0; transform: translateY(25px) translateZ(0); will-change: opacity, transform; backface-visibility: hidden; }
     .vogue-title { font-family: var(--font-emotion); font-size: clamp(42px, 8vw, 84px); font-weight: 300; font-style: italic; line-height: 1.2; color: #f5ebe2; margin-bottom: 25px; text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); }
     .vogue-paragraph { font-family: var(--font-clean); font-size: clamp(15px, 3.4vw, 18px); font-weight: 300; line-height: 1.8; color: #e3dad0; max-width: 540px; margin: 0 auto; letter-spacing: 0.01em; text-shadow: 0 2px 15px rgba(0, 0, 0, 0.5); }
 
-    .stars-story-fullscreen { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; opacity: 0; background: radial-gradient(ellipse at center, #120d0a 0%, #080605 70%, #030202 100%); display: flex; align-items: center; justify-content: center; text-align: center; will-change: opacity; }
+    .stars-story-fullscreen { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; opacity: 0; background: radial-gradient(ellipse at center, #120d0a 0%, #080605 70%, #030202 100%); display: flex; align-items: center; justify-content: center; text-align: center; will-change: opacity; transform: translateZ(0); }
     .stars-overlay-artisan { position: absolute; inset: 0; background: transparent; z-index: 1; }
     .stars-overlay-artisan::before { content: " "; position: absolute; top: 0; left: 0; width: 1.5px; height: 1.5px; background: transparent; box-shadow: 200px 150px rgba(238, 223, 204, 0.6), 600px 400px rgba(255, 255, 255, 0.4), 150px 500px rgba(238, 223, 204, 0.5), 800px 250px rgba(255, 255, 255, 0.7), 450px 700px rgba(179, 132, 99, 0.6), 700px 600px rgba(238, 223, 204, 0.4), 300px 300px rgba(255, 255, 255, 0.5), 900px 150px rgba(179, 132, 99, 0.5); animation: starsBreathe 4s ease-in-out infinite alternate; }
     @keyframes starsBreathe { 0% { opacity: 0.3; } 100% { opacity: 0.85; } }
-    .stars-text-content { position: relative; z-index: 3; padding: 0 6vw; max-width: 750px; text-align: center; opacity: 0; transform: scale(0.95); will-change: opacity, transform; }
+    .stars-text-content { position: relative; z-index: 3; padding: 0 6vw; max-width: 750px; text-align: center; opacity: 0; transform: scale(0.95) translateZ(0); will-change: opacity, transform; backface-visibility: hidden; }
     .vogue-date-label { font-family: var(--font-clean); font-size: clamp(10px, 1.3vw, 12px); text-transform: uppercase; letter-spacing: 0.3em; color: #f5ebe2; margin-top: 20px; display: block; font-weight: 400; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); }
 
-    .location-story-fullscreen { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; opacity: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; will-change: opacity; }
+    .location-story-fullscreen { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; opacity: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; will-change: opacity; transform: translateZ(0); backface-visibility: hidden; perspective: 1000; }
     .location-bg-image { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; will-change: transform; }
     .location-bg-image img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
     .location-story-fullscreen::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(13, 10, 8, 0.45) 0%, rgba(13, 10, 8, 0.65) 50%, rgba(13, 10, 8, 0.75) 100%); z-index: 2; pointer-events: none; }
-    .location-text-content { position: relative; z-index: 4; padding: 0 6vw; max-width: 750px; text-align: center; opacity: 0; transform: translateY(25px); will-change: opacity, transform; }
+    .location-text-content { position: relative; z-index: 4; padding: 0 6vw; max-width: 750px; text-align: center; opacity: 0; transform: translateY(25px) translateZ(0); will-change: opacity, transform; backface-visibility: hidden; }
     
     .vogue-pin-icon { width: clamp(30px, 5vw, 42px); height: clamp(30px, 5vw, 42px); fill: var(--accent-love); margin-bottom: 25px; display: inline-block; animation: pinFloat 3.5s ease-in-out infinite alternate; filter: drop-shadow(0 8px 15px rgba(179, 132, 99, 0.4)); }
-    @keyframes pinFloat { 0% { transform: translateY(0); } 100% { transform: translateY(-10px); } }
+    @keyframes pinFloat { 0% { transform: translateY(0) translateZ(0); } 100% { transform: translateY(-10px) translateZ(0); } }
     .vogue-coords-value { font-family: var(--font-clean); font-size: clamp(18px, 3.8vw, 28px); font-weight: 300; letter-spacing: 0.08em; color: #eedfcc; margin-bottom: 20px; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); }
 
     .journey-sticky-container::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle, transparent 40%, rgba(13, 10, 8, 0.65) 100%); z-index: 4; pointer-events: none; }
@@ -214,15 +215,15 @@
        ========================================== */
     .section-artisan-hold { padding: 160px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: 100svh; }
     .art-print-viewport { position: relative; width: 100%; max-width: 520px; aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; box-shadow: 0 35px 80px rgba(33, 26, 20, 0.06); cursor: pointer; touch-action: none; will-change: transform, box-shadow; transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.8s ease; }
-    .art-print-viewport img { width: 100%; height: 100%; object-fit: cover; display: block; filter: blur(25px) grayscale(60%) brightness(0.65); transform: scale(1.12); will-change: filter, transform; transition: filter 1.4s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.4s cubic-bezier(0.2, 0.8, 0.2, 1); pointer-events: none; }
+    .art-print-viewport img { width: 100%; height: 100%; object-fit: cover; display: block; filter: blur(25px) grayscale(60%) brightness(0.65); transform: scale(1.12) translateZ(0); will-change: filter, transform; transition: filter 1.4s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.4s cubic-bezier(0.2, 0.8, 0.2, 1); pointer-events: none; }
     .art-print-viewport::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle, transparent 50%, rgba(21, 16, 12, 0.4) 100%); z-index: 2; pointer-events: none; transition: opacity 1s ease; }
     .hold-touch-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 3; padding: 0 40px; text-align: center; transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); pointer-events: none; }
-    .hold-touch-overlay .finger-icon { font-size: 36px; margin-bottom: 20px; color: var(--accent-love); filter: drop-shadow(0 0 10px rgba(179,132,99,0.3)); animation: pulseSparkle 2s infinite alternate; }
-    @keyframes pulseSparkle { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.15); opacity: 1; } }
+    .hold-touch-overlay .finger-icon { font-size: 36px; margin-bottom: 20px; color: var(--accent-love); filter: drop-shadow(0 0 10px rgba(179,132,99,0.3)); animation: pulseSparkle 2s infinite alternate; transform: translateZ(0); }
+    @keyframes pulseSparkle { 0% { transform: scale(1) translateZ(0); opacity: 0.6; } 100% { transform: scale(1.15) translateZ(0); opacity: 1; } }
     .hold-instruction-text { font-family: var(--font-clean); font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: #eedfcc; font-weight: 400; line-height: 1.7; }
-    .art-print-viewport.active { transform: scale(1.03); box-shadow: 0 45px 95px rgba(179, 132, 99, 0.3), 0 20px 40px rgba(0,0,0,0.04); }
-    .art-print-viewport.active img { filter: blur(0px) grayscale(0%) brightness(0.95); transform: scale(1.02); }
-    .art-print-viewport.active .hold-touch-overlay { opacity: 0; transform: scale(0.95); }
+    .art-print-viewport.active { transform: scale(1.03) translateZ(0); box-shadow: 0 45px 95px rgba(179, 132, 99, 0.3), 0 20px 40px rgba(0,0,0,0.04); }
+    .art-print-viewport.active img { filter: blur(0px) grayscale(0%) brightness(0.95); transform: scale(1.02) translateZ(0); }
+    .art-print-viewport.active .hold-touch-overlay { opacity: 0; transform: scale(0.95) translateZ(0); }
     .art-print-viewport.active::after { opacity: 0.3; }
 
     /* ==========================================
@@ -230,20 +231,20 @@
        ========================================== */
     .vogue-timeline-section { position: relative; width: 100%; padding: 180px 0; display: flex; justify-content: center; min-height: 100svh; }
     .timeline-container-inner { position: relative; width: 100%; max-width: 700px; display: flex; justify-content: center; }
-    .svg-timeline-track { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 240px; height: 100%; overflow: visible; pointer-events: none; z-index: 1; }
+    .svg-timeline-track { position: absolute; top: 0; left: 50%; transform: translateX(-50%) translateZ(0); width: 240px; height: 100%; overflow: visible; pointer-events: none; z-index: 1; }
     .svg-path-base { fill: none; stroke: var(--scroll-bg); stroke-width: 2.5; stroke-linecap: round; transition: stroke 1.5s; }
     .svg-path-draw { fill: none; stroke: var(--accent-love); stroke-width: 3.2; stroke-linecap: round; will-change: stroke-dashoffset; }
     .timeline-events-list { position: relative; width: 100%; z-index: 2; display: flex; flex-direction: column; gap: 220px; }
-    .vogue-time-node { position: relative; width: 100%; display: flex; will-change: opacity, transform, filter; opacity: 0.05; filter: blur(8px); transform: translateY(60px) scale(0.92); transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), filter 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    .vogue-time-node { position: relative; width: 100%; display: flex; will-change: opacity, transform, filter; opacity: 0.05; filter: blur(8px); transform: translateY(60px) scale(0.92) translateZ(0); transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), filter 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); backface-visibility: hidden; }
     .vogue-time-node:nth-child(1) { justify-content: flex-start; text-align: right; }
     .vogue-time-node:nth-child(2) { justify-content: flex-end; text-align: left; }
     .vogue-time-node:nth-child(3) { justify-content: flex-start; text-align: right; }
-    .vogue-time-node:nth-child(1) .node-text-wrapper { transform: translateX(-20px) rotate(-1deg); }
-    .vogue-time-node:nth-child(2) .node-text-wrapper { transform: translateX(20px) rotate(1deg); }
-    .vogue-time-node:nth-child(3) .node-text-wrapper { transform: translateX(-20px) rotate(-1deg); }
-    .node-text-wrapper { width: 42%; transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
-    .vogue-time-node.node-in-focus { opacity: 1; filter: blur(0px); transform: translateY(0) scale(1); }
-    .vogue-time-node.node-in-focus .node-text-wrapper { transform: translateX(0) rotate(0deg) !important; }
+    .vogue-time-node:nth-child(1) .node-text-wrapper { transform: translateX(-20px) rotate(-1deg) translateZ(0); }
+    .vogue-time-node:nth-child(2) .node-text-wrapper { transform: translateX(20px) rotate(1deg) translateZ(0); }
+    .vogue-time-node:nth-child(3) .node-text-wrapper { transform: translateX(-20px) rotate(-1deg) translateZ(0); }
+    .node-text-wrapper { width: 42%; transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); will-change: transform; }
+    .vogue-time-node.node-in-focus { opacity: 1; filter: blur(0px); transform: translateY(0) scale(1) translateZ(0); }
+    .vogue-time-node.node-in-focus .node-text-wrapper { transform: translateX(0) rotate(0deg) translateZ(0) !important; }
     .node-date { font-family: var(--font-clean); font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent-love); margin-bottom: 8px; font-weight: 500; }
     .node-title { font-family: var(--font-emotion); font-size: clamp(24px, 4.5vw, 32px); color: var(--text-main); margin-bottom: 12px; font-weight: 400; }
     .node-description { font-family: var(--font-clean); font-size: 14px; line-height: 1.7; color: var(--text-muted); font-weight: 300; }
@@ -253,31 +254,30 @@
        ========================================== */
     .vogue-promise-section { 
       width: 100vw; 
-      /* FIX: 100svh umjesto 100dvh */
       height: 100svh; 
       position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: var(--bg-promise); display: flex; align-items: center; justify-content: center; overflow: hidden; perspective: 1200px; transition: background 1.5s ease-in-out; 
     }
-    .promise-3d-container { max-width: 740px; padding: 0 24px; text-align: center; will-change: transform, opacity; transform-style: preserve-3d; transform: rotateX(12deg) rotateY(-12deg) rotateZ(-2deg); opacity: 0; }
+    .promise-3d-container { max-width: 740px; padding: 0 24px; text-align: center; will-change: transform, opacity; transform-style: preserve-3d; transform: rotateX(12deg) rotateY(-12deg) rotateZ(-2deg) translateZ(0); opacity: 0; backface-visibility: hidden; }
     .promise-title { font-family: var(--font-clean); font-size: clamp(10px, 1.4vw, 12px); text-transform: uppercase; letter-spacing: 0.35em; color: var(--accent-love); margin-bottom: 30px; font-weight: 500; }
-    .promise-body-text { font-family: var(--font-emotion); font-size: clamp(26px, 4.5vw, 44px); font-weight: 300; line-height: 1.45; color: var(--text-main); letter-spacing: -0.01em; transition: color 1.5s ease-in-out; }
-    .letter-span { display: inline-block; opacity: 0; transform: translateZ(-50px) scale(0.92); filter: blur(5px); will-change: opacity, transform, filter; }
+    .promise-body-text { font-family: var(--font-emotion); font-size: clamp(26px, 4.5vw, 44px); font-weight: 300; line-height: 1.45; color: var(--text-main); letter-spacing: -0.01em; transition: color 1.5s ease-in-out; transform-style: preserve-3d; }
+    .letter-span { display: inline-block; opacity: 0; transform: translateZ(-50px) scale(0.92); filter: blur(5px); will-change: opacity, transform, filter; backface-visibility: hidden; }
 
     /* ==========================================
        🧼 POGLAVLJE 8: SECRET MOMENT
        ========================================== */
     .section-artisan-scratch { padding: 160px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: 100svh; }
-    .scratch-art-viewport { position: relative; width: 100%; max-width: 520px; aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; box-shadow: 0 35px 80px rgba(33, 26, 20, 0.06); touch-action: none; will-change: transform, opacity; }
+    .scratch-art-viewport { position: relative; width: 100%; max-width: 520px; aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; box-shadow: 0 35px 80px rgba(33, 26, 20, 0.06); touch-action: none; will-change: transform, opacity; transform: translateZ(0); }
     .scratch-art-viewport img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
-    #scratchCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; touch-action: none; cursor: pointer; }
+    #scratchCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; touch-action: none; cursor: pointer; transform: translateZ(0); }
     .scratch-vogue-hint { position: absolute; top: 30px; left: 0; width: 100%; text-align: center; color: #fff; font-family: var(--font-clean); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); pointer-events: none; z-index: 10; font-weight: 500; transition: opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
 
     /* ==========================================
        📖 POGLAVLJE 9: EVERY LITTLE THING
        ========================================== */
     .vogue-text-break-section { width: 100%; padding: 180px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; min-height: 100svh; }
-    .break-content-inner { max-width: 660px; padding: 0 24px; will-change: transform; }
-    .break-title-emotion { font-family: var(--font-emotion); font-size: clamp(36px, 6.5vw, 64px); font-weight: 400; line-height: 1.3; color: var(--text-main); margin-bottom: 30px; opacity: 0; transform: translateY(20px); will-change: opacity, transform; }
-    .break-paragraph-clean { font-family: var(--font-clean); font-size: clamp(14px, 3.2vw, 17px); font-weight: 300; line-height: 1.8; color: var(--text-muted); max-width: 520px; margin: 0 auto; letter-spacing: 0.02em; opacity: 0; transform: translateY(20px); will-change: opacity, transform; }
+    .break-content-inner { max-width: 660px; padding: 0 24px; will-change: transform; transform: translateZ(0); backface-visibility: hidden; }
+    .break-title-emotion { font-family: var(--font-emotion); font-size: clamp(36px, 6.5vw, 64px); font-weight: 400; line-height: 1.3; color: var(--text-main); margin-bottom: 30px; opacity: 0; transform: translateY(20px) translateZ(0); will-change: opacity, transform; }
+    .break-paragraph-clean { font-family: var(--font-clean); font-size: clamp(14px, 3.2vw, 17px); font-weight: 300; line-height: 1.8; color: var(--text-muted); max-width: 520px; margin: 0 auto; letter-spacing: 0.02em; opacity: 0; transform: translateY(20px) translateZ(0); will-change: opacity, transform; }
 
     /* ==========================================
        🖼️ POGLAVLJE 10: JEDNOSTAVNA SWIPE GALERIJA BEZ TEKSTA
@@ -301,8 +301,9 @@
       padding: 14px;
       border-radius: 4px;
       box-shadow: 0 15px 40px rgba(33, 26, 20, 0.07);
-      transform: rotate(calc(var(--item-rotation, 0) * 1deg));
+      transform: rotate(calc(var(--item-rotation, 0) * 1deg)) translateZ(0);
       transition: transform 0.4s ease;
+      will-change: transform;
     }
     html.theme-night .simple-gallery-card { background: #1c1612; box-shadow: 0 15px 40px rgba(0,0,0,0.3); }
     .simple-gallery-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 2px; pointer-events: none; display: block; }
@@ -314,7 +315,7 @@
     .luminous-cards-stack { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 30px; margin-top: 20px; }
     
     .flip-card-container { perspective: 1200px; width: 100%; height: 200px; cursor: pointer; }
-    .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style: preserve-3d; }
+    .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style: preserve-3d; will-change: transform; }
     
     .flip-card-container.is-flipped .flip-card-inner { transform: rotateY(180deg); }
     
@@ -336,12 +337,12 @@
        ========================================== */
     .vogue-soundtrack-section { padding: 160px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
     .soundtrack-layout-grid { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 40px; }
-    .vinyl-record-artisan { position: relative; width: clamp(200px, 38vw, 270px); height: clamp(200px, 38vw, 270px); background: radial-gradient(circle, #2b211a 0%, #150d0a 40%, #2b211a 41%, #0d0a08 70%, #1f1612 100%); border-radius: 50%; box-shadow: 0 30px 75px rgba(0,0,0,0.18), inset 0 0 1px rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; cursor: pointer; transform: none !important; }
+    .vinyl-record-artisan { position: relative; width: clamp(200px, 38vw, 270px); height: clamp(200px, 38vw, 270px); background: radial-gradient(circle, #2b211a 0%, #150d0a 40%, #2b211a 41%, #0d0a08 70%, #1f1612 100%); border-radius: 50%; box-shadow: 0 30px 75px rgba(0,0,0,0.18), inset 0 0 1px rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; cursor: pointer; transform: translateZ(0) !important; will-change: transform; }
     .vinyl-center-label { width: 34%; height: 32%; background: var(--bg-promise); border-radius: 50%; border: 1px dashed var(--accent-love); display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; }
-    .vinyl-heart-svg-core { width: clamp(22px, 4.5vw, 28px); height: clamp(22px, 4.5vw, 28px); fill: var(--accent-love); transform-origin: center center; will-change: transform, filter; animation: heartRestingBreathe 2.5s ease-in-out infinite alternate; }
-    @keyframes heartRestingBreathe { 0% { transform: scale(1) rotate(0deg); opacity: 0.6; filter: drop-shadow(0 0 0px rgba(179,132,99,0)); } 100% { transform: scale(1.08) rotate(0deg); opacity: 0.95; filter: drop-shadow(0 0 5px rgba(179,132,99,0.35)); } }
+    .vinyl-heart-svg-core { width: clamp(22px, 4.5vw, 28px); height: clamp(22px, 4.5vw, 28px); fill: var(--accent-love); transform-origin: center center; will-change: transform, filter; animation: heartRestingBreathe 2.5s ease-in-out infinite alternate; transform: translateZ(0); }
+    @keyframes heartRestingBreathe { 0% { transform: scale(1) rotate(0deg) translateZ(0); opacity: 0.6; filter: drop-shadow(0 0 0px rgba(179,132,99,0)); } 100% { transform: scale(1.08) rotate(0deg) translateZ(0); opacity: 0.95; filter: drop-shadow(0 0 5px rgba(179,132,99,0.35)); } }
     .vinyl-record-artisan.is-playing-audio .vinyl-heart-svg-core { animation: heartMusicPulse 0.95s cubic-bezier(0.25, 1, 0.2, 1) infinite !important; fill: #b33939; }
-    @keyframes heartMusicPulse { 0% { transform: scale(1); } 25% { transform: scale(1.24); filter: drop-shadow(0 0 12px rgba(179,132,99,0.7)); } 40% { transform: scale(1.08); } 55% { transform: scale(1.26); filter: drop-shadow(0 0 15px rgba(179,132,99,0.8)); } 100% { transform: scale(1); } }
+    @keyframes heartMusicPulse { 0% { transform: scale(1) translateZ(0); } 25% { transform: scale(1.24) translateZ(0); filter: drop-shadow(0 0 12px rgba(179,132,99,0.7)); } 40% { transform: scale(1.08) translateZ(0); } 55% { transform: scale(1.26) translateZ(0); filter: drop-shadow(0 0 15px rgba(179,132,99,0.8)); } 100% { transform: scale(1) translateZ(0); } }
     .vinyl-track-info-card { text-align: center; max-width: 320px; }
     .vinyl-track-title { font-family: var(--font-emotion); font-size: clamp(24px, 4vw, 30px); color: var(--text-main); margin-bottom: 6px; font-weight: 400; }
     .vinyl-track-sub { font-family: var(--font-clean); font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--text-muted); font-weight: 500; }
@@ -350,13 +351,13 @@
        🔒 POGLAVLJE 12: TIMELOCK SEF SJEĆANJA
        ========================================= */
     .vogue-lock-section { padding: 180px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: 100svh; text-align: center; }
-    .lock-interactive-box { width: 100%; max-width: 480px; padding: 40px 30px; margin: 0 auto; display: none; flex-direction: column; align-items: center; will-change: opacity, transform; background: var(--card-bg-sleep); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 2px dashed var(--accent-love); border-radius: var(--radius); box-shadow: 0 15px 40px rgba(33, 26, 20, 0.08); }
-    @keyframes pulseLock { 0% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 8px var(--accent-love)); } 100% { transform: scale(1); opacity: 0.8; } }
-    .artisan-envelope-wrapper { position: absolute; width: 100%; max-width: 420px; height: 260px; background: #fdfbf7; border-radius: 12px; box-shadow: 0 25px 65px rgba(33, 26, 20, 0.12), inset 0 1px 2px #fff; border: 1px solid rgba(43, 33, 26, 0.08); cursor: pointer; display: none; opacity: 0; transform: scale(0.95) translateY(30px); will-change: opacity, transform; z-index: 30; }
+    .lock-interactive-box { width: 100%; max-width: 480px; padding: 40px 30px; margin: 0 auto; display: none; flex-direction: column; align-items: center; will-change: opacity, transform; background: var(--card-bg-sleep); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 2px dashed var(--accent-love); border-radius: var(--radius); box-shadow: 0 15px 40px rgba(33, 26, 20, 0.08); transform: translateZ(0); }
+    @keyframes pulseLock { 0% { transform: scale(1) translateZ(0); opacity: 0.8; } 50% { transform: scale(1.1) translateZ(0); opacity: 1; filter: drop-shadow(0 0 8px var(--accent-love)); } 100% { transform: scale(1) translateZ(0); opacity: 0.8; } }
+    .artisan-envelope-wrapper { position: absolute; width: 100%; max-width: 420px; height: 260px; background: #fdfbf7; border-radius: 12px; box-shadow: 0 25px 65px rgba(33, 26, 20, 0.12), inset 0 1px 2px #fff; border: 1px solid rgba(43, 33, 26, 0.08); cursor: pointer; display: none; opacity: 0; transform: scale(0.95) translateY(30px) translateZ(0); will-change: opacity, transform; z-index: 30; }
     .artisan-envelope-wrapper::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%; background: linear-gradient(135deg, transparent 49.5%, rgba(179, 132, 99, 0.15) 50%, transparent 50.5%), linear-gradient(225deg, transparent 49.5%, rgba(179, 132, 99, 0.15) 50%, transparent 50.5%); border-bottom: 1px solid rgba(179, 132, 99, 0.2); pointer-events: none; }
     .preview-letter-lip { position: absolute; top: -15px; left: 8%; right: 8%; height: 50px; background: #fff; border-radius: 6px 6px 0 0; box-shadow: 0 -5px 15px rgba(0,0,0,0.02); border: 1px solid rgba(43, 33, 26, 0.05); border-bottom: none; display: flex; align-items: center; justify-content: center; }
     .preview-letter-lip::after { content: 'A & N'; font-family: var(--font-emotion); font-size: 12px; font-style: italic; color: var(--accent-love); letter-spacing: 0.1em; opacity: 0.7; }
-    .secret-letter-reveal-zone { position: absolute; width: 100%; max-width: 660px; padding: 60px 50px; background: #fcfaf6; border-radius: var(--radius); box-shadow: 0 35px 85px rgba(33, 26, 20, 0.09), inset 0 0 1px #fff; border: 1px solid rgba(43, 33, 26, 0.06); opacity: 0; transform: scale(0.97) translateY(40px); will-change: opacity, transform; display: none; z-index: 40; }
+    .secret-letter-reveal-zone { position: absolute; width: 100%; max-width: 660px; padding: 60px 50px; background: #fcfaf6; border-radius: var(--radius); box-shadow: 0 35px 85px rgba(33, 26, 20, 0.09), inset 0 0 1px #fff; border: 1px solid rgba(43, 33, 26, 0.06); opacity: 0; transform: scale(0.97) translateY(40px) translateZ(0); will-change: opacity, transform; display: none; z-index: 40; }
     .artisan-handwritten-letter { font-family: var(--font-emotion); font-size: clamp(24px, 4vw, 34px); line-height: 1.8; color: #2b211a; font-weight: 300; text-align: center; }
     .letter-accent-closure { font-style: italic; color: var(--accent-love); font-weight: 400; display: block; margin-top: 45px; font-size: clamp(26px, 4.2vw, 36px); }
 
@@ -364,15 +365,14 @@
        👑 POGLAVLJE 14: FINALNI TRIBUT
        ========================================== */
     .vogue-closing-tribute-section { padding: 200px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; min-height: 100svh; }
-    .closing-words-container { max-width: 680px; padding: 0 24px; will-change: transform, opacity; }
-    .closure-main-statement { font-family: var(--font-emotion); font-size: clamp(38px, 6.5vw, 68px); font-weight: 300; line-height: 1.35; color: var(--text-main); margin-bottom: 25px; opacity: 0; transform: translateY(20px); will-change: opacity, transform; }
-    .closure-sub-manifesto { font-family: var(--font-emotion); font-size: clamp(24px, 4vw, 36px); font-style: italic; line-height: 1.6; color: var(--text-muted); max-width: 520px; margin: 0 auto 50px auto; opacity: 0; transform: translateY(20px); will-change: opacity, transform; }
-    .closure-signature-line { font-family: var(--font-clean); font-size: clamp(12px, 2vw, 14px); text-transform: uppercase; letter-spacing: 0.25em; color: var(--accent-love); font-weight: 500; opacity: 0; transform: translateY(15px); will-change: opacity, transform; }
-    .shake-interaction-hint { font-family: var(--font-clean); font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); opacity: 0; margin-top: 80px; animation: gentleBreatheShake 2.5s ease-in-out infinite alternate; will-change: opacity; }
+    .closing-words-container { max-width: 680px; padding: 0 24px; will-change: transform, opacity; transform: translateZ(0); backface-visibility: hidden; }
+    .closure-main-statement { font-family: var(--font-emotion); font-size: clamp(38px, 6.5vw, 68px); font-weight: 300; line-height: 1.35; color: var(--text-main); margin-bottom: 25px; opacity: 0; transform: translateY(20px) translateZ(0); will-change: opacity, transform; }
+    .closure-sub-manifesto { font-family: var(--font-emotion); font-size: clamp(24px, 4vw, 36px); font-style: italic; line-height: 1.6; color: var(--text-muted); max-width: 520px; margin: 0 auto 50px auto; opacity: 0; transform: translateY(20px) translateZ(0); will-change: opacity, transform; }
+    .closure-signature-line { font-family: var(--font-clean); font-size: clamp(12px, 2vw, 14px); text-transform: uppercase; letter-spacing: 0.25em; color: var(--accent-love); font-weight: 500; opacity: 0; transform: translateY(15px) translateZ(0); will-change: opacity, transform; }
+    .shake-interaction-hint { font-family: var(--font-clean); font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); opacity: 0; margin-top: 80px; animation: gentleBreatheShake 2.5s ease-in-out infinite alternate; will-change: opacity; transform: translateZ(0); }
     @keyframes gentleBreatheShake { 0% { opacity: 0.25; } 100% { opacity: 0.55; } }
     
-    /* ✨ FIX: Sakrivanje praznog prostora. Canvas fiksiran na viewport */
-    #shakeConfettiCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100svh; z-index: 99999; pointer-events: none; }
+    #shakeConfettiCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100svh; z-index: 99999; pointer-events: none; transform: translateZ(0); }
   </style>
 </head>
 
@@ -708,11 +708,8 @@
       window.scrollTo(0, 0);
       gsap.registerPlugin(ScrollTrigger);
 
-      // ✨ FIX ZA SJECKANJE: GSAP sada ignoriše skupljanje i širenje trake pretraživača!
+      // ✨ GSAP ostaje optimizovan da ignoriše address bar
       ScrollTrigger.config({ ignoreMobileResize: true });
-      
-      // 🔥 DODATO: Prisiljava skrol na glavnom JavaScript threadu da bi sve teklo glatko na telefonu
-      ScrollTrigger.normalizeScroll(true);
 
       const anniversaryDate = new Date('2022-02-14T00:00:00').getTime();
 
