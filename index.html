@@ -57,16 +57,16 @@
     
     html, body {
       width: 100%;
-      /* ✨ FIX: min-height: 100% rješava prepoznavanje skrola kod GSAP-a na telefonima! */
-      min-height: 100%;
+      height: 100%;
       background: var(--bg-gradient);
       font-family: var(--font-clean);
       font-weight: 300;
       color: var(--text-main);
       -webkit-font-smoothing: antialiased;
       transition: background 1.5s ease-in-out, color 1.5s ease-in-out;
-      overflow-x: hidden;
     }
+
+    body.is-loading { overflow: hidden; }
 
     .hero-grain {
       position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: var(--grain-opacity);
@@ -129,7 +129,8 @@
        ========================================== */
     .awwwards-hero-container {
       width: 100vw;
-      height: calc(var(--vh, 1vh) * 100);
+      /* FIX: 100svh umjesto 100dvh za stabilnost na mobilnom */
+      height: 100svh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -174,8 +175,13 @@
     /* ==========================================
        🎞️ MASTER INTEGRISANA KINEMATOGRAFSKA TRAKA (SEKCIJE 2, 3, 4)
        ========================================== */
-    .scroll-journey-wrapper { position: relative; width: 100vw; height: calc(var(--vh, 1vh) * 500); background-color: transparent; }
-    .journey-sticky-container { position: sticky; top: 0; width: 100vw; height: calc(var(--vh, 1vh) * 100); overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .scroll-journey-wrapper { position: relative; width: 100vw; height: 500vh; background-color: transparent; }
+    .journey-sticky-container { 
+      position: sticky; top: 0; width: 100vw; 
+      /* FIX: 100svh umjesto 100dvh */
+      height: 100svh; 
+      overflow: hidden; display: flex; align-items: center; justify-content: center; 
+    }
     
     .journey-bg-image { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; will-change: transform, filter, opacity; filter: grayscale(10%) brightness(0.35) blur(10px); transform: scale(1.1); }
     .journey-bg-image img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
@@ -206,7 +212,7 @@
     /* ==========================================
        🖐️ POGLAVLJE 5: TOUCH OF A MEMORY
        ========================================== */
-    .section-artisan-hold { padding: 160px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: calc(var(--vh, 1vh) * 100); }
+    .section-artisan-hold { padding: 160px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: 100svh; }
     .art-print-viewport { position: relative; width: 100%; max-width: 520px; aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; box-shadow: 0 35px 80px rgba(33, 26, 20, 0.06); cursor: pointer; touch-action: none; will-change: transform, box-shadow; transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.8s ease; }
     .art-print-viewport img { width: 100%; height: 100%; object-fit: cover; display: block; filter: blur(25px) grayscale(60%) brightness(0.65); transform: scale(1.12); will-change: filter, transform; transition: filter 1.4s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.4s cubic-bezier(0.2, 0.8, 0.2, 1); pointer-events: none; }
     .art-print-viewport::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle, transparent 50%, rgba(21, 16, 12, 0.4) 100%); z-index: 2; pointer-events: none; transition: opacity 1s ease; }
@@ -222,7 +228,7 @@
     /* ==========================================
        〰️ POGLAVLJE 6: SPIRALA VREMENA
        ========================================== */
-    .vogue-timeline-section { position: relative; width: 100%; padding: 180px 0; display: flex; justify-content: center; min-height: calc(var(--vh, 1vh) * 100); }
+    .vogue-timeline-section { position: relative; width: 100%; padding: 180px 0; display: flex; justify-content: center; min-height: 100svh; }
     .timeline-container-inner { position: relative; width: 100%; max-width: 700px; display: flex; justify-content: center; }
     .svg-timeline-track { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 240px; height: 100%; overflow: visible; pointer-events: none; z-index: 1; }
     .svg-path-base { fill: none; stroke: var(--scroll-bg); stroke-width: 2.5; stroke-linecap: round; transition: stroke 1.5s; }
@@ -245,7 +251,12 @@
     /* ==========================================
        ✍️ POGLAVLJE 7: A PROMISE OF ORDINARY DAYS (FULL VIEWPORT)
        ========================================== */
-    .vogue-promise-section { width: 100vw; height: calc(var(--vh, 1vh) * 100); position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: var(--bg-promise); display: flex; align-items: center; justify-content: center; overflow: hidden; perspective: 1200px; transition: background 1.5s ease-in-out; }
+    .vogue-promise-section { 
+      width: 100vw; 
+      /* FIX: 100svh umjesto 100dvh */
+      height: 100svh; 
+      position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: var(--bg-promise); display: flex; align-items: center; justify-content: center; overflow: hidden; perspective: 1200px; transition: background 1.5s ease-in-out; 
+    }
     .promise-3d-container { max-width: 740px; padding: 0 24px; text-align: center; will-change: transform, opacity; transform-style: preserve-3d; transform: rotateX(12deg) rotateY(-12deg) rotateZ(-2deg); opacity: 0; }
     .promise-title { font-family: var(--font-clean); font-size: clamp(10px, 1.4vw, 12px); text-transform: uppercase; letter-spacing: 0.35em; color: var(--accent-love); margin-bottom: 30px; font-weight: 500; }
     .promise-body-text { font-family: var(--font-emotion); font-size: clamp(26px, 4.5vw, 44px); font-weight: 300; line-height: 1.45; color: var(--text-main); letter-spacing: -0.01em; transition: color 1.5s ease-in-out; }
@@ -254,7 +265,7 @@
     /* ==========================================
        🧼 POGLAVLJE 8: SECRET MOMENT
        ========================================== */
-    .section-artisan-scratch { padding: 160px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: calc(var(--vh, 1vh) * 100); }
+    .section-artisan-scratch { padding: 160px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: 100svh; }
     .scratch-art-viewport { position: relative; width: 100%; max-width: 520px; aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; box-shadow: 0 35px 80px rgba(33, 26, 20, 0.06); touch-action: none; will-change: transform, opacity; }
     .scratch-art-viewport img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
     #scratchCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; touch-action: none; cursor: pointer; }
@@ -263,7 +274,7 @@
     /* ==========================================
        📖 POGLAVLJE 9: EVERY LITTLE THING
        ========================================== */
-    .vogue-text-break-section { width: 100%; padding: 180px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; min-height: calc(var(--vh, 1vh) * 100); }
+    .vogue-text-break-section { width: 100%; padding: 180px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; min-height: 100svh; }
     .break-content-inner { max-width: 660px; padding: 0 24px; will-change: transform; }
     .break-title-emotion { font-family: var(--font-emotion); font-size: clamp(36px, 6.5vw, 64px); font-weight: 400; line-height: 1.3; color: var(--text-main); margin-bottom: 30px; opacity: 0; transform: translateY(20px); will-change: opacity, transform; }
     .break-paragraph-clean { font-family: var(--font-clean); font-size: clamp(14px, 3.2vw, 17px); font-weight: 300; line-height: 1.8; color: var(--text-muted); max-width: 520px; margin: 0 auto; letter-spacing: 0.02em; opacity: 0; transform: translateY(20px); will-change: opacity, transform; }
@@ -338,7 +349,7 @@
     /* ==========================================
        🔒 POGLAVLJE 12: TIMELOCK SEF SJEĆANJA
        ========================================= */
-    .vogue-lock-section { padding: 180px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: calc(var(--vh, 1vh) * 100); text-align: center; }
+    .vogue-lock-section { padding: 180px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: 100svh; text-align: center; }
     .lock-interactive-box { width: 100%; max-width: 480px; padding: 40px 30px; margin: 0 auto; display: none; flex-direction: column; align-items: center; will-change: opacity, transform; background: var(--card-bg-sleep); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 2px dashed var(--accent-love); border-radius: var(--radius); box-shadow: 0 15px 40px rgba(33, 26, 20, 0.08); }
     @keyframes pulseLock { 0% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 8px var(--accent-love)); } 100% { transform: scale(1); opacity: 0.8; } }
     .artisan-envelope-wrapper { position: absolute; width: 100%; max-width: 420px; height: 260px; background: #fdfbf7; border-radius: 12px; box-shadow: 0 25px 65px rgba(33, 26, 20, 0.12), inset 0 1px 2px #fff; border: 1px solid rgba(43, 33, 26, 0.08); cursor: pointer; display: none; opacity: 0; transform: scale(0.95) translateY(30px); will-change: opacity, transform; z-index: 30; }
@@ -352,7 +363,7 @@
     /* ==========================================
        👑 POGLAVLJE 14: FINALNI TRIBUT
        ========================================== */
-    .vogue-closing-tribute-section { padding: 200px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; min-height: calc(var(--vh, 1vh) * 100); }
+    .vogue-closing-tribute-section { padding: 200px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; min-height: 100svh; }
     .closing-words-container { max-width: 680px; padding: 0 24px; will-change: transform, opacity; }
     .closure-main-statement { font-family: var(--font-emotion); font-size: clamp(38px, 6.5vw, 68px); font-weight: 300; line-height: 1.35; color: var(--text-main); margin-bottom: 25px; opacity: 0; transform: translateY(20px); will-change: opacity, transform; }
     .closure-sub-manifesto { font-family: var(--font-emotion); font-size: clamp(24px, 4vw, 36px); font-style: italic; line-height: 1.6; color: var(--text-muted); max-width: 520px; margin: 0 auto 50px auto; opacity: 0; transform: translateY(20px); will-change: opacity, transform; }
@@ -360,83 +371,12 @@
     .shake-interaction-hint { font-family: var(--font-clean); font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); opacity: 0; margin-top: 80px; animation: gentleBreatheShake 2.5s ease-in-out infinite alternate; will-change: opacity; }
     @keyframes gentleBreatheShake { 0% { opacity: 0.25; } 100% { opacity: 0.55; } }
     
-    /* ✨ FIX: Zauvijek briše prazan prostor na dnu */
-    #shakeConfettiCanvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 99999; pointer-events: none; }
-
-    /* ==========================================
-       🚪 ENTRY CURTAIN EFFECT (SA DUGMETOM)
-       ========================================== */
-    .curtain-overlay {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: calc(var(--vh, 1vh) * 100);
-      z-index: 9999999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: auto;
-    }
-    .curtain-panel {
-      position: absolute;
-      top: 0;
-      height: 100%;
-      width: 50.5vw; /* Preklapa se na sredini da ubije liniju */
-      background: #14100d;
-      transition: transform 1.6s cubic-bezier(0.76, 0, 0.24, 1);
-      z-index: 1;
-    }
-    .curtain-left { left: 0; border-right: none; }
-    .curtain-right { right: 0; border-left: none; }
-
-    .curtain-content {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    .enter-world-btn {
-      background: transparent;
-      border: 1px solid var(--accent-love);
-      color: #eedfcc;
-      font-family: var(--font-clean);
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.35em;
-      padding: 18px 40px;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-      outline: none;
-    }
-    .enter-world-btn:hover, .enter-world-btn:active {
-      background: var(--accent-love);
-      color: #14100d;
-      box-shadow: 0 10px 30px rgba(179, 132, 99, 0.3);
-      transform: translateY(-2px);
-    }
-
-    .curtain-overlay.is-open .curtain-left { transform: translateX(-100%); }
-    .curtain-overlay.is-open .curtain-right { transform: translateX(100%); }
-    .curtain-overlay.is-open .curtain-content { opacity: 0; transform: scale(0.95); pointer-events: none; }
+    /* ✨ FIX: Sakrivanje praznog prostora. Canvas fiksiran na viewport */
+    #shakeConfettiCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100svh; z-index: 99999; pointer-events: none; }
   </style>
 </head>
 
-<body>
-
-  <!-- ✨ ZAVJESA SA DUGMETOM -->
-  <div id="curtainOverlay" class="curtain-overlay">
-    <div class="curtain-panel curtain-left"></div>
-    <div class="curtain-panel curtain-right"></div>
-    <div class="curtain-content">
-      <button id="enterWorldBtn" class="enter-world-btn">Step into our world</button>
-    </div>
-  </div>
+<body class="is-loading">
 
   <script>
     (function() {
@@ -447,20 +387,6 @@
       if (currentHour >= 20 || currentHour < 6) {
         document.documentElement.classList.add('theme-night');
       }
-
-      const setVH = () => {
-        let vh = window.innerHeight;
-        document.documentElement.style.setProperty('--vh', `${vh * 0.01}px`);
-      };
-      setVH();
-      
-      let vw = window.innerWidth;
-      window.addEventListener('resize', () => {
-        if (window.innerWidth !== vw) {
-          vw = window.innerWidth;
-          setVH();
-        }
-      });
     })();
   </script>
 
@@ -782,8 +708,11 @@
       window.scrollTo(0, 0);
       gsap.registerPlugin(ScrollTrigger);
 
-      // ✨ GSAP FIX: Ignorišemo pomjeranje trake telefona
+      // ✨ FIX ZA SJECKANJE: GSAP sada ignoriše skupljanje i širenje trake pretraživača!
       ScrollTrigger.config({ ignoreMobileResize: true });
+      
+      // 🔥 DODATO: Prisiljava skrol na glavnom JavaScript threadu da bi sve teklo glatko na telefonu
+      ScrollTrigger.normalizeScroll(true);
 
       const anniversaryDate = new Date('2022-02-14T00:00:00').getTime();
 
@@ -824,40 +753,13 @@
         gsap.fromTo(inputContainer, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.6, ease: "power2.out", scrollTrigger: { trigger: "#lockSectionScope", start: "top 80%" } });
       }
 
-      // ✨ UVODNA ANIMACIJA PAUZIRANA
       const introTimeline = gsap.timeline({
-        paused: true,
-        onComplete: () => { ScrollTrigger.refresh(); }
+        onComplete: () => { document.body.classList.remove('is-loading'); ScrollTrigger.refresh(); }
       });
       introTimeline.to("#heroEyebrow", { opacity: 0.75, y: 0, duration: 2.0, ease: "power2.out", delay: 0.4 })
       .to(".word-span", { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.6, stagger: 0.15, ease: "power3.out" }, "-=1.4")
       .to("#heroTicker", { opacity: 1, y: 0, duration: 2.2, ease: "power2.out" }, "-=1.0")
       .to("#heroScroll", { opacity: 0.8, duration: 1.6, ease: "power2.out" }, "-=1.4");
-
-      // ✨ ZAVJESA NA KLIK OTVARA SAJT I PALI ANIMACIJU
-      const enterBtn = document.getElementById('enterWorldBtn');
-      const curtainOverlay = document.getElementById('curtainOverlay');
-
-      if(enterBtn && curtainOverlay) {
-        enterBtn.addEventListener('click', () => {
-          if (navigator.vibrate) { navigator.vibrate(30); }
-          curtainOverlay.classList.add('is-open');
-          
-          if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
-            DeviceMotionEvent.requestPermission()
-              .then(response => {
-                if (response === 'granted') {
-                  window.addEventListener('devicemotion', handleMotion);
-                }
-              }).catch(console.error);
-          } else {
-            window.addEventListener('devicemotion', handleMotion);
-          }
-          
-          setTimeout(() => { introTimeline.play(); }, 500);
-          setTimeout(() => { curtainOverlay.style.display = 'none'; }, 1600);
-        });
-      }
 
       const masterJourneyTimeline = gsap.timeline({
         scrollTrigger: { trigger: "#journeySection", start: "top top", end: "bottom bottom", scrub: 1.4, anticipatePin: 1 }
@@ -990,18 +892,7 @@
     function spawnHeartConfetti(intensity) { const particleCount = Math.min(Math.floor(intensity * 1.8), 30); if (navigator.vibrate) { navigator.vibrate(35); } for (let i = 0; i < particleCount; i++) { heartParticles.push({ x: Math.random() * shakeCanvas.width, y: -20 - (Math.random() * 60), size: Math.random() * 14 + 10, speedY: Math.random() * 3 + 3.5, speedX: (Math.random() - 0.5) * 6, rotation: Math.random() * Math.PI * 2, rotationSpeed: (Math.random() - 0.5) * 0.05, opacity: Math.random() * 0.4 + 0.6 }); } if (!isConfettiActive) { isConfettiActive = true; animateHeartConfetti(); } }
     function drawVectorHeart(ctx, x, y, size, angle, opacity) { ctx.save(); ctx.translate(x, y); ctx.rotate(angle); ctx.beginPath(); ctx.moveTo(0, -size / 4); ctx.bezierCurveTo(-size / 2, -size / 2, -size, -size / 4, -size, size / 4); ctx.bezierCurveTo(-size, size * 0.7, -size / 5, size, 0, size * 1.15); ctx.bezierCurveTo(size / 5, size, size, size * 0.7, size, size / 4); ctx.bezierCurveTo(size, -size / 4, size / 2, -size / 2, 0, -size / 4); ctx.closePath(); ctx.fillStyle = `rgba(179, 132, 99, ${opacity})`; ctx.fill(); ctx.restore(); }
     function animateHeartConfetti() { sCtx.clearRect(0, 0, shakeCanvas.width, shakeCanvas.height); for (let i = 0; i < heartParticles.length; i++) { let p = heartParticles[i]; p.y += p.speedY; p.x += p.speedX; p.rotation += p.rotationSpeed; drawVectorHeart(sCtx, p.x, p.y, p.size, p.rotation, p.opacity); if (p.y > shakeCanvas.height) { heartParticles.splice(i, 1); i--; } } if (heartParticles.length > 0) { requestAnimationFrame(animateHeartConfetti); } else { isConfettiActive = false; sCtx.clearRect(0, 0, shakeCanvas.width, shakeCanvas.height); } }
-    
-    function handleMotion(e) { 
-      let acc = e.accelerationIncludingGravity; 
-      if (!acc || acc.x === null) return; 
-      if (lastX !== null) { 
-        let deltaX = Math.abs(acc.x - lastX); let deltaY = Math.abs(acc.y - lastY); let deltaZ = Math.abs(acc.z - lastZ); 
-        let totalMovement = deltaX + deltaY + deltaZ; 
-        if (totalMovement > shakeThreshold) { spawnHeartConfetti(totalMovement); } 
-      } 
-      lastX = acc.x; lastY = acc.y; lastZ = acc.z; 
-    }
-
+    if (window.DeviceMotionEvent) { window.addEventListener('devicemotion', (e) => { let acc = e.accelerationIncludingGravity; if (!acc || acc.x === null) return; if (lastX !== null) { let deltaX = Math.abs(acc.x - lastX); let deltaY = Math.abs(acc.y - lastY); let deltaZ = Math.abs(acc.z - lastZ); let totalMovement = deltaX + deltaY + deltaZ; if (totalMovement > shakeThreshold) { spawnHeartConfetti(totalMovement); } } lastX = acc.x; lastY = acc.y; lastZ = acc.z; }); }
     document.getElementById("finalTributeScope").addEventListener("click", () => { spawnHeartConfetti(25); });
   </script>
 </body>
