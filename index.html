@@ -57,7 +57,7 @@
     
     html, body {
       width: 100%;
-      min-height: 100svh; /* OSLOBOĐEN GSAP SCROLL NA MOBILNIM! */
+      min-height: 100svh;
       background: var(--bg-gradient);
       font-family: var(--font-clean);
       font-weight: 300;
@@ -68,7 +68,12 @@
       overscroll-behavior-y: none; /* Ubija "gumeno" odskakanje na iPhone-u */
     }
 
-    body.is-loading { overflow: hidden; }
+    /* ✨ ZAKLJUČAVANJE SKROLA TOKOM UČITAVANJA */
+    body.is-loading { 
+      overflow: hidden !important; 
+      height: 100vh !important; 
+      height: 100svh !important; 
+    }
 
     .hero-grain {
       position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: var(--grain-opacity);
@@ -131,7 +136,7 @@
        ========================================== */
     .awwwards-hero-container {
       width: 100vw;
-      height: 100svh; /* Korišten SVH za stabilnost pretraživača */
+      height: 100svh; /* Stabilna visina koja ignoriše Safari traku */
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -362,8 +367,8 @@
     .shake-interaction-hint { font-family: var(--font-clean); font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); opacity: 0; margin-top: 80px; animation: gentleBreatheShake 2.5s ease-in-out infinite alternate; will-change: opacity; }
     @keyframes gentleBreatheShake { 0% { opacity: 0.25; } 100% { opacity: 0.55; } }
     
-    /* ✨ FIX: Canvas za srca mora imati height 100svh da ne bi probijao dole! */
-    #shakeConfettiCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100svh; z-index: 99999; pointer-events: none; }
+    /* ✨ POPRAVLJEN I FIKSIRAN SHAKE CANVAS */
+    #shakeConfettiCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100%; z-index: 99999; pointer-events: none; }
 
     /* ==========================================
        🚪 ENTRY CURTAIN EFFECT (BEZ LINIJE)
@@ -703,7 +708,7 @@
       window.scrollTo(0, 0);
       gsap.registerPlugin(ScrollTrigger);
 
-      // ✨ GSAP ANTI-JITTER: Potpuno gasi kalkulaciju pri povratku pretraživač trake
+      // ✨ GSAP ANTI-JITTER FIX: Savršena stabilnost bez obzira na micanje Safari trake
       ScrollTrigger.config({ ignoreMobileResize: true });
 
       const anniversaryDate = new Date('2022-02-14T00:00:00').getTime();
@@ -738,9 +743,15 @@
         gsap.fromTo(inputContainer, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.6, ease: "power2.out", scrollTrigger: { trigger: "#lockSectionScope", start: "top 80%" } });
       }
 
+      // ✨ UVODNA ANIMACIJA PAUZIRANA
       const introTimeline = gsap.timeline({
         paused: true,
-        onComplete: () => { ScrollTrigger.refresh(); }
+        onComplete: () => { 
+          // ✨ SKROL SE OTKLJUČAVA TEK KAD SE ANIMACIJA POTPUNO ZAVRŠI
+          document.body.classList.remove('is-loading'); 
+          // Nasilno okidamo refresh kako bi GSAP pročitao nove "otključane" dimenzije za mobilni!
+          setTimeout(() => { ScrollTrigger.refresh(); }, 100);
+        }
       });
       introTimeline.to("#heroEyebrow", { opacity: 0.75, y: 0, duration: 2.0, ease: "power2.out", delay: 0.4 })
       .to(".word-span", { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.6, stagger: 0.15, ease: "power3.out" }, "-=1.4")
@@ -755,18 +766,18 @@
           if (navigator.vibrate) { navigator.vibrate(30); }
           curtainOverlay.classList.add('is-open');
           
-          // Otključava skrol odmah
-          document.body.classList.remove('is-loading');
-          setTimeout(() => { ScrollTrigger.refresh(); }, 100);
-
           if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
-            DeviceMotionEvent.requestPermission().then(response => {
-              if (response === 'granted') { window.addEventListener('devicemotion', handleMotion); }
-            }).catch(console.error);
+            DeviceMotionEvent.requestPermission()
+              .then(response => {
+                if (response === 'granted') {
+                  window.addEventListener('devicemotion', handleMotion);
+                }
+              }).catch(console.error);
           } else if (window.DeviceMotionEvent) {
             window.addEventListener('devicemotion', handleMotion);
           }
           
+          // ✨ Animacija se pali, skrol ostaje ZAKLJUČAN dok ona ne završi!
           setTimeout(() => { introTimeline.play(); }, 500);
           setTimeout(() => { curtainOverlay.style.display = 'none'; }, 1600);
         });
@@ -832,73 +843,13 @@
 
     function openPaperLetter() { const realEnvelope = document.getElementById('physicalEnvelope'); const letterZone = document.getElementById('secretLetterZone'); if (navigator.vibrate) { navigator.vibrate([45, 90, 45]); } const revealTimeline = gsap.timeline(); revealTimeline.to(realEnvelope, { opacity: 0, scale: 1.04, y: -15, duration: 1.2, ease: "power2.inOut", onComplete: () => { realEnvelope.style.display = "none"; letterZone.style.display = "block"; } }).to(letterZone, { opacity: 1, scale: 1, y: 0, duration: 2, ease: "power3.out" }); }
 
-    // =========================================================================
-    // ✨ SHAKE KOD
-    // =========================================================================
-    const shakeCanvas = document.getElementById("shakeConfettiCanvas"); 
-    const sCtx = shakeCanvas.getContext("2d"); 
-    let heartParticles = []; 
-    let lastX = null, lastY = null, lastZ = null; 
-    let shakeThreshold = 14; 
-    let isConfettiActive = false;
-
+    const shakeCanvas = document.getElementById("shakeConfettiCanvas"); const sCtx = shakeCanvas.getContext("2d"); let heartParticles = []; let lastX = null, lastY = null, lastZ = null; let shakeThreshold = 14; let isConfettiActive = false;
     function resizeShakeCanvas() { shakeCanvas.width = window.innerWidth; shakeCanvas.height = window.innerHeight; }
     window.addEventListener("resize", resizeShakeCanvas); resizeShakeCanvas();
-
-    function spawnHeartConfetti(intensity) { 
-      const particleCount = Math.min(Math.floor(intensity * 1.8), 30); 
-      if (navigator.vibrate) { navigator.vibrate(35); } 
-      for (let i = 0; i < particleCount; i++) { 
-        heartParticles.push({ 
-          x: Math.random() * shakeCanvas.width, 
-          y: -20 - (Math.random() * 60), 
-          size: Math.random() * 14 + 10, 
-          speedY: Math.random() * 3 + 3.5, 
-          speedX: (Math.random() - 0.5) * 6, 
-          rotation: Math.random() * Math.PI * 2, 
-          rotationSpeed: (Math.random() - 0.5) * 0.05, 
-          opacity: Math.random() * 0.4 + 0.6 
-        }); 
-      } 
-      if (!isConfettiActive) { isConfettiActive = true; animateHeartConfetti(); } 
-    }
-
-    function drawVectorHeart(ctx, x, y, size, angle, opacity) { 
-      ctx.save(); ctx.translate(x, y); ctx.rotate(angle); ctx.beginPath(); ctx.moveTo(0, -size / 4); 
-      ctx.bezierCurveTo(-size / 2, -size / 2, -size, -size / 4, -size, size / 4); 
-      ctx.bezierCurveTo(-size, size * 0.7, -size / 5, size, 0, size * 1.15); 
-      ctx.bezierCurveTo(size / 5, size, size, size * 0.7, size, size / 4); 
-      ctx.bezierCurveTo(size, -size / 4, size / 2, -size / 2, 0, -size / 4); 
-      ctx.closePath(); ctx.fillStyle = `rgba(179, 132, 99, ${opacity})`; ctx.fill(); ctx.restore(); 
-    }
-
-    function animateHeartConfetti() { 
-      sCtx.clearRect(0, 0, shakeCanvas.width, shakeCanvas.height); 
-      for (let i = 0; i < heartParticles.length; i++) { 
-        let p = heartParticles[i]; 
-        p.y += p.speedY; p.x += p.speedX; p.rotation += p.rotationSpeed; 
-        drawVectorHeart(sCtx, p.x, p.y, p.size, p.rotation, p.opacity); 
-        if (p.y > shakeCanvas.height) { heartParticles.splice(i, 1); i--; } 
-      } 
-      if (heartParticles.length > 0) { 
-        requestAnimationFrame(animateHeartConfetti); 
-      } else { 
-        isConfettiActive = false; 
-        sCtx.clearRect(0, 0, shakeCanvas.width, shakeCanvas.height); 
-      } 
-    }
-
-    function handleMotion(e) { 
-      let acc = e.accelerationIncludingGravity; 
-      if (!acc || acc.x === null) return; 
-      if (lastX !== null) { 
-        let deltaX = Math.abs(acc.x - lastX); let deltaY = Math.abs(acc.y - lastY); let deltaZ = Math.abs(acc.z - lastZ); 
-        let totalMovement = deltaX + deltaY + deltaZ; 
-        if (totalMovement > shakeThreshold) { spawnHeartConfetti(totalMovement); } 
-      } 
-      lastX = acc.x; lastY = acc.y; lastZ = acc.z; 
-    }
-
+    function spawnHeartConfetti(intensity) { const particleCount = Math.min(Math.floor(intensity * 1.8), 30); if (navigator.vibrate) { navigator.vibrate(35); } for (let i = 0; i < particleCount; i++) { heartParticles.push({ x: Math.random() * shakeCanvas.width, y: -20 - (Math.random() * 60), size: Math.random() * 14 + 10, speedY: Math.random() * 3 + 3.5, speedX: (Math.random() - 0.5) * 6, rotation: Math.random() * Math.PI * 2, rotationSpeed: (Math.random() - 0.5) * 0.05, opacity: Math.random() * 0.4 + 0.6 }); } if (!isConfettiActive) { isConfettiActive = true; animateHeartConfetti(); } }
+    function drawVectorHeart(ctx, x, y, size, angle, opacity) { ctx.save(); ctx.translate(x, y); ctx.rotate(angle); ctx.beginPath(); ctx.moveTo(0, -size / 4); ctx.bezierCurveTo(-size / 2, -size / 2, -size, -size / 4, -size, size / 4); ctx.bezierCurveTo(-size, size * 0.7, -size / 5, size, 0, size * 1.15); ctx.bezierCurveTo(size / 5, size, size, size * 0.7, size, size / 4); ctx.bezierCurveTo(size, -size / 4, size / 2, -size / 2, 0, -size / 4); ctx.closePath(); ctx.fillStyle = `rgba(179, 132, 99, ${opacity})`; ctx.fill(); ctx.restore(); }
+    function animateHeartConfetti() { sCtx.clearRect(0, 0, shakeCanvas.width, shakeCanvas.height); for (let i = 0; i < heartParticles.length; i++) { let p = heartParticles[i]; p.y += p.speedY; p.x += p.speedX; p.rotation += p.rotationSpeed; drawVectorHeart(sCtx, p.x, p.y, p.size, p.rotation, p.opacity); if (p.y > shakeCanvas.height) { heartParticles.splice(i, 1); i--; } } if (heartParticles.length > 0) { requestAnimationFrame(animateHeartConfetti); } else { isConfettiActive = false; sCtx.clearRect(0, 0, shakeCanvas.width, shakeCanvas.height); } }
+    if (window.DeviceMotionEvent) { window.addEventListener('devicemotion', (e) => { let acc = e.accelerationIncludingGravity; if (!acc || acc.x === null) return; if (lastX !== null) { let deltaX = Math.abs(acc.x - lastX); let deltaY = Math.abs(acc.y - lastY); let deltaZ = Math.abs(acc.z - lastZ); let totalMovement = deltaX + deltaY + deltaZ; if (totalMovement > shakeThreshold) { spawnHeartConfetti(totalMovement); } } lastX = acc.x; lastY = acc.y; lastZ = acc.z; }); }
     document.getElementById("finalTributeScope").addEventListener("click", () => { spawnHeartConfetti(25); });
   </script>
 </body>
