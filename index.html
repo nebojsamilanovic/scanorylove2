@@ -64,7 +64,7 @@
       color: var(--text-main);
       -webkit-font-smoothing: antialiased;
       transition: background 1.5s ease-in-out, color 1.5s ease-in-out;
-      overflow-x: hidden; 
+      overflow-x: hidden; /* ✨ OSIGURAČ: Ne dozvoljava skakanje i prazan prostor na dnu */
     }
 
     body.is-loading { overflow: hidden; }
@@ -188,6 +188,7 @@
     .stars-story-fullscreen { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; opacity: 0; background: radial-gradient(ellipse at center, #120d0a 0%, #080605 70%, #030202 100%); display: flex; align-items: center; justify-content: center; text-align: center; will-change: opacity; }
     .stars-overlay-artisan { position: absolute; inset: 0; background: transparent; z-index: 1; }
     .stars-overlay-artisan::before { content: " "; position: absolute; top: 0; left: 0; width: 1.5px; height: 1.5px; background: transparent; box-shadow: 200px 150px rgba(238, 223, 204, 0.6), 600px 400px rgba(255, 255, 255, 0.4), 150px 500px rgba(238, 223, 204, 0.5), 800px 250px rgba(255, 255, 255, 0.7), 450px 700px rgba(179, 132, 99, 0.6), 700px 600px rgba(238, 223, 204, 0.4), 300px 300px rgba(255, 255, 255, 0.5), 900px 150px rgba(179, 132, 99, 0.5); animation: starsBreathe 4s ease-in-out infinite alternate; }
+    @keyframes starsBreathe { 0% { opacity: 0.3; } 100% { opacity: 0.85; } }
     .stars-text-content { position: relative; z-index: 3; padding: 0 6vw; max-width: 750px; text-align: center; opacity: 0; transform: scale(0.95); will-change: opacity, transform; }
     .vogue-date-label { font-family: var(--font-clean); font-size: clamp(10px, 1.3vw, 12px); text-transform: uppercase; letter-spacing: 0.3em; color: #f5ebe2; margin-top: 20px; display: block; font-weight: 400; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); }
 
@@ -198,6 +199,7 @@
     .location-text-content { position: relative; z-index: 4; padding: 0 6vw; max-width: 750px; text-align: center; opacity: 0; transform: translateY(25px); will-change: opacity, transform; }
     
     .vogue-pin-icon { width: clamp(30px, 5vw, 42px); height: clamp(30px, 5vw, 42px); fill: var(--accent-love); margin-bottom: 25px; display: inline-block; animation: pinFloat 3.5s ease-in-out infinite alternate; filter: drop-shadow(0 8px 15px rgba(179, 132, 99, 0.4)); }
+    @keyframes pinFloat { 0% { transform: translateY(0); } 100% { transform: translateY(-10px); } }
     .vogue-coords-value { font-family: var(--font-clean); font-size: clamp(18px, 3.8vw, 28px); font-weight: 300; letter-spacing: 0.08em; color: #eedfcc; margin-bottom: 20px; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); }
 
     .journey-sticky-container::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle, transparent 40%, rgba(13, 10, 8, 0.65) 100%); z-index: 4; pointer-events: none; }
@@ -211,6 +213,7 @@
     .art-print-viewport::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle, transparent 50%, rgba(21, 16, 12, 0.4) 100%); z-index: 2; pointer-events: none; transition: opacity 1s ease; }
     .hold-touch-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 3; padding: 0 40px; text-align: center; transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); pointer-events: none; }
     .hold-touch-overlay .finger-icon { font-size: 36px; margin-bottom: 20px; color: var(--accent-love); filter: drop-shadow(0 0 10px rgba(179,132,99,0.3)); animation: pulseSparkle 2s infinite alternate; }
+    @keyframes pulseSparkle { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.15); opacity: 1; } }
     .hold-instruction-text { font-family: var(--font-clean); font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: #eedfcc; font-weight: 400; line-height: 1.7; }
     .art-print-viewport.active { transform: scale(1.03); box-shadow: 0 45px 95px rgba(179, 132, 99, 0.3), 0 20px 40px rgba(0,0,0,0.04); }
     .art-print-viewport.active img { filter: blur(0px) grayscale(0%) brightness(0.95); transform: scale(1.02); }
@@ -358,16 +361,70 @@
     .shake-interaction-hint { font-family: var(--font-clean); font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); opacity: 0; margin-top: 80px; animation: gentleBreatheShake 2.5s ease-in-out infinite alternate; will-change: opacity; }
     @keyframes gentleBreatheShake { 0% { opacity: 0.25; } 100% { opacity: 0.55; } }
     
-    /* ✨ ZAKLJUČANO FIKSNO PLATNO ZA SRCA (Spriječava duh prostor na dnu ekrana) */
-    #shakeConfettiCanvas { 
-      position: fixed; 
-      top: 0; 
-      left: 0; 
-      width: 100vw; 
-      height: 100vh; 
-      z-index: 99999; 
-      pointer-events: none; 
+    /* ✨ POPRAVLJEN I FIKSIRAN SHAKE CANVAS: Koristi čistu 100vh visinu ekrana da eliminiše duh prostor na dnu */
+    #shakeConfettiCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 99999; pointer-events: none; }
+
+    /* ==========================================
+       🚪 ENTRY CURTAIN EFFECT (VRAĆENA ZAVJESA)
+       ========================================== */
+    .curtain-overlay {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: calc(var(--vh, 1vh) * 100);
+      z-index: 9999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: all;
     }
+    .curtain-panel {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 50vw;
+      background: #14100d;
+      transition: transform 1.6s cubic-bezier(0.76, 0, 0.24, 1);
+      z-index: 1;
+    }
+    .curtain-left { left: 0; }
+    .curtain-right { right: 0; }
+
+    .curtain-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .enter-world-btn {
+      background: transparent;
+      border: 1px solid var(--accent-love);
+      color: #eedfcc;
+      font-family: var(--font-clean);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.35em;
+      padding: 18px 40px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      outline: none;
+    }
+    .enter-world-btn:hover, .enter-world-btn:active {
+      background: var(--accent-love);
+      color: #14100d;
+      box-shadow: 0 10px 30px rgba(179, 132, 99, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .curtain-overlay.is-open .curtain-left { transform: translateX(-100%); }
+    .curtain-overlay.is-open .curtain-right { transform: translateX(100%); }
+    .curtain-overlay.is-open .curtain-content { opacity: 0; transform: scale(0.95); pointer-events: none; }
   </style>
 </head>
 <body class="is-loading">
@@ -398,6 +455,14 @@
       });
     })();
   </script>
+
+  <div id="curtainOverlay" class="curtain-overlay">
+    <div class="curtain-panel curtain-left"></div>
+    <div class="curtain-panel curtain-right"></div>
+    <div class="curtain-content">
+      <button id="enterWorldBtn" class="enter-world-btn">Step into our world</button>
+    </div>
+  </div>
 
   <div class="hero-grain"></div>
   <canvas id="shakeConfettiCanvas"></canvas>
@@ -520,7 +585,7 @@
       <section class="section-artisan-scratch">
         <h2 class="vogue-section-title" id="scratchTitleTrigger">Secret Moment</h2>
         <div class="scratch-art-viewport" id="scratchArtViewport">
-          <img src="https://images.unsplash.com/photo-1563808599481-34a342e44008?w=1200&auto=format&fit=crop&q=80" alt="Secret Memory" loading="lazy" decoding="async" />
+          <img src="https://images.unsplash.com/photo-1563808599481-34a342e44508?w=1200&auto=format&fit=crop&q=80" alt="Secret Memory" loading="lazy" decoding="async" />
           <div class="scratch-vogue-hint" id="scratchHint">Erase the dust from our favorite day.</div>
           <canvas id="scratchCanvas"></canvas>
         </div>
@@ -656,6 +721,7 @@
       window.scrollTo(0, 0);
       gsap.registerPlugin(ScrollTrigger);
 
+      // ✨ GSAP ANTI-JITTER: Isključuje trzanje animacija kod resajza navigacione trake na mobilnim pretraživačima
       ScrollTrigger.config({ ignoreMobileResize: true });
 
       const anniversaryDate = new Date('2022-02-14T00:00:00').getTime();
@@ -690,7 +756,7 @@
         gsap.fromTo(inputContainer, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.6, ease: "power2.out", scrollTrigger: { trigger: "#lockSectionScope", start: "top 80%" } });
       }
 
-      // 🛠️ ISPRAVLJENO: Uvodna animacija se odmah glatko izvodi pri učitavanju body-a
+      // ✨ UVODNA ANIMACIJA RADI ODMAH BEZ PREKIDA I ZAVJESA KAKO JE KODOM ZADANO
       const introTimeline = gsap.timeline({
         onComplete: () => { document.body.classList.remove('is-loading'); ScrollTrigger.refresh(); }
       });
@@ -698,18 +764,6 @@
       .to(".word-span", { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.6, stagger: 0.15, ease: "power3.out" }, "-=1.4")
       .to("#heroTicker", { opacity: 1, y: 0, duration: 2.2, ease: "power2.out" }, "-=1.0")
       .to("#heroScroll", { opacity: 0.8, duration: 1.6, ease: "power2.out" }, "-=1.4");
-
-      // Slušalac pokreta za drmanje
-      if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
-         document.body.addEventListener('click', function requestMotion() {
-            DeviceMotionEvent.requestPermission().then(response => {
-               if (response === 'granted') { window.addEventListener('devicemotion', handleMotion); }
-            }).catch(console.error);
-            document.body.removeEventListener('click', requestMotion);
-         });
-      } else {
-         window.addEventListener('devicemotion', handleMotion);
-      }
 
       const masterJourneyTimeline = gsap.timeline({ scrollTrigger: { trigger: "#journeySection", start: "top top", end: "bottom bottom", scrub: 1.4, anticipatePin: 1 } });
       masterJourneyTimeline
@@ -772,7 +826,7 @@
     function openPaperLetter() { const realEnvelope = document.getElementById('physicalEnvelope'); const letterZone = document.getElementById('secretLetterZone'); if (navigator.vibrate) { navigator.vibrate([45, 90, 45]); } const revealTimeline = gsap.timeline(); revealTimeline.to(realEnvelope, { opacity: 0, scale: 1.04, y: -15, duration: 1.2, ease: "power2.inOut", onComplete: () => { realEnvelope.style.display = "none"; letterZone.style.display = "block"; } }).to(letterZone, { opacity: 1, scale: 1, y: 0, duration: 2, ease: "power3.out" }); }
 
     // =========================================================================
-    // ✨ SHAKE MEHANIZAM
+    // ✨ POPRAVLJEN SHAKE EFEKAT
     // =========================================================================
     const shakeCanvas = document.getElementById("shakeConfettiCanvas"); 
     const sCtx = shakeCanvas.getContext("2d"); 
@@ -855,6 +909,7 @@
       } 
     }
 
+    if (window.DeviceMotionEvent) { window.addEventListener('devicemotion', handleMotion); }
     document.getElementById("finalTributeScope").addEventListener("click", () => { spawnHeartConfetti(25); });
   </script>
 </body>
