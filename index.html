@@ -57,21 +57,27 @@
     
     html, body {
       width: 100%;
-      min-height: 100vh; /* FIX: Umjesto height: 100% kako bi animacije radile na mobilnom */
+      height: 100%;
       background: var(--bg-gradient);
       font-family: var(--font-clean);
       font-weight: 300;
       color: var(--text-main);
       -webkit-font-smoothing: antialiased;
       transition: background 1.5s ease-in-out, color 1.5s ease-in-out;
-      overflow-x: hidden; 
     }
+    
+    body { overflow-x: hidden; }
+
+    body.is-loading { overflow: hidden; }
 
     .hero-grain {
       position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: var(--grain-opacity);
       background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
       transition: opacity 1.5s ease-in-out;
     }
+
+    /* CSS dodatak za fiksiranje canvasa na dnu da ne pravi razmak */
+    #shakeConfettiCanvas { position: fixed; inset: 0; pointer-events: none; z-index: 99999; width: 100%; height: 100%; }
 
     .page-story-wrapper {
       width: 100%;
@@ -128,7 +134,7 @@
        ========================================== */
     .awwwards-hero-container {
       width: 100vw;
-      height: 100vh;
+      height: 100dvh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -174,7 +180,7 @@
        🎞️ MASTER INTEGRISANA KINEMATOGRAFSKA TRAKA (SEKCIJE 2, 3, 4)
        ========================================== */
     .scroll-journey-wrapper { position: relative; width: 100vw; height: 500vh; background-color: transparent; }
-    .journey-sticky-container { position: sticky; top: 0; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .journey-sticky-container { position: sticky; top: 0; width: 100vw; height: 100dvh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
     
     .journey-bg-image { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; will-change: transform, filter, opacity; filter: grayscale(10%) brightness(0.35) blur(10px); transform: scale(1.1); }
     .journey-bg-image img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
@@ -244,7 +250,7 @@
     /* ==========================================
        ✍️ POGLAVLJE 7: A PROMISE OF ORDINARY DAYS (FULL VIEWPORT)
        ========================================== */
-    .vogue-promise-section { width: 100vw; height: 100vh; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: var(--bg-promise); display: flex; align-items: center; justify-content: center; overflow: hidden; perspective: 1200px; transition: background 1.5s ease-in-out; }
+    .vogue-promise-section { width: 100vw; height: 100dvh; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: var(--bg-promise); display: flex; align-items: center; justify-content: center; overflow: hidden; perspective: 1200px; transition: background 1.5s ease-in-out; }
     .promise-3d-container { max-width: 740px; padding: 0 24px; text-align: center; will-change: transform, opacity; transform-style: preserve-3d; transform: rotateX(12deg) rotateY(-12deg) rotateZ(-2deg); opacity: 0; }
     .promise-title { font-family: var(--font-clean); font-size: clamp(10px, 1.4vw, 12px); text-transform: uppercase; letter-spacing: 0.35em; color: var(--accent-love); margin-bottom: 30px; font-weight: 500; }
     .promise-body-text { font-family: var(--font-emotion); font-size: clamp(26px, 4.5vw, 44px); font-weight: 300; line-height: 1.45; color: var(--text-main); letter-spacing: -0.01em; transition: color 1.5s ease-in-out; }
@@ -338,7 +344,7 @@
        🔒 POGLAVLJE 12: TIMELOCK SEF SJEĆANJA
        ========================================= */
     .vogue-lock-section { padding: 180px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: 100vh; text-align: center; }
-    .lock-interactive-box { width: 100%; max-width: 480px; padding: 0 24px; display: none; flex-direction: column; align-items: center; will-change: opacity, transform; }
+    .lock-interactive-box { width: 100%; max-width: 480px; padding: 40px 30px; margin: 0 auto; display: none; flex-direction: column; align-items: center; will-change: opacity, transform; }
     .artisan-envelope-wrapper { position: absolute; width: 100%; max-width: 420px; height: 260px; background: #fdfbf7; border-radius: 12px; box-shadow: 0 25px 65px rgba(33, 26, 20, 0.12), inset 0 1px 2px #fff; border: 1px solid rgba(43, 33, 26, 0.08); cursor: pointer; display: none; opacity: 0; transform: scale(0.95) translateY(30px); will-change: opacity, transform; z-index: 30; }
     .artisan-envelope-wrapper::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%; background: linear-gradient(135deg, transparent 49.5%, rgba(179, 132, 99, 0.15) 50%, transparent 50.5%), linear-gradient(225deg, transparent 49.5%, rgba(179, 132, 99, 0.15) 50%, transparent 50.5%); border-bottom: 1px solid rgba(179, 132, 99, 0.2); pointer-events: none; }
     .preview-letter-lip { position: absolute; top: -15px; left: 8%; right: 8%; height: 50px; background: #fff; border-radius: 6px 6px 0 0; box-shadow: 0 -5px 15px rgba(0,0,0,0.02); border: 1px solid rgba(43, 33, 26, 0.05); border-bottom: none; display: flex; align-items: center; justify-content: center; }
@@ -358,24 +364,82 @@
     .shake-interaction-hint { font-family: var(--font-clean); font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); opacity: 0; margin-top: 80px; animation: gentleBreatheShake 2.5s ease-in-out infinite alternate; will-change: opacity; }
     @keyframes gentleBreatheShake { 0% { opacity: 0.25; } 100% { opacity: 0.55; } }
     
-    /* FIX: PRAZAN PROSTOR NA DNU. Fiksirano platno */
-    #shakeConfettiCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 99999; pointer-events: none; }
+    /* ==========================================
+       🚪 ENTRY CURTAIN EFFECT (BEZ LINIJE U SREDINI)
+       ========================================== */
+    .curtain-overlay {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: all;
+    }
+    .curtain-panel {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 50vw;
+      background: #14100d;
+      transition: transform 1.6s cubic-bezier(0.76, 0, 0.24, 1);
+      z-index: 1;
+    }
+    /* Uklonjena linija po sredini */
+    .curtain-left { left: 0; border-right: none; }
+    .curtain-right { right: 0; border-left: none; }
+
+    .curtain-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .enter-world-btn {
+      background: transparent;
+      border: 1px solid var(--accent-love);
+      color: #eedfcc;
+      font-family: var(--font-clean);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.35em;
+      padding: 18px 40px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      outline: none;
+    }
+    .enter-world-btn:hover, .enter-world-btn:active {
+      background: var(--accent-love);
+      color: #14100d;
+      box-shadow: 0 10px 30px rgba(179, 132, 99, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .curtain-overlay.is-open .curtain-left { transform: translateX(-100%); }
+    .curtain-overlay.is-open .curtain-right { transform: translateX(100%); }
+    .curtain-overlay.is-open .curtain-content { opacity: 0; transform: scale(0.95); pointer-events: none; }
 
   </style>
 </head>
-<body>
 
-  <script>
-    (function() {
-      if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
-      window.scrollTo(0, 0);
-      
-      const currentHour = new Date().getHours();
-      if (currentHour >= 20 || currentHour < 6) {
-        document.documentElement.classList.add('theme-night');
-      }
-    })();
-  </script>
+<body class="is-loading">
+
+  <!-- ✨ ZAVJESA SA MODERNIJIM DUGMETOM ✨ -->
+  <div id="curtainOverlay" class="curtain-overlay">
+    <div class="curtain-panel curtain-left"></div>
+    <div class="curtain-panel curtain-right"></div>
+    <div class="curtain-content">
+      <button id="enterWorldBtn" class="enter-world-btn">Step into our world</button>
+    </div>
+  </div>
 
   <div class="hero-grain"></div>
   <canvas id="shakeConfettiCanvas"></canvas>
@@ -695,7 +759,7 @@
       window.scrollTo(0, 0);
       gsap.registerPlugin(ScrollTrigger);
 
-      // ✨ GSAP FIX ZA SJECKANJE: GSAP ignoriše micanje trake na telefonu
+      // ✨ FIX ZA SJECKANJE: GSAP ignoriše micanje trake na telefonu (Samo ova linija zaobilazi taj lag)
       ScrollTrigger.config({ ignoreMobileResize: true });
 
       const anniversaryDate = new Date('2022-02-14T00:00:00').getTime();
@@ -737,11 +801,38 @@
         gsap.fromTo(inputContainer, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.6, ease: "power2.out", scrollTrigger: { trigger: "#lockSectionScope", start: "top 80%" } });
       }
 
-      const introTimeline = gsap.timeline();
+      // ✨ UVODNA ANIMACIJA PAUZIRANA
+      const introTimeline = gsap.timeline({
+        paused: true,
+        onComplete: () => { 
+          // ✨ SKROL SE OTKLJUČAVA TEK NA KRAJU ANIMACIJE
+          document.body.classList.remove('is-loading'); 
+          ScrollTrigger.refresh(); 
+        }
+      });
       introTimeline.to("#heroEyebrow", { opacity: 0.75, y: 0, duration: 2.0, ease: "power2.out", delay: 0.4 })
       .to(".word-span", { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.6, stagger: 0.15, ease: "power3.out" }, "-=1.4")
       .to("#heroTicker", { opacity: 1, y: 0, duration: 2.2, ease: "power2.out" }, "-=1.0")
       .to("#heroScroll", { opacity: 0.8, duration: 1.6, ease: "power2.out" }, "-=1.4");
+
+      // ✨ ZAVJESA NA KLIK OTVARA SAJT I PALI ANIMACIJU
+      const enterBtn = document.getElementById('enterWorldBtn');
+      const curtainOverlay = document.getElementById('curtainOverlay');
+
+      if(enterBtn && curtainOverlay) {
+        enterBtn.addEventListener('click', () => {
+          if (navigator.vibrate) { navigator.vibrate(30); }
+          curtainOverlay.classList.add('is-open');
+          
+          setTimeout(() => {
+            introTimeline.play();
+          }, 500);
+
+          setTimeout(() => {
+            curtainOverlay.style.display = 'none';
+          }, 1600);
+        });
+      }
 
       const masterJourneyTimeline = gsap.timeline({
         scrollTrigger: { trigger: "#journeySection", start: "top top", end: "bottom bottom", scrub: 1.4, anticipatePin: 1 }
