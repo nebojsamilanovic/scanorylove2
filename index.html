@@ -64,7 +64,6 @@
       color: var(--text-main);
       -webkit-font-smoothing: antialiased;
       transition: background 1.5s ease-in-out, color 1.5s ease-in-out;
-      /* ✨ OSIGURAČ: Sprječava bilo kakav višak praznog prostora izvan granica */
       overflow-x: hidden; 
     }
 
@@ -189,7 +188,6 @@
     .stars-story-fullscreen { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; opacity: 0; background: radial-gradient(ellipse at center, #120d0a 0%, #080605 70%, #030202 100%); display: flex; align-items: center; justify-content: center; text-align: center; will-change: opacity; }
     .stars-overlay-artisan { position: absolute; inset: 0; background: transparent; z-index: 1; }
     .stars-overlay-artisan::before { content: " "; position: absolute; top: 0; left: 0; width: 1.5px; height: 1.5px; background: transparent; box-shadow: 200px 150px rgba(238, 223, 204, 0.6), 600px 400px rgba(255, 255, 255, 0.4), 150px 500px rgba(238, 223, 204, 0.5), 800px 250px rgba(255, 255, 255, 0.7), 450px 700px rgba(179, 132, 99, 0.6), 700px 600px rgba(238, 223, 204, 0.4), 300px 300px rgba(255, 255, 255, 0.5), 900px 150px rgba(179, 132, 99, 0.5); animation: starsBreathe 4s ease-in-out infinite alternate; }
-    @keyframes starsBreathe { 0% { opacity: 0.3; } 100% { opacity: 0.85; } }
     .stars-text-content { position: relative; z-index: 3; padding: 0 6vw; max-width: 750px; text-align: center; opacity: 0; transform: scale(0.95); will-change: opacity, transform; }
     .vogue-date-label { font-family: var(--font-clean); font-size: clamp(10px, 1.3vw, 12px); text-transform: uppercase; letter-spacing: 0.3em; color: #f5ebe2; margin-top: 20px; display: block; font-weight: 400; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); }
 
@@ -200,7 +198,6 @@
     .location-text-content { position: relative; z-index: 4; padding: 0 6vw; max-width: 750px; text-align: center; opacity: 0; transform: translateY(25px); will-change: opacity, transform; }
     
     .vogue-pin-icon { width: clamp(30px, 5vw, 42px); height: clamp(30px, 5vw, 42px); fill: var(--accent-love); margin-bottom: 25px; display: inline-block; animation: pinFloat 3.5s ease-in-out infinite alternate; filter: drop-shadow(0 8px 15px rgba(179, 132, 99, 0.4)); }
-    @keyframes pinFloat { 0% { transform: translateY(0); } 100% { transform: translateY(-10px); } }
     .vogue-coords-value { font-family: var(--font-clean); font-size: clamp(18px, 3.8vw, 28px); font-weight: 300; letter-spacing: 0.08em; color: #eedfcc; margin-bottom: 20px; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); }
 
     .journey-sticky-container::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle, transparent 40%, rgba(13, 10, 8, 0.65) 100%); z-index: 4; pointer-events: none; }
@@ -214,7 +211,6 @@
     .art-print-viewport::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle, transparent 50%, rgba(21, 16, 12, 0.4) 100%); z-index: 2; pointer-events: none; transition: opacity 1s ease; }
     .hold-touch-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 3; padding: 0 40px; text-align: center; transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); pointer-events: none; }
     .hold-touch-overlay .finger-icon { font-size: 36px; margin-bottom: 20px; color: var(--accent-love); filter: drop-shadow(0 0 10px rgba(179,132,99,0.3)); animation: pulseSparkle 2s infinite alternate; }
-    @keyframes pulseSparkle { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.15); opacity: 1; } }
     .hold-instruction-text { font-family: var(--font-clean); font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: #eedfcc; font-weight: 400; line-height: 1.7; }
     .art-print-viewport.active { transform: scale(1.03); box-shadow: 0 45px 95px rgba(179, 132, 99, 0.3), 0 20px 40px rgba(0,0,0,0.04); }
     .art-print-viewport.active img { filter: blur(0px) grayscale(0%) brightness(0.95); transform: scale(1.02); }
@@ -341,7 +337,8 @@
        🔒 POGLAVLJE 12: TIMELOCK SEF SJEĆANJA
        ========================================= */
     .vogue-lock-section { padding: 180px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: calc(var(--vh, 1vh) * 100); text-align: center; }
-    .lock-interactive-box { width: 100%; max-width: 480px; padding: 0 24px; display: none; flex-direction: column; align-items: center; will-change: opacity, transform; }
+    .lock-interactive-box { width: 100%; max-width: 480px; padding: 40px 30px; margin: 0 auto; display: none; flex-direction: column; align-items: center; will-change: opacity, transform; background: var(--card-bg-sleep); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 2px dashed var(--accent-love); border-radius: var(--radius); box-shadow: 0 15px 40px rgba(33, 26, 20, 0.08); }
+    @keyframes pulseLock { 0% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 8px var(--accent-love)); } 100% { transform: scale(1); opacity: 0.8; } }
     .artisan-envelope-wrapper { position: absolute; width: 100%; max-width: 420px; height: 260px; background: #fdfbf7; border-radius: 12px; box-shadow: 0 25px 65px rgba(33, 26, 20, 0.12), inset 0 1px 2px #fff; border: 1px solid rgba(43, 33, 26, 0.08); cursor: pointer; display: none; opacity: 0; transform: scale(0.95) translateY(30px); will-change: opacity, transform; z-index: 30; }
     .artisan-envelope-wrapper::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%; background: linear-gradient(135deg, transparent 49.5%, rgba(179, 132, 99, 0.15) 50%, transparent 50.5%), linear-gradient(225deg, transparent 49.5%, rgba(179, 132, 99, 0.15) 50%, transparent 50.5%); border-bottom: 1px solid rgba(179, 132, 99, 0.2); pointer-events: none; }
     .preview-letter-lip { position: absolute; top: -15px; left: 8%; right: 8%; height: 50px; background: #fff; border-radius: 6px 6px 0 0; box-shadow: 0 -5px 15px rgba(0,0,0,0.02); border: 1px solid rgba(43, 33, 26, 0.05); border-bottom: none; display: flex; align-items: center; justify-content: center; }
@@ -361,8 +358,17 @@
     .shake-interaction-hint { font-family: var(--font-clean); font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); opacity: 0; margin-top: 80px; animation: gentleBreatheShake 2.5s ease-in-out infinite alternate; will-change: opacity; }
     @keyframes gentleBreatheShake { 0% { opacity: 0.25; } 100% { opacity: 0.55; } }
     
-    /* ✨ OSIGURAČ: Spriječava širenje prostora na dnu ispod ekrana */
-    #shakeConfettiCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 99999; pointer-events: none; }
+    /* ✨ POPRAVLJEN I FIKSIRAN SHAKE CANVAS: 
+       Koristi nativni 100vh fiksni prostor tako da ga pretraživač ne vidi kao element skrola */
+    #shakeConfettiCanvas { 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100vw; 
+      height: 100vh; 
+      z-index: 99999; 
+      pointer-events: none; 
+    }
 
     /* ==========================================
        🚪 ENTRY CURTAIN EFFECT (VRAĆENA ZAVJESA)
@@ -439,24 +445,19 @@
         document.documentElement.classList.add('theme-night');
       }
 
-      // --- 🛠️ ANTI-JITTER KOD (Zaključavanje visine) ---
       const setVH = () => {
         let vh = window.innerHeight;
-        // Postavlja CSS varijablu na 1% stvarne visine pri učitavanju
         document.documentElement.style.setProperty('--vh', `${vh * 0.01}px`);
       };
       setVH();
       
       let vw = window.innerWidth;
       window.addEventListener('resize', () => {
-        // Ažurira visinu SAMO ako se promijeni širina (npr. okretanje telefona),
-        // potpuno ignorišući pojavljivanje i nestajanje navigacione trake.
         if (window.innerWidth !== vw) {
           vw = window.innerWidth;
           setVH();
         }
       });
-      // ------------------------------------------------
     })();
   </script>
 
@@ -759,9 +760,8 @@
         gsap.fromTo(inputContainer, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.6, ease: "power2.out", scrollTrigger: { trigger: "#lockSectionScope", start: "top 80%" } });
       }
 
-      // UVODNA ANIMACIJA PAUZIRANA DOK SE ZAVJESA NE OTVORI
+      // 🛠️ POPRAVLJENO: Uvodna animacija se sada pokreće bez pauziranja i grešaka!
       const introTimeline = gsap.timeline({
-        paused: true,
         onComplete: () => { document.body.classList.remove('is-loading'); ScrollTrigger.refresh(); }
       });
       introTimeline.to("#heroEyebrow", { opacity: 0.75, y: 0, duration: 2.0, ease: "power2.out", delay: 0.4 })
@@ -769,30 +769,18 @@
       .to("#heroTicker", { opacity: 1, y: 0, duration: 2.2, ease: "power2.out" }, "-=1.0")
       .to("#heroScroll", { opacity: 0.8, duration: 1.6, ease: "power2.out" }, "-=1.4");
 
-      // LOGIKA ZAVJESE I TRAŽENJE DOZVOLE ZA SHAKE
-      const enterBtn = document.getElementById('enterWorldBtn');
-      const curtainOverlay = document.getElementById('curtainOverlay');
-
-      enterBtn.addEventListener('click', () => {
-        if (navigator.vibrate) { navigator.vibrate(30); }
-        curtainOverlay.classList.add('is-open');
-        
-        // ✨ TRAŽENJE DOZVOLE NA iOS PRILIKOM PRVOG KLIKA
-        if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
-          DeviceMotionEvent.requestPermission()
-            .then(response => {
-              if (response === 'granted') {
-                window.addEventListener('devicemotion', handleMotion);
-              }
-            })
-            .catch(console.error);
-        } else {
-          window.addEventListener('devicemotion', handleMotion);
-        }
-        
-        setTimeout(() => { introTimeline.play(); }, 500);
-        setTimeout(() => { curtainOverlay.style.display = 'none'; }, 1600);
-      });
+      // ✨ SIGURNOSNA PROVJERA ZA DOZVOLU (Shake i motion slušalac se glatko montira na body)
+      if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
+         // Fallback za iOS uređaje ukoliko traže eksplicitni klik
+         document.body.addEventListener('click', function requestMotion() {
+            DeviceMotionEvent.requestPermission().then(response => {
+               if (response === 'granted') { window.addEventListener('devicemotion', handleMotion); }
+            }).catch(console.error);
+            document.body.removeEventListener('click', requestMotion);
+         });
+      } else {
+         window.addEventListener('devicemotion', handleMotion);
+      }
 
       const masterJourneyTimeline = gsap.timeline({ scrollTrigger: { trigger: "#journeySection", start: "top top", end: "bottom bottom", scrub: 1.4, anticipatePin: 1 } });
       masterJourneyTimeline
@@ -855,7 +843,7 @@
     function openPaperLetter() { const realEnvelope = document.getElementById('physicalEnvelope'); const letterZone = document.getElementById('secretLetterZone'); if (navigator.vibrate) { navigator.vibrate([45, 90, 45]); } const revealTimeline = gsap.timeline(); revealTimeline.to(realEnvelope, { opacity: 0, scale: 1.04, y: -15, duration: 1.2, ease: "power2.inOut", onComplete: () => { realEnvelope.style.display = "none"; letterZone.style.display = "block"; } }).to(letterZone, { opacity: 1, scale: 1, y: 0, duration: 2, ease: "power3.out" }); }
 
     // =========================================================================
-    // ✨ POPRAVLJEN I ZAVRŠEN SHAKE EFEKAT (Sporija srca, manji odziv, samo na kraju)
+    // ✨ SHAKE MEHANIZAM
     // =========================================================================
     const shakeCanvas = document.getElementById("shakeConfettiCanvas"); 
     const sCtx = shakeCanvas.getContext("2d"); 
@@ -863,9 +851,8 @@
     let lastX = null, lastY = null, lastZ = null; 
     let lastTimeShake = Date.now();
     let isConfettiActive = false;
-    let isAtFinalSection = false; // ✨ Provjera da li smo na zadnjoj sekciji
+    let isAtFinalSection = false; 
 
-    // Pratimo da li je Ana skrolala skroz do kraja
     const finalObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         isAtFinalSection = entry.isIntersecting;
@@ -884,7 +871,6 @@
           x: Math.random() * shakeCanvas.width, 
           y: -20 - (Math.random() * 60), 
           size: Math.random() * 14 + 10, 
-          // ✨ USPORENA BRZINA PADANJA SRCA
           speedY: Math.random() * 1.5 + 1.5, 
           speedX: (Math.random() - 0.5) * 2, 
           rotation: Math.random() * Math.PI * 2, 
@@ -921,7 +907,6 @@
     }
 
     function handleMotion(e) { 
-      // ✨ SHAKE RADI SAMO KADA JE KORISNIK SKROLAO DO ZADNJE SEKCIJE
       if (!isAtFinalSection) return;
 
       let acc = e.accelerationIncludingGravity; 
@@ -933,7 +918,6 @@
         lastTimeShake = currentTime; 
         if (lastX !== null) { 
           let speed = Math.abs(acc.x + acc.y + acc.z - lastX - lastY - lastZ) / diffTime * 10000; 
-          // ✨ SMANJEN ODZIV: Potrebno je malo jače i očitije protresti telefon
           if (speed > 150) { 
             spawnHeartConfetti(speed / 15); 
           } 
@@ -942,7 +926,6 @@
       } 
     }
 
-    // Klik fallback za računare na zadnjoj sekciji
     document.getElementById("finalTributeScope").addEventListener("click", () => { spawnHeartConfetti(25); });
   </script>
 </body>
