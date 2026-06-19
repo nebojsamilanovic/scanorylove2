@@ -70,26 +70,21 @@
     body.is-loading { overflow: hidden; }
 
     /* ==========================================
-       ✨ UVODNI EKRAN (INTRO OVERLAY)
+       ✨ UNAPRIJEĐENI UVODNI EKRAN (INTRO OVERLAY)
        ========================================== */
     #introOverlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
-      height: 100svh;
+      height: 100vh; /* Da uvijek pokriva cijeli ekran */
       background: var(--bg-gradient);
       z-index: 9999999;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.2s;
-    }
-    #introOverlay.is-hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
+      will-change: transform, opacity;
     }
     .intro-vogue-title {
       font-family: var(--font-emotion);
@@ -97,7 +92,6 @@
       font-style: italic;
       color: var(--text-main);
       margin-bottom: 40px;
-      opacity: 0.9;
     }
     .intro-enter-btn {
       font-family: var(--font-clean);
@@ -112,8 +106,6 @@
       cursor: pointer;
       transition: all 0.4s ease;
       outline: none;
-      position: relative;
-      overflow: hidden;
     }
     html.theme-night .intro-enter-btn {
       border-color: rgba(245, 235, 226, 0.2);
@@ -234,7 +226,8 @@
     .scroll-journey-wrapper { position: relative; width: 100vw; height: 500vh; background-color: transparent; }
     .journey-sticky-container { 
       position: sticky; top: 0; width: 100vw; 
-      height: 100svh; 
+      /* FIX: Vraćeno na 100vh da pokrije pun ekran i kad se sakrije traka pretraživača! */
+      height: 100vh; 
       overflow: hidden; display: flex; align-items: center; justify-content: center; 
     }
     
@@ -426,7 +419,7 @@
     .shake-interaction-hint { font-family: var(--font-clean); font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); opacity: 0; margin-top: 80px; animation: gentleBreatheShake 2.5s ease-in-out infinite alternate; will-change: opacity; transform: translateZ(0); }
     @keyframes gentleBreatheShake { 0% { opacity: 0.25; } 100% { opacity: 0.55; } }
     
-    #shakeConfettiCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100svh; z-index: 99999; pointer-events: none; transform: translateZ(0); }
+    #shakeConfettiCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 99999; pointer-events: none; transform: translateZ(0); }
   </style>
 </head>
 
@@ -444,7 +437,6 @@
     })();
   </script>
 
-  <!-- ✨ UVODNI EKRAN -->
   <div id="introOverlay">
     <div class="intro-vogue-title">The Beginning</div>
     <button class="intro-enter-btn" id="enterBtn">Enter our world</button>
@@ -770,6 +762,10 @@
 
       ScrollTrigger.config({ ignoreMobileResize: true });
 
+      // ✨ GSAP animacije za intro ekran pri učitavanju
+      gsap.fromTo(".intro-vogue-title", { opacity: 0, y: 30 }, { opacity: 0.9, y: 0, duration: 1.8, ease: "power3.out", delay: 0.2 });
+      gsap.fromTo(".intro-enter-btn", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.8, ease: "power3.out", delay: 0.6 });
+
       const anniversaryDate = new Date('2022-02-14T00:00:00').getTime();
 
       function refreshTicker() {
@@ -809,7 +805,7 @@
         gsap.fromTo(inputContainer, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.6, ease: "power2.out", scrollTrigger: { trigger: "#lockSectionScope", start: "top 80%" } });
       }
 
-      // ✨ IZMIJENJENO: Uvodna animacija je pauzirana po defaultu
+      // Animacija prve sekcije čeka dok se ne klikne "Enter"
       const introTimeline = gsap.timeline({
         paused: true,
         onComplete: () => { ScrollTrigger.refresh(); }
@@ -820,24 +816,35 @@
       .to("#heroTicker", { opacity: 1, y: 0, duration: 2.2, ease: "power2.out" }, "-=1.0")
       .to("#heroScroll", { opacity: 0.8, duration: 1.6, ease: "power2.out" }, "-=1.4");
 
-      // ✨ DODATO: Logika za klik na dugme i otključavanje sajta
+      // ✨ Logika klika i nestajanja uvodnog ekrana
       const enterBtn = document.getElementById('enterBtn');
       const introOverlay = document.getElementById('introOverlay');
 
       enterBtn.addEventListener('click', () => {
-        // Skriva uvodni ekran
-        introOverlay.classList.add('is-hidden');
-        
-        // Vraća skrol na tijelo sajta
-        document.body.classList.remove('is-loading');
-        
-        // Budi audio i vibraciju kako bi kasnije radili bez blokada od strane browsera
         if (navigator.vibrate) { navigator.vibrate(30); }
-        
-        // Pokreće animaciju prve sekcije sa kratkim kašnjenjem dok ekran ne izblijedi
-        setTimeout(() => {
-          introTimeline.play();
-        }, 600);
+
+        // Animirani izlazak teksta i dugmeta
+        gsap.to(".intro-vogue-title, .intro-enter-btn", {
+          y: -20,
+          opacity: 0,
+          duration: 0.6,
+          ease: "power2.in",
+          stagger: 0.1
+        });
+
+        // Animirani fade i lagani zoom cijelog ekrana
+        gsap.to(introOverlay, {
+          opacity: 0,
+          scale: 1.05,
+          duration: 1.2,
+          ease: "power3.inOut",
+          delay: 0.3,
+          onComplete: () => {
+            introOverlay.style.display = "none";
+            document.body.classList.remove('is-loading');
+            introTimeline.play();
+          }
+        });
       });
 
       const masterJourneyTimeline = gsap.timeline({
